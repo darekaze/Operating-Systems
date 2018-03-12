@@ -4,7 +4,7 @@
 This is just a project of dealing with some **scheduling** stuff..(lol)(　ﾟДﾟ)＜!!
 
 ## Project WiP :fire:
-Keep calm and commit!!
+Keep calm and **commit** !! o(〃＾▽＾〃)o
 
 ---
 
