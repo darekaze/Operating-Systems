@@ -1,11 +1,12 @@
-# Operating-Systems Project
+# Operating-System Project
 > PolyU COMP2432 Project (2017~2018 Spring)  
 
-**Welcome**!! :fire:  
-Hope we can cooperate well and get a good grade in this project.
+This is just a project of dealing with some **scheduling** stuff..(lol)(　ﾟДﾟ)＜!!
 
-## Currently no activities yet
-Just relax until the project pdf releases...
+## Project WiP :fire:
+Keep calm and commit!!
+
+---
 
 ## Some useful links for you to explore :thinking:
 
