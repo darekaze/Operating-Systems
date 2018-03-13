@@ -7,14 +7,14 @@
 #define MEETING 2
 #define GATHERING 3
 
-typedef struct {
-    char *name;
+typedef struct extra {
+    char name[20];
     struct extra *next;
 } extra;
 
-typedef struct {
+typedef struct Job {
     int ssType;
-    char *owner;
+    char owner[20];
     int date; // YYYYMMDD
     int startTime;
     int duration;
@@ -42,7 +42,7 @@ void readInput(char (*cmd)) {
         cmd[strlen (cmd) - 1] = '\0';
 }
 
-void splitString(char **wList, char (*p)) {
+int splitString(char **wList, char (*p)) {
     int i, nSpace = 0;
 
     while(p) {
@@ -54,6 +54,8 @@ void splitString(char **wList, char (*p)) {
     }
     wList = realloc(wList, sizeof(char*) * (nSpace+1));
     wList[nSpace] = 0;
+    
+    return nSpace;
 }
 
 int checkType(char *cmd) {
@@ -66,20 +68,53 @@ int checkType(char *cmd) {
     else if (strcmp(cmd, "printReport") == 0)   return 6;
 }
 
-void handleCmd(char (*cmd), int *loop) {
-    char **wList = malloc(sizeof(char*) * 1);
-    char *p = strtok(cmd," ");
+void addSession(int argc, char **argv, Job **head_ref, int t) {
+    Job *newJob = (Job*)malloc(sizeof(Job));
 
-    splitString(wList, p);
-    switch(checkType(wList[0])) { // TODO: implement functions
-        case 1:
-            printf("la\n");
-            break;
-        case 2:
-            printf("lala\n");
-            break;
-        case 3:
-            printf("lalala\n");
+    if (newJob == NULL) {
+        printf("Error: Out of memory..");
+        exit(1);
+    }
+    if(argc < 5) {
+        printf("Error: Not enough argument...\n");
+        return;
+    }
+    // input data into list
+    newJob->ssType = t;
+    strcpy(newJob->owner, argv[1]);
+    newJob->date = atoi(argv[2]);
+    newJob->startTime = atoi(argv[3]) / 100;
+    newJob->duration = atoi(argv[4]);
+    newJob->next = NULL;
+
+    // Bug here...
+    // if(*head_ref == NULL) {
+    //     *head_ref = newJob;
+    // } else {
+    //     Job *temp = *head_ref;
+    //     while(temp->next != NULL){
+    //         printf("skip\n");
+    //         temp = temp->next;
+    //     }
+    //     temp->next = newJob;
+    //     printf("Job Added later!!\n");
+    // }
+
+    printf("%d %s %d %d %d\n", 
+            newJob->ssType, newJob->owner, newJob->date, newJob->startTime, newJob->duration);
+    free(newJob);
+}
+
+void handleCmd(char (*cmd), Job **jobList, int *loop) {
+    char **wList = malloc(sizeof(char*) * 1);
+    char *p = strtok(cmd, " ");
+    int t, l;
+
+    l = splitString(wList, p);
+    t = checkType(wList[0]);
+    switch(t) { // TODO: implement functions
+        case 1: case 2: case 3:
+            addSession(l, wList, jobList, t);
             break;
         case 4:
             printf("lol\n");
@@ -100,18 +135,33 @@ void handleCmd(char (*cmd), int *loop) {
     free(wList);
 }
 
+void debug_print(Job *head) {
+    printf("Debug log\n");
+        printf("%d %s %d %d %d\n", 
+            head->ssType, head->owner, head->date, head->startTime, head->duration);
+        head = head->next;
+        printf("%d %s %d %d %d\n", 
+            head->ssType, head->owner, head->date, head->startTime, head->duration);
+    printf("\n");
+}
+
 
 /*-------Main-------*/
 int main(int argc, char *argv[]) {
     int loop = 1;
     char cmd[MAX_INPUT_SZ];
+    Job *jobList = NULL;
+
     // Initialize
     readUsers(--argc, ++argv);
     // Looping
     while(loop) {
         readInput(cmd);
-        handleCmd(cmd, &loop);
+        handleCmd(cmd, &jobList, &loop);
     }
     printf("-> Bye!!!!!!\n");
+    // Debug
+    // debug_print(jobList);
+    free(jobList);
     return 0;
 }
