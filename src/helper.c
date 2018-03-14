@@ -69,7 +69,7 @@ int checkType(char *cmd) {
 }
 
 void addSession(int argc, char **argv, Job **head_ref, int t) {
-    Job *newJob = (Job*)malloc(sizeof(Job));
+    Job *temp, *newJob = (Job*)malloc(sizeof(Job));
 
     if (newJob == NULL) {
         printf("Error: Out of memory..");
@@ -87,22 +87,21 @@ void addSession(int argc, char **argv, Job **head_ref, int t) {
     newJob->duration = atoi(argv[4]);
     newJob->next = NULL;
 
-    // Bug here...
-    // if(*head_ref == NULL) {
-    //     *head_ref = newJob;
-    // } else {
-    //     Job *temp = *head_ref;
-    //     while(temp->next != NULL){
-    //         printf("skip\n");
-    //         temp = temp->next;
-    //     }
-    //     temp->next = newJob;
-    //     printf("Job Added later!!\n");
-    // }
+    if(*head_ref == NULL) {
+        *head_ref = newJob;
+        // printf("1st Job Added!!\n");
+    } else {
+        temp = *head_ref;
+        while(temp->next != NULL){
+            // printf("skip\n");
+            temp = temp->next;
+        }
+        temp->next = newJob;
+        // printf("Job Added later!!\n");
+    }
 
-    printf("%d %s %d %d %d\n", 
-            newJob->ssType, newJob->owner, newJob->date, newJob->startTime, newJob->duration);
-    free(newJob);
+    // printf("%d %s %d %d %d\n", 
+    //         newJob->ssType, newJob->owner, newJob->date, newJob->startTime, newJob->duration);
 }
 
 void handleCmd(char (*cmd), Job **jobList, int *loop) {
@@ -136,12 +135,12 @@ void handleCmd(char (*cmd), Job **jobList, int *loop) {
 }
 
 void debug_print(Job *head) {
-    printf("Debug log\n");
+    printf("Debug-log\n");
+    while(head) {
         printf("%d %s %d %d %d\n", 
             head->ssType, head->owner, head->date, head->startTime, head->duration);
         head = head->next;
-        printf("%d %s %d %d %d\n", 
-            head->ssType, head->owner, head->date, head->startTime, head->duration);
+    }
     printf("\n");
 }
 
@@ -161,7 +160,7 @@ int main(int argc, char *argv[]) {
     }
     printf("-> Bye!!!!!!\n");
     // Debug
-    // debug_print(jobList);
+    debug_print(jobList);
     free(jobList);
     return 0;
 }
