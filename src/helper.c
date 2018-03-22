@@ -110,28 +110,19 @@ void addBatchFile(char *fname, Job **jobList) {
     fp = fopen(fname,"r");
     if (fp == NULL)
         exit(EXIT_FAILURE);
+        
     while (getline(&line, &len, fp) != -1) {
         char **chunks = malloc(sizeof(char*) * 1);
-        int t, nSpace = 0;
         char *p;
+        int l, t;
+        
         if ((strlen(line) > 0) && (line[strlen(line) - 1] == '\n'))
             line[strlen(line) - 1] = '\0';
         p = strtok(line, " ");
-        // ------
-        while(p) {
-            chunks = realloc(chunks, sizeof(char*) * ++nSpace);
-            if(chunks == NULL)
-                exit(1);
-            chunks[nSpace-1] = p;
-            p = strtok(NULL, " ");
-        }
-        chunks = realloc(chunks, sizeof(char*) * (nSpace+1));
-        chunks[nSpace] = 0;
-        // ------
-        // splitString(chunks, p); // pass in chunks got error, 
-        // so i extract out the function temporality
+        l = splitString(chunks, p);
         t = checkType(chunks[0]);
-        addSession(nSpace, chunks, jobList, t);
+        printf("%s\n", chunks[0]);
+        addSession(l, chunks, jobList, t);
         free(chunks);
     }
     fclose(fp);
