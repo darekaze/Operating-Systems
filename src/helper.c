@@ -16,8 +16,8 @@ typedef struct Job {
     int ssType;
     char owner[20];
     int date; // YYYYMMDD
-    int startTime;
-    int duration;
+    int startTime; // hr only
+    int endTime; // hr only
     extra remark;
     struct Job *next;
 } Job;
@@ -38,8 +38,8 @@ void readInput(char (*cmd)) {
     printf("Please enter ->\n");
     fgets(cmd, MAX_INPUT_SZ, stdin);
     /* Remove trailing newline, if there. */
-    if ((strlen(cmd) > 0) && (cmd[strlen (cmd) - 1] == '\n'))
-        cmd[strlen (cmd) - 1] = '\0';
+    if ((strlen(cmd) > 0) && (cmd[strlen(cmd) - 1] == '\n'))
+        cmd[strlen(cmd) - 1] = '\0';
 }
 
 int splitString(char **wList, char (*p)) {
@@ -54,7 +54,7 @@ int splitString(char **wList, char (*p)) {
     }
     wList = realloc(wList, sizeof(char*) * (nSpace+1));
     wList[nSpace] = 0;
-    
+
     return nSpace;
 }
 
@@ -71,6 +71,7 @@ int checkType(char *cmd) {
 void addSession(int argc, char **argv, Job **head_ref, int t) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
 
+    // TODO: add check users and other format
     if (newJob == NULL) {
         printf("Error: Out of memory..");
         exit(1);
@@ -84,24 +85,57 @@ void addSession(int argc, char **argv, Job **head_ref, int t) {
     strcpy(newJob->owner, argv[1]);
     newJob->date = atoi(argv[2]);
     newJob->startTime = atoi(argv[3]) / 100;
-    newJob->duration = atoi(argv[4]);
+    newJob->endTime = newJob->startTime + atoi(argv[4]);
     newJob->next = NULL;
 
     if(*head_ref == NULL) {
         *head_ref = newJob;
-        // printf("1st Job Added!!\n");
     } else {
         temp = *head_ref;
         while(temp->next != NULL){
-            // printf("skip\n");
             temp = temp->next;
         }
         temp->next = newJob;
-        // printf("Job Added later!!\n");
     }
 
     // printf("%d %s %d %d %d\n", 
     //         newJob->ssType, newJob->owner, newJob->date, newJob->startTime, newJob->duration);
+}
+
+void addBatchFile(char *fname, Job **jobList) {
+    FILE *fp;
+    char *line = NULL;
+    size_t len = 0;
+
+    fp = fopen(fname,"r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+    while (getline(&line, &len, fp) != -1) {
+        char **chunks = malloc(sizeof(char*) * 1);
+        int t, nSpace = 0;
+        char *p;
+        if ((strlen(line) > 0) && (line[strlen(line) - 1] == '\n'))
+            line[strlen(line) - 1] = '\0';
+        p = strtok(line, " ");
+        // ------
+        while(p) {
+            chunks = realloc(chunks, sizeof(char*) * ++nSpace);
+            if(chunks == NULL)
+                exit(1);
+            chunks[nSpace-1] = p;
+            p = strtok(NULL, " ");
+        }
+        chunks = realloc(chunks, sizeof(char*) * (nSpace+1));
+        chunks[nSpace] = 0;
+        // ------
+        // splitString(chunks, p); // pass in chunks got error, 
+        // so i extract out the function temporality
+        t = checkType(chunks[0]);
+        addSession(nSpace, chunks, jobList, t);
+        free(chunks);
+    }
+    fclose(fp);
+    if (line) free(line);
 }
 
 void handleCmd(char (*cmd), Job **jobList, int *loop) {
@@ -116,7 +150,7 @@ void handleCmd(char (*cmd), Job **jobList, int *loop) {
             addSession(l, wList, jobList, t);
             break;
         case 4:
-            printf("lol\n");
+            addBatchFile(wList[1], jobList);
             break;
         case 5:
             printf("ahhh\n");
@@ -138,7 +172,7 @@ void debug_print(Job *head) {
     printf("Debug-log\n");
     while(head) {
         printf("%d %s %d %d %d\n", 
-            head->ssType, head->owner, head->date, head->startTime, head->duration);
+            head->ssType, head->owner, head->date, head->startTime, head->endTime);
         head = head->next;
     }
     printf("\n");
@@ -151,9 +185,7 @@ int main(int argc, char *argv[]) {
     char cmd[MAX_INPUT_SZ];
     Job *jobList = NULL;
 
-    // Initialize
-    readUsers(--argc, ++argv);
-    // Looping
+    readUsers(--argc, ++argv); // Initialize
     while(loop) {
         readInput(cmd);
         handleCmd(cmd, &jobList, &loop);
