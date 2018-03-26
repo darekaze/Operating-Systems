@@ -32,6 +32,7 @@ void readUsers(int num, char *users[]) {
         exit(1);
     }
     // TODO: Initialize Structure of User (Their Schedule)
+	
 }
 
 void readInput(char (*cmd)) {
@@ -67,16 +68,8 @@ int checkType(char *cmd) {
     else if (strcmp(cmd, "printSchd") == 0)     return 5;
     else if (strcmp(cmd, "printReport") == 0)   return 6;
 }
-
-void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
-    Job *temp, *newJob = (Job*)malloc(sizeof(Job));
-
-    // TODO: add check users and other format
-    if (newJob == NULL) {
-        printf("Error: Out of memory..");
-        exit(1);
-    }
-    if(argc < 5 || argc > 4+userNum) {
+void validateInput(int argc, char **argv,int userNum){
+	if(argc < 5 || argc > 4+userNum) {
         printf("Error: Unvalid Argument Number\n");
         return;
     }
@@ -91,7 +84,21 @@ void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
 	if (atoi(argv[4])<1 || atoi(argv[4])>8){
 		printf("Error: Unvalid Duration\n");
 		return;
-	}
+	}	
+}
+void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
+    Job *temp, *newJob = (Job*)malloc(sizeof(Job));
+
+    if (newJob == NULL) {
+        printf("Error: Out of memory..");
+        exit(1);
+    }
+	if(argc < 5) {
+        printf("Error: Not enough argument...\n");
+        return;
+    }
+    validateInput(argc,argv,userNum);
+	
     // input data into list
     newJob->ssType = t;
     strcpy(newJob->owner, argv[1]);
