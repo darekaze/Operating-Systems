@@ -68,34 +68,35 @@ int checkType(char *cmd) {
     else if (strcmp(cmd, "printSchd") == 0)     return 5;
     else if (strcmp(cmd, "printReport") == 0)   return 6;
 }
-void validateInput(int argc, char **argv,int userNum){
+
+int validateInput(int argc, char **argv,int userNum){
+    int tStart = atoi(argv[3]) / 100;
 	if(argc < 5 || argc > 4+userNum) {
         printf("Error: Unvalid Argument Number\n");
-        return;
+        return 1;
     }
-	if(atoi(argv[2])<20180401 || atoi(argv[2])>20180414){
+	if(atoi(argv[2]) < 20180401 || atoi(argv[2]) > 20180414){
 		printf("Error: Unvalid Date\n");
-		return;
+		return 1;
 	}
-	if(atoi(argv[3])/100 <8 || atoi(argv[3])/100>17){
+	if(tStart < 8 || tStart > 17){
 		printf("Error: Unvalid Starting Time\n");
-		return;
+		return 1;
 	}
-	if (atoi(argv[4])<1 || atoi(argv[4])>8){
+	if (atoi(argv[4]) < 1 || (atoi(argv[4]) + tStart) > 18){
 		printf("Error: Unvalid Duration\n");
-		return;
-	}	
+		return 1;
+	}
+
+    // TODO: add user validation (i.e. ignored user not in list)
 }
+
 void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
 
     if (newJob == NULL) {
         printf("Error: Out of memory..");
         exit(1);
-    }
-	if(argc < 5) {
-        printf("Error: Not enough argument...\n");
-        return;
     }
     validateInput(argc,argv,userNum);
 	
@@ -140,7 +141,7 @@ void addBatchFile(char *fname, Job **jobList, int userNum) {
         p = strtok(line, " ");
         l = splitString(chunks, p);
         t = checkType(chunks[0]);
-        printf("%s\n", chunks[0]);
+        printf("%s\n", chunks[0]); // debug
         addSession(l, chunks, jobList, t, userNum);
         free(chunks);
     }
