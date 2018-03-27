@@ -5,6 +5,7 @@ This is just a project of dealing with some **scheduling** stuff..(lol)(　ﾟД
 
 ## Project WiP :fire:
 Keep calm and **commit** !! o(〃＾▽＾〃)o
+Talk is less. Show me your **code** !!! bvb
 
 ---
 
