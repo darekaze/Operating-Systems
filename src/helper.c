@@ -32,6 +32,7 @@ void readUsers(int num, char *users[]) {
         exit(1);
     }
     // TODO: Initialize Structure of User (Their Schedule)
+	
 }
 
 void readInput(char (*cmd)) {
@@ -68,18 +69,37 @@ int checkType(char *cmd) {
     else if (strcmp(cmd, "printReport") == 0)   return 6;
 }
 
-void addSession(int argc, char **argv, Job **head_ref, int t) {
+int validateInput(int argc, char **argv,int userNum){
+    int tStart = atoi(argv[3]) / 100;
+	if(argc < 5 || argc > 4+userNum) {
+        printf("Error: Unvalid Argument Number\n");
+        return 1;
+    }
+	if(atoi(argv[2]) < 20180401 || atoi(argv[2]) > 20180414){
+		printf("Error: Unvalid Date\n");
+		return 1;
+	}
+	if(tStart < 8 || tStart > 17){
+		printf("Error: Unvalid Starting Time\n");
+		return 1;
+	}
+	if (atoi(argv[4]) < 1 || (atoi(argv[4]) + tStart) > 18){
+		printf("Error: Unvalid Duration\n");
+		return 1;
+	}
+
+    // TODO: add user validation (i.e. ignored user not in list)
+}
+
+void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
 
-    // TODO: add check users and other format
     if (newJob == NULL) {
         printf("Error: Out of memory..");
         exit(1);
     }
-    if(argc < 5) {
-        printf("Error: Not enough argument...\n");
-        return;
-    }
+    validateInput(argc,argv,userNum);
+	
     // input data into list
     newJob->ssType = t;
     strcpy(newJob->owner, argv[1]);
@@ -102,7 +122,7 @@ void addSession(int argc, char **argv, Job **head_ref, int t) {
     //         newJob->ssType, newJob->owner, newJob->date, newJob->startTime, newJob->duration);
 }
 
-void addBatchFile(char *fname, Job **jobList) {
+void addBatchFile(char *fname, Job **jobList, int userNum) {
     FILE *fp;
     char *line = NULL;
     size_t len = 0;
@@ -121,15 +141,15 @@ void addBatchFile(char *fname, Job **jobList) {
         p = strtok(line, " ");
         l = splitString(chunks, p);
         t = checkType(chunks[0]);
-        printf("%s\n", chunks[0]);
-        addSession(l, chunks, jobList, t);
+        printf("%s\n", chunks[0]); // debug
+        addSession(l, chunks, jobList, t, userNum);
         free(chunks);
     }
     fclose(fp);
     if (line) free(line);
 }
 
-void handleCmd(char (*cmd), Job **jobList, int *loop) {
+void handleCmd(char (*cmd), Job **jobList, int *loop, int userNum) {
     char **wList = malloc(sizeof(char*) * 1);
     char *p = strtok(cmd, " ");
     int t, l;
@@ -138,10 +158,10 @@ void handleCmd(char (*cmd), Job **jobList, int *loop) {
     t = checkType(wList[0]);
     switch(t) { // TODO: implement functions
         case 1: case 2: case 3:
-            addSession(l, wList, jobList, t);
+            addSession(l, wList, jobList, t, userNum);
             break;
         case 4:
-            addBatchFile(wList[1], jobList);
+            addBatchFile(wList[1], jobList, userNum);
             break;
         case 5:
             printf("ahhh\n");
@@ -174,12 +194,13 @@ void debug_print(Job *head) {
 int main(int argc, char *argv[]) {
     int loop = 1;
     char cmd[MAX_INPUT_SZ];
+	int userNum=argc-1;
     Job *jobList = NULL;
-
+	
     readUsers(--argc, ++argv); // Initialize
     while(loop) {
         readInput(cmd);
-        handleCmd(cmd, &jobList, &loop);
+        handleCmd(cmd, &jobList, &loop, userNum);
     }
     printf("-> Bye!!!!!!\n");
     // Debug
