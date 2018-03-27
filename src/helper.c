@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <string.h>
 
 #define MAX_INPUT_SZ 128
 #define CLASSES 1
 #define MEETING 2
 #define GATHERING 3
+#define N_CHILD 2 // How many scheduler
 
 typedef struct extra {
     char name[20];
@@ -88,6 +92,7 @@ int validateInput(int argc, char **argv,int userNum){
 		return 1;
 	}
 
+    return 0;
     // TODO: add user validation (i.e. ignored user not in list)
 }
 
@@ -98,7 +103,9 @@ void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
         printf("Error: Out of memory..");
         exit(1);
     }
-    validateInput(argc,argv,userNum);
+
+    if(validateInput(argc,argv,userNum))
+        return;
 	
     // input data into list
     newJob->ssType = t;
@@ -189,22 +196,84 @@ void debug_print(Job *head) {
     printf("\n");
 }
 
+void fcfsScheduler(int fromParent, int toParent) {
+    int loop = 0; // Change to 1 if you want to active
+    while(loop) {
+        char cmdBuf[64] = "";
+        read(fromParent, cmdBuf, 64);
+        
+    }
+}
+
+void prScheduler(int fromParent, int toParent) {
+    // TODO: implement it
+}
 
 /*-------Main-------*/
 int main(int argc, char *argv[]) {
-    int loop = 1;
-    char cmd[MAX_INPUT_SZ];
-	int userNum=argc-1;
     Job *jobList = NULL;
-	
+    int toParent[N_CHILD][2], toChild[N_CHILD][2];
+    pid_t shut_down[N_CHILD];
+    int pid, i, j;
+
     readUsers(--argc, ++argv); // Initialize
-    while(loop) {
-        readInput(cmd);
-        handleCmd(cmd, &jobList, &loop, userNum);
+
+    for(i = 0; i < N_CHILD; i++) {
+        if(pipe(toParent[i]) < 0 || pipe(toChild[i]) < 0) {
+            printf("Pipe creation error\n");
+            exit(1);
+        }
     }
+
+    for(i = 0; i < N_CHILD; i++) {
+        pid = fork();
+        if(pid < 0) {
+            printf("Error");
+            exit(1);
+        } 
+        else if (pid == 0) { /* child */
+            // usable pipe-> read: toChild[i][0] write: toParent[i][1]
+            for(j = 0; j < N_CHILD; j++){
+                close(toChild[j][1]);
+                close(toParent[j][0]);
+                if(j != i) {
+                    close(toChild[j][0]);
+                    close(toParent[j][1]);
+                }
+            }
+            switch(i) {
+                case 0:
+                    fcfsScheduler(toChild[i][0], toParent[i][1]);
+                    break;
+                case 1:
+                    prScheduler(toChild[i][0], toParent[i][1]);
+                    break;
+                default:
+                    printf("Here goes nothing\n");
+                    break;
+            }
+            printf("child %d ends\n",i+1);
+            exit(0);
+        }
+        else shut_down[i] = pid;
+    }
+
+    if(pid > 0) { /* parent */
+        int loop = 1;
+        char cmd[MAX_INPUT_SZ];
+        int userNum = argc-1;
+        while(loop) {
+            readInput(cmd);
+            handleCmd(cmd, &jobList, &loop, userNum);
+        }
+    }
+
+    /* prevent zombie */
+    for(i = 0; i < N_CHILD; i++)
+        waitpid(shut_down[i], NULL, 0);
+    
     printf("-> Bye!!!!!!\n");
-    // Debug
-    debug_print(jobList);
+    debug_print(jobList); // Debug
     free(jobList);
     return 0;
 }
