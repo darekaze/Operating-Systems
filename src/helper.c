@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <string.h>
 
 #define MAX_INPUT_SZ 128
 #define CLASSES 1
 #define MEETING 2
 #define GATHERING 3
+#define N_CHILD 2 // How many scheduler
 
 typedef struct extra {
     char name[20];
@@ -26,13 +30,11 @@ typedef struct Job {
 /* Prototype */
 
 /*-------Functions-------*/
-void readUsers(int num, char *users[]) {
+void checkUser(int num, char *users[]) {
     if(num < 3 || num > 9) {
         printf("You're trolling: Range should be 3~9 users");
         exit(1);
     }
-    // TODO: Initialize Structure of User (Their Schedule)
-	
 }
 
 void readInput(char (*cmd)) {
@@ -45,7 +47,6 @@ void readInput(char (*cmd)) {
 
 int splitString(char **wList, char (*p)) {
     int i, nSpace = 0;
-
     while(p) {
         wList = realloc(wList, sizeof(char*) * ++nSpace);
         if(wList == NULL)
@@ -55,7 +56,6 @@ int splitString(char **wList, char (*p)) {
     }
     wList = realloc(wList, sizeof(char*) * (nSpace+1));
     wList[nSpace] = 0;
-
     return nSpace;
 }
 
@@ -88,9 +88,11 @@ int validateInput(int argc, char **argv,int userNum){
 		return 1;
 	}
 
+    return 0;
     // TODO: add user validation (i.e. ignored user not in list)
 }
 
+/* TODO: Need to edit for each type of scheduler */
 void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
 
@@ -98,7 +100,9 @@ void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
         printf("Error: Out of memory..");
         exit(1);
     }
-    validateInput(argc,argv,userNum);
+
+    if(validateInput(argc,argv,userNum))
+        return;
 	
     // input data into list
     newJob->ssType = t;
@@ -122,52 +126,46 @@ void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
     //         newJob->ssType, newJob->owner, newJob->date, newJob->startTime, newJob->duration);
 }
 
-void addBatchFile(char *fname, Job **jobList, int userNum) {
+void addBatchFile(char *cmd, int toChild[][2]) {
     FILE *fp;
     char *line = NULL;
     size_t len = 0;
+    int i;
 
-    fp = fopen(fname,"r");
-    if (fp == NULL)
-        exit(EXIT_FAILURE);
-        
+    strtok(cmd, " ");
+    line = strtok(NULL, " \n");
+    fp = fopen(line,"r");
+    if (fp == NULL) {
+        printf("Error: No such file\n");
+        return;
+    }
     while (getline(&line, &len, fp) != -1) {
-        char **chunks = malloc(sizeof(char*) * 1);
-        char *p;
-        int l, t;
-        
         if ((strlen(line) > 0) && (line[strlen(line) - 1] == '\n'))
             line[strlen(line) - 1] = '\0';
-        p = strtok(line, " ");
-        l = splitString(chunks, p);
-        t = checkType(chunks[0]);
-        printf("%s\n", chunks[0]); // debug
-        addSession(l, chunks, jobList, t, userNum);
-        free(chunks);
+        for(i = 0; i < N_CHILD; i++)
+            write(toChild[i][1], line, MAX_INPUT_SZ);
     }
     fclose(fp);
     if (line) free(line);
 }
 
-void handleCmd(char (*cmd), Job **jobList, int *loop, int userNum) {
-    char **wList = malloc(sizeof(char*) * 1);
-    char *p = strtok(cmd, " ");
-    int t, l;
+void handleCmd(char (*cmd), char *users[], int *loop, int toChild[][2]) {
+    char str[MAX_INPUT_SZ] = "";
+    int i, t;
 
-    l = splitString(wList, p);
-    t = checkType(wList[0]);
-    switch(t) { // TODO: implement functions
-        case 1: case 2: case 3:
-            addSession(l, wList, jobList, t, userNum);
+    strcpy(str, cmd);
+    strtok(cmd," ");
+    t = checkType(cmd);
+    switch(t) {
+        case 1: case 2: case 3: case 6:
+            for(i = 0; i < N_CHILD; i++)
+                write(toChild[i][1], str, MAX_INPUT_SZ);
             break;
         case 4:
-            addBatchFile(wList[1], jobList, userNum);
+            addBatchFile(str, toChild);
             break;
         case 5:
-            printf("ahhh\n");
-            break;
-        case 6:
-            printf("wut\n");
+            printf("Only need to write to specified scheduler\n");
             break;
         case 0:
             *loop = 0;
@@ -175,8 +173,6 @@ void handleCmd(char (*cmd), Job **jobList, int *loop, int userNum) {
         default:
             printf("Meh..\n");
     }
-
-    free(wList);
 }
 
 void debug_print(Job *head) {
@@ -189,22 +185,108 @@ void debug_print(Job *head) {
     printf("\n");
 }
 
+void fcfsScheduler(int fromParent, char *argv[]) {
+    int loop = 1;
+    Job *accepted = NULL;
+    Job *rejected = NULL;
+
+    // Can create another pipe and fork for users and scheduler to communicate
+    // (If you wish to)
+
+    while(loop) {
+        char cmdBuf[MAX_INPUT_SZ] = "";
+        char **wList = malloc(sizeof(char*) * 1);
+        char *p;
+        int t, l;
+
+        read(fromParent, cmdBuf, MAX_INPUT_SZ);
+        p = strtok(cmdBuf, " ");
+        l = splitString(wList, p);
+        t = checkType(wList[0]);
+
+        switch(t) {
+            case 1: case 2: case 3:
+                // TODO: edit addSession for fcfs
+                printf("fcfs: %s %s %s %s %s\n",wList[0], wList[1], wList[2], wList[3], wList[4]);
+                break;
+            case 5:
+                printf("for a user's schedule\n");
+                break;
+            case 6:
+                printf("for a report of all users' schedule\n");
+                break;
+            default:
+                printf("Meh..\n");
+        }
+        
+        // printf("fcfs: %s\n", wList[2]);
+        // loop = 0;
+    }
+    // debug_print(jobList); // Debug
+    // free(jobList);
+}
+
+void prScheduler(int fromParent, char *argv[]) {
+    // TODO: implement it
+}
 
 /*-------Main-------*/
 int main(int argc, char *argv[]) {
-    int loop = 1;
-    char cmd[MAX_INPUT_SZ];
-	int userNum=argc-1;
-    Job *jobList = NULL;
-	
-    readUsers(--argc, ++argv); // Initialize
-    while(loop) {
-        readInput(cmd);
-        handleCmd(cmd, &jobList, &loop, userNum);
+    int toChild[N_CHILD][2];
+    pid_t shut_down[N_CHILD];
+    int pid, i, j;
+
+    checkUser(--argc, ++argv);
+    // Pipes
+    for(i = 0; i < N_CHILD; i++) {
+        if(pipe(toChild[i]) < 0) {
+            printf("Pipe creation error\n");
+            exit(1);
+        }
     }
+    // Fork
+    for(i = 0; i < N_CHILD; i++) {
+        pid = fork();
+        if(pid < 0) {
+            printf("Error");
+            exit(1);
+        } 
+        else if (pid == 0) { /* child */
+            for(j = 0; j < N_CHILD; j++){
+                close(toChild[j][1]);
+                if(j != i) close(toChild[j][0]);
+            }
+            switch(i) { // read: toChild[i][0] write: toParent[i][1]
+                case 0:
+                    fcfsScheduler(toChild[i][0], argv);
+                    break;
+                case 1:
+                    prScheduler(toChild[i][0], argv);
+                    break;
+                default:
+                    printf("Here goes nothing\n");
+                    break;
+            }
+            close(toChild[i][0]);
+            exit(0);
+        }
+        else shut_down[i] = pid;
+    }
+
+    if(pid > 0) { /* parent */
+        int loop = 1;
+        char cmd[MAX_INPUT_SZ];
+        for(i = 0; i < N_CHILD; i++) close(toChild[i][0]);
+        while(loop) {
+            readInput(cmd);
+            handleCmd(cmd, argv, &loop, toChild);
+        }
+        for(j = 0; j < N_CHILD; j++) close(toChild[j][1]);
+    }
+    /* prevent zombie */
+    for(i = 0; i < N_CHILD; i++)
+        waitpid(shut_down[i], NULL, 0);
+    
     printf("-> Bye!!!!!!\n");
-    // Debug
-    debug_print(jobList);
-    free(jobList);
     return 0;
 }
