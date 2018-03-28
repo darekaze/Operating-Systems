@@ -92,6 +92,7 @@ int validateInput(int argc, char **argv,int userNum){
     // TODO: add user validation (i.e. ignored user not in list)
 }
 
+/* TODO: Need to edit for each type of scheduler */
 void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
 
@@ -148,36 +149,6 @@ void addBatchFile(char *cmd, int toChild[][2]) {
     if (line) free(line);
 }
 
-// void childCmd(char (*cmd), Job **jobList, int *loop, char *users[]) {
-//     char **wList = malloc(sizeof(char*) * 1);
-//     char *p = strtok(cmd, " ");
-//     int t, l;
-
-//     l = splitString(wList, p);
-//     t = checkType(wList[0]);
-//     switch(t) { // TODO: implement functions
-//         case 1: case 2: case 3:
-//             // addSession(l, wList, jobList, t);
-//             break;
-//         case 4:
-//             // addBatchFile(wList[1], jobList);
-//             break;
-//         case 5:
-//             printf("ahhh\n");
-//             break;
-//         case 6:
-//             printf("wut\n");
-//             break;
-//         case 0:
-//             *loop = 0;
-//             break;
-//         default:
-//             printf("Meh..\n");
-//     }
-
-//     free(wList);
-// }
-
 void handleCmd(char (*cmd), char *users[], int *loop, int toChild[][2]) {
     char str[MAX_INPUT_SZ] = "";
     int i, t;
@@ -194,7 +165,7 @@ void handleCmd(char (*cmd), char *users[], int *loop, int toChild[][2]) {
             addBatchFile(str, toChild);
             break;
         case 5:
-            printf("ahhh\n");
+            printf("Only need to write to specified scheduler\n");
             break;
         case 0:
             *loop = 0;
@@ -219,11 +190,37 @@ void fcfsScheduler(int fromParent, char *argv[]) {
     Job *accepted = NULL;
     Job *rejected = NULL;
 
+    // Can create another pipe and fork for users and scheduler to communicate
+    // (If you wish to)
+
     while(loop) {
         char cmdBuf[MAX_INPUT_SZ] = "";
+        char **wList = malloc(sizeof(char*) * 1);
+        char *p;
+        int t, l;
+
         read(fromParent, cmdBuf, MAX_INPUT_SZ);
-        printf("fcfs: %s\n", cmdBuf);
-        loop = 0;
+        p = strtok(cmdBuf, " ");
+        l = splitString(wList, p);
+        t = checkType(wList[0]);
+
+        switch(t) {
+            case 1: case 2: case 3:
+                // TODO: edit addSession for fcfs
+                printf("fcfs: %s %s %s %s %s\n",wList[0], wList[1], wList[2], wList[3], wList[4]);
+                break;
+            case 5:
+                printf("for a user's schedule\n");
+                break;
+            case 6:
+                printf("for a report of all users' schedule\n");
+                break;
+            default:
+                printf("Meh..\n");
+        }
+        
+        // printf("fcfs: %s\n", wList[2]);
+        // loop = 0;
     }
     // debug_print(jobList); // Debug
     // free(jobList);
