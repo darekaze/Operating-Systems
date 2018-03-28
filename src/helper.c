@@ -32,7 +32,6 @@ void readUsers(int num, char *users[]) {
         exit(1);
     }
     // TODO: Initialize Structure of User (Their Schedule)
-	
 }
 
 void readInput(char (*cmd)) {
@@ -67,39 +66,21 @@ int checkType(char *cmd) {
     else if (strcmp(cmd, "addBatch") == 0)      return 4;
     else if (strcmp(cmd, "printSchd") == 0)     return 5;
     else if (strcmp(cmd, "printReport") == 0)   return 6;
+	return -1; // if the input type cannot be recognized
 }
 
-int validateInput(int argc, char **argv,int userNum){
-    int tStart = atoi(argv[3]) / 100;
-	if(argc < 5 || argc > 4+userNum) {
-        printf("Error: Unvalid Argument Number\n");
-        return 1;
-    }
-	if(atoi(argv[2]) < 20180401 || atoi(argv[2]) > 20180414){
-		printf("Error: Unvalid Date\n");
-		return 1;
-	}
-	if(tStart < 8 || tStart > 17){
-		printf("Error: Unvalid Starting Time\n");
-		return 1;
-	}
-	if (atoi(argv[4]) < 1 || (atoi(argv[4]) + tStart) > 18){
-		printf("Error: Unvalid Duration\n");
-		return 1;
-	}
-
-    // TODO: add user validation (i.e. ignored user not in list)
-}
-
-void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
+void addSession(int argc, char **argv, Job **head_ref, int t) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
 
+    // TODO: add check users and other format
     if (newJob == NULL) {
         printf("Error: Out of memory..");
         exit(1);
     }
-    validateInput(argc,argv,userNum);
-	
+    if(argc < 5) {
+        printf("Error: Not enough argument...\n");
+        return;
+    }
     // input data into list
     newJob->ssType = t;
     strcpy(newJob->owner, argv[1]);
@@ -122,7 +103,7 @@ void addSession(int argc, char **argv, Job **head_ref, int t,int userNum) {
     //         newJob->ssType, newJob->owner, newJob->date, newJob->startTime, newJob->duration);
 }
 
-void addBatchFile(char *fname, Job **jobList, int userNum) {
+void addBatchFile(char *fname, Job **jobList) {
     FILE *fp;
     char *line = NULL;
     size_t len = 0;
@@ -141,15 +122,16 @@ void addBatchFile(char *fname, Job **jobList, int userNum) {
         p = strtok(line, " ");
         l = splitString(chunks, p);
         t = checkType(chunks[0]);
-        printf("%s\n", chunks[0]); // debug
-        addSession(l, chunks, jobList, t, userNum);
+        printf("%s\n", chunks[0]);
+        addSession(l, chunks, jobList, t);
         free(chunks);
     }
     fclose(fp);
     if (line) free(line);
 }
 
-void handleCmd(char (*cmd), Job **jobList, int *loop, int userNum) {
+/*Note: handleCmd can be deleted*/
+void handleCmd(char (*cmd), Job **jobList, int *loop) {
     char **wList = malloc(sizeof(char*) * 1);
     char *p = strtok(cmd, " ");
     int t, l;
@@ -158,10 +140,10 @@ void handleCmd(char (*cmd), Job **jobList, int *loop, int userNum) {
     t = checkType(wList[0]);
     switch(t) { // TODO: implement functions
         case 1: case 2: case 3:
-            addSession(l, wList, jobList, t, userNum);
+            addSession(l, wList, jobList, t);
             break;
         case 4:
-            addBatchFile(wList[1], jobList, userNum);
+            addBatchFile(wList[1], jobList);
             break;
         case 5:
             printf("ahhh\n");
@@ -179,6 +161,69 @@ void handleCmd(char (*cmd), Job **jobList, int *loop, int userNum) {
     free(wList);
 }
 
+/*new function begins*/
+/*can be continued.... such as 1. the owner name is not in the list 2. The char is required for the digit bit */
+int checkValid(char (*cmd)) {
+	char **wList;
+	*wList = (char *)malloc(sizeof(char*) * 1);
+	char *p = strtok(cmd, " ");
+	int t, l;
+	
+	l = splitString(wList, p);
+	t = checkType(wList[0]);
+	
+	switch(t) {
+		case 0: 
+			return -1;
+		case 1:
+			if(l!=5 || strlen(wList[2])!=8 || strlen(wList[3])!=4) {
+				printf("Error: Unrecognised Format \n");
+				printf("Usage: \n    addClass xxx YYYYMMDD hhmm n\n");
+				return 0;
+			}
+			return 1;
+		case 2:
+			if(l<5 || strlen(wList[2])!=8 || strlen(wList[3])!=4) {
+				printf("Error: Unrecognised Format \n");
+				printf("Usage: \n    addMeeting xxx YYYYMMDD hhmm n xxx xxx ...\n");
+				return 0;
+			}
+			return 1;
+		case 3:
+			if(l<5 || strlen(wList[2])!=8 || strlen(wList[3])!=4) {
+				printf("Error: Unrecognised Format \n");
+				printf("Usage: \n    addGathering xxx YYYYMMDD hhmm n xxx xxx ...\n");
+				return 0;
+			}
+			return 1;
+		case 4: 
+			if(l!=2) {
+				printf("Error: Unrecognised Format \n");
+				printf("Usage: \n    addBatch [filename]\n");
+				return 0;
+			}
+			return 1;
+		case 5:
+			if(l!=4 || (strcmp(wList[2],"fcfs")!=0 && strcmp(wList[2],"pr")!=0 && strcmp(wList[2],"sjf")!=0)) {
+				printf("Error: Unrecognised Format \n");
+				printf("Usage: \n    printSchd xxx [fcfs/pr/sjf] [filename]\n");
+				return 0;
+			}
+			return 1;
+		case 6: 
+			if(l!=2) {
+				printf("Error: Unrecognised Format \n");
+				printf("Usage: \n    printSchd [filename]\n");
+				return 0;
+			}
+			return 1;
+		default: 
+			printf("Error: Unrecognised Command \n");
+			return 0;
+	}
+}
+/*new function ends*/
+
 void debug_print(Job *head) {
     printf("Debug-log\n");
     while(head) {
@@ -192,15 +237,40 @@ void debug_print(Job *head) {
 
 /*-------Main-------*/
 int main(int argc, char *argv[]) {
+	/*Reference: child 0 means FCFS, child 1 means priority, child 2 means SJF*/
     int loop = 1;
     char cmd[MAX_INPUT_SZ];
-	int userNum=argc-1;
     Job *jobList = NULL;
-	
     readUsers(--argc, ++argv); // Initialize
+	
+     /*new part begin*/
+     /*-----build scheduler (Children Part)-----*/
+    int cToP[5][2], pToC[5][2];
+    int i;
+    for(i = 0; i < 3; i++) {
+		int pid;
+		if (pipe(cToP[i])<0 || pipe(pToC[i])<0) {
+			printf("Pipe creation error. \n");
+			exit(1);
+		}
+		pid = fork();
+		if (pid == 0) {
+			close(pToC[i][1]);
+			close(cToP[i][0]);
+			//To Do: The function of each schdule
+			exit(0);
+		}
+	}
+	/*new part ends*/
+	
+	/*-----Parent Part-----*/
+	for (i = 0; i < 3; i++) {
+		close(pToC[i][0]);
+		close(cToP[i][1]);
+	}
     while(loop) {
         readInput(cmd);
-        handleCmd(cmd, &jobList, &loop, userNum);
+        //handleCmd(cmd, &jobList, &loop);
     }
     printf("-> Bye!!!!!!\n");
     // Debug
