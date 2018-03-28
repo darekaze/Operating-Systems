@@ -192,6 +192,7 @@ void debug_print(Job *head) {
 
 /*-------Main-------*/
 int main(int argc, char *argv[]) {
+    /*Reference: child 0 means FCFS, child 1 means priority, child 2 means SJF*/
     int loop = 1;
     char cmd[MAX_INPUT_SZ];
 	int userNum=argc-1;
