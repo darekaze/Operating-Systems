@@ -67,6 +67,7 @@ int checkType(char *cmd) {
     else if (strcmp(cmd, "addBatch") == 0)      return 4;
     else if (strcmp(cmd, "printSchd") == 0)     return 5;
     else if (strcmp(cmd, "printReport") == 0)   return 6;
+    return -1; // if the input type cannot be recognized
 }
 
 int validateInput(int argc, char **argv,int userNum){
