@@ -44,12 +44,12 @@ void add_fcfsByInput(int, char**, Job**, int);
 
 
 /*-------Main-------*/
-int main(int length, char *wList[]) {
+int main(int argc, char *argv[]) {
     int toChild[N_CHILD][2], toParent[N_CHILD][2];
     pid_t shut_down[N_CHILD];
     int pid, i, j;
 
-    checkUser(--length, ++wList);
+    checkUser(--argc, ++argv);
     // Pipes
     for(i = 0; i < N_CHILD; i++) {
         if(pipe(toChild[i]) < 0 || pipe(toParent[i]) < 0) {
@@ -73,7 +73,7 @@ int main(int length, char *wList[]) {
                     close(toChild[j][1]);
                 } 
             } // read: toChild[i][0] write: toParent[i][1]
-            scheduleHandler(i, toChild[i][0], wList);
+            scheduleHandler(i, toChild[i][0], argv);
 
             close(toChild[i][0]);
             close(toParent[j][1]);
@@ -88,7 +88,7 @@ int main(int length, char *wList[]) {
         for(i = 0; i < N_CHILD; i++) close(toChild[i][0]);
         while(loop) {
             readInput(cmd);
-            handleCmd(cmd, wList, &loop, toChild);
+            handleCmd(cmd, argv, &loop, toChild);
         }
         for(j = 0; j < N_CHILD; j++) close(toChild[j][1]);
     }
