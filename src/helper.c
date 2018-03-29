@@ -34,21 +34,22 @@ int checkType(char*);
 void debug_print(Job*);
 
 void checkUser(int, char *[]);
-int validateInput(int, char **, int);
 void handleCmd(char (*), char *[], int *, int [][2]);
-void addBatchFile(char*, int [][2]);
+void addRequest(char *, char *[], int [][2]);
+int validateAdd(int, char **, char *[]);
+void addBatchFile(char*, char*[], int [][2]);
 
 void scheduleHandler(int, int, char *[]);
 void add_fcfsByInput(int, char**, Job**, int);
 
 
 /*-------Main-------*/
-int main(int argc, char *argv[]) {
+int main(int length, char *wList[]) {
     int toChild[N_CHILD][2], toParent[N_CHILD][2];
     pid_t shut_down[N_CHILD];
     int pid, i, j;
 
-    checkUser(--argc, ++argv);
+    checkUser(--length, ++wList);
     // Pipes
     for(i = 0; i < N_CHILD; i++) {
         if(pipe(toChild[i]) < 0 || pipe(toParent[i]) < 0) {
@@ -72,7 +73,7 @@ int main(int argc, char *argv[]) {
                     close(toChild[j][1]);
                 } 
             } // read: toChild[i][0] write: toParent[i][1]
-            scheduleHandler(i, toChild[i][0], argv);
+            scheduleHandler(i, toChild[i][0], wList);
 
             close(toChild[i][0]);
             close(toParent[j][1]);
@@ -87,7 +88,7 @@ int main(int argc, char *argv[]) {
         for(i = 0; i < N_CHILD; i++) close(toChild[i][0]);
         while(loop) {
             readInput(cmd);
-            handleCmd(cmd, argv, &loop, toChild);
+            handleCmd(cmd, wList, &loop, toChild);
         }
         for(j = 0; j < N_CHILD; j++) close(toChild[j][1]);
     }
@@ -152,46 +153,25 @@ void checkUser(int num, char *users[]) {
     }
 }
 
-int validateInput(int argc, char **argv, int userNum){
-    int tStart = atoi(argv[3]) / 100;
-	if(argc < 5 || argc > 4+userNum) {
-        printf("Error: Unvalid Argument Number\n");
-        return 1;
-    }
-	if(atoi(argv[2]) < 20180401 || atoi(argv[2]) > 20180414){
-		printf("Error: Unvalid Date\n");
-		return 1;
-	}
-	if(tStart < 8 || tStart > 17){
-		printf("Error: Unvalid Starting Time\n");
-		return 1;
-	}
-	if (atoi(argv[4]) < 1 || (atoi(argv[4]) + tStart) > 18){
-		printf("Error: Unvalid Duration\n");
-		return 1;
-	}
-
-    return 0;
-    // TODO: add user validation (i.e. ignored user not in list)
-}
-
 void handleCmd(char (*cmd), char *users[], int *loop, int toChild[][2]) {
     char str[MAX_INPUT_SZ] = "";
-    int i, t;
+    int t;
 
     strcpy(str, cmd);
     strtok(cmd," ");
     t = checkType(cmd);
     switch(t) {
-        case 1: case 2: case 3: case 6:
-            for(i = 0; i < N_CHILD; i++)
-                write(toChild[i][1], str, MAX_INPUT_SZ);
+        case 1: case 2: case 3:
+            addRequest(str, users, toChild);
             break;
         case 4:
-            addBatchFile(str, toChild);
+            addBatchFile(str, users, toChild);
             break;
         case 5:
-            printf("Only need to write to specified scheduler\n");
+            printf("printSchedule: Only need to write to specified scheduler\n");
+            break;
+        case 6:
+            printf("printReport: Take turn to call each scheduler\n");
             break;
         case 0:
             *loop = 0;
@@ -201,11 +181,47 @@ void handleCmd(char (*cmd), char *users[], int *loop, int toChild[][2]) {
     }
 }
 
-void addBatchFile(char *cmd, int toChild[][2]) {
+void addRequest(char *cmd, char *users[], int toChild[][2]) {
+    char str[MAX_INPUT_SZ] = "";
+    char **wList = malloc(sizeof(char*) * 1);
+    int i, l;
+
+    strcpy(str, cmd);
+    strtok(cmd, " ");
+    l = splitString(wList, cmd);
+    if(validateAdd(l, wList, users)) 
+        for(i = 0; i < N_CHILD; i++)
+            write(toChild[i][1], str, MAX_INPUT_SZ);
+}
+
+int validateAdd(int length, char **wList, char *users[]){
+    int tStart = atoi(wList[3]) / 100;
+    int userLen = -1;
+    int ownerValid = 0;
+
+	if(length < 5) printf("Error: Unvalid Argument Number\n");
+    else if(atoi(wList[2]) < 20180401 || atoi(wList[2]) > 20180414) printf("Error: Unvalid Date\n");
+	else if(tStart < 8 || tStart > 17)                              printf("Error: Unvalid Starting Time\n");
+    else if (atoi(wList[4]) < 1 || (atoi(wList[4]) + tStart) > 18)  printf("Error: Unvalid Duration\n");
+    else {
+        /* temp method */
+        while(users[++userLen] != NULL) {
+            if(strcmp(users[userLen], wList[1]) == 0) {
+                printf("ok!\n");
+                ownerValid = 1;
+                break;
+            }
+        }
+        return ownerValid;
+        // TODO: Add check other users validity (consider create a function to do it)
+    }
+    return 0;
+}
+
+void addBatchFile(char *cmd, char *users[], int toChild[][2]) {
     FILE *fp;
     char *line = NULL;
     size_t len = 0;
-    int i;
 
     strtok(cmd, " ");
     line = strtok(NULL, " \n");
@@ -217,15 +233,14 @@ void addBatchFile(char *cmd, int toChild[][2]) {
     while (getline(&line, &len, fp) != -1) {
         if ((strlen(line) > 0) && (line[strlen(line) - 1] == '\n'))
             line[strlen(line) - 1] = '\0';
-        for(i = 0; i < N_CHILD; i++)
-            write(toChild[i][1], line, MAX_INPUT_SZ);
+        addRequest(line, users, toChild);
     }
     fclose(fp);
     if (line) free(line);
 }
 
 /*------------Child_part------------*/
-void scheduleHandler(int schedulerID, int fromParent, char *argv[]) {
+void scheduleHandler(int schedulerID, int fromParent, char *wList[]) {
     int loop = 1;
     Job *jobList = NULL;
 
@@ -242,7 +257,7 @@ void scheduleHandler(int schedulerID, int fromParent, char *argv[]) {
 
         switch(t) {
             case 1: case 2: case 3:
-                // TODO: edit addSession for each scheduler (new function)
+                // TODO:  add each scheduler (new function for caseHandler)
                 printf("scheduler: %s %s %s %s %s\n",wList[0], wList[1], wList[2], wList[3], wList[4]);
                 break;
             case 5:
@@ -262,7 +277,7 @@ void scheduleHandler(int schedulerID, int fromParent, char *argv[]) {
     // free(jobList);
 }
 
-void add_fcfsByInput(int argc, char **argv, Job **head_ref, int t) {
+void add_fcfsByInput(int length, char **wList, Job **head_ref, int t) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
     if (newJob == NULL) {
         printf("Error: Out of memory..");
@@ -271,10 +286,10 @@ void add_fcfsByInput(int argc, char **argv, Job **head_ref, int t) {
 	
     // input data into list
     newJob->ssType = t;
-    strcpy(newJob->owner, argv[1]);
-    newJob->date = atoi(argv[2]);
-    newJob->startTime = atoi(argv[3]) / 100;
-    newJob->endTime = newJob->startTime + atoi(argv[4]);
+    strcpy(newJob->owner, wList[1]);
+    newJob->date = atoi(wList[2]);
+    newJob->startTime = atoi(wList[3]) / 100;
+    newJob->endTime = newJob->startTime + atoi(wList[4]);
     newJob->next = NULL;
 
     if(*head_ref == NULL) {
