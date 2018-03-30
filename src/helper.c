@@ -116,7 +116,7 @@ void readInput(char (*cmd)) {
 }
 
 int splitString(char **wList, char (*p)) {
-    int i, nSpace = 0;
+    int nSpace = 0;
     while(p) {
         wList = realloc(wList, sizeof(char*) * ++nSpace);
         if(wList == NULL)
@@ -166,7 +166,7 @@ void parent_write(char *str, int toChild[][2]) {
 
 void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2]) {
     char str[MAX_INPUT_SZ] = "";
-    int t, i;
+    int t;
 
     strcpy(str, cmd);
     strtok(cmd," ");
@@ -257,12 +257,11 @@ void scheduler_base(int schedulerID, int fromParent, char *wList[]) {
     while(loop) {
         char cmdBuf[MAX_INPUT_SZ] = "";
         char **wList = malloc(sizeof(char*) * 1);
-        char *p;
         int t, l;
 
         read(fromParent, cmdBuf, MAX_INPUT_SZ);
-        p = strtok(cmdBuf, " ");
-        l = splitString(wList, p);
+        strtok(cmdBuf, " ");
+        l = splitString(wList, cmdBuf);
         t = checkType(wList[0]);
 
         switch(t) {
@@ -283,7 +282,7 @@ void scheduler_base(int schedulerID, int fromParent, char *wList[]) {
                 break;
         }
     }
-    debug_print(jobList); // Debug
+    debug_print(jobList);
     free(jobList);
 }
 
