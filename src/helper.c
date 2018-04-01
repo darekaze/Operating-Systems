@@ -24,7 +24,7 @@ typedef struct Job {
     int date; // YYYYMMDD
     int startTime; // hr only
     int endTime; // hr only
-    Extra remark;
+    Extra *remark;
     struct Job *next;
 } Job;
 
@@ -378,6 +378,7 @@ void scheduler_selector(int schedulerID, Job **head_ref, char **wList, int t) {
 }
 
 void scheduler_initJob(Job *newJob, char **wList, int t) {
+    int l = NORMAL_LENGTH -1;
     if (newJob == NULL) {
         printf("Error: Out of memory..");
         exit(1);
@@ -387,8 +388,11 @@ void scheduler_initJob(Job *newJob, char **wList, int t) {
     newJob->date = atoi(wList[2]);
     newJob->startTime = atoi(wList[3]) / 100;
     newJob->endTime = newJob->startTime + atoi(wList[4]);
+
+    newJob->remark = (Extra*)malloc(sizeof(Extra));
+    while(wList[++l] != NULL)
+        addParticipant(&(newJob->remark), wList[l]);
     newJob->next = NULL;
-    // TODO: add other user's who also join this event
 }
 
 void scheduler_sample(Job **head_ref, char **wList, int t) {
