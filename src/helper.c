@@ -6,15 +6,17 @@
 #include <string.h>
 
 #define MAX_INPUT_SZ 128
+#define NORMAL_LENGTH 5
+
 #define CLASSES 1
 #define MEETING 2
 #define GATHERING 3
 #define N_CHILD 2 // How many scheduler
 
-typedef struct extra {
+typedef struct Extra {
     char name[20];
-    struct extra *next;
-} extra;
+    struct Extra *next;
+} Extra;
 
 typedef struct Job {
     int ssType;
@@ -22,7 +24,7 @@ typedef struct Job {
     int date; // YYYYMMDD
     int startTime; // hr only
     int endTime; // hr only
-    extra remark;
+    Extra remark;
     struct Job *next;
 } Job;
 
@@ -31,21 +33,25 @@ void readInput(char (*));
 int splitString(char**, char (*));
 int checkType(char*);
 void debug_print(Job*);
+void freeParticipantList(Extra*);
 
-void parent_checkUser(int, char *[]);
+void parent_checkUserNum(int, char *[]);
 void parent_write(char *, int [][2]);
 void parent_handler(char (*), char *[], int *, int [][2]);
 void parent_request(char *, char *[], int [][2]);
-int parent_validate(int, char **, char *[]);
+int parent_validate(char **, char *[], int);
+int parent_checkUserExist(char **, char* [], int);
+int parent_verifyUser(char *, char* []);
+int parent_checkDuplicate(Extra **, char *);
 void parent_addBatch(char*, char*[], int [][2]);
 
 void scheduler_base(int, int, char *[]);
-void scheduler_initJob(Job *, char **, int, int);
-void scheduler_selector(int, Job **, char **, int, int);
-void scheduler_sample(Job **, char **, int, int);
-void scheduler_fcfs(Job **, char **, int, int);
-void scheduler_priority(Job **, char **, int, int);
-void scheduler_special(Job **, char **, int, int);
+void scheduler_initJob(Job *, char **, int);
+void scheduler_selector(int, Job **, char **, int);
+void scheduler_sample(Job **, char **, int);
+void scheduler_fcfs(Job **, char **, int);
+void scheduler_priority(Job **, char **, int);
+void scheduler_special(Job **, char **, int);
 
 
 /*-------Main-------*/
@@ -54,7 +60,7 @@ int main(int argc, char *argv[]) {
     pid_t shut_down[N_CHILD];
     int pid, i, j;
 
-    parent_checkUser(--argc, ++argv);
+    parent_checkUserNum(--argc, ++argv);
     // Pipes
     for(i = 0; i < N_CHILD; i++) {
         if(pipe(toChild[i]) < 0 || pipe(toParent[i]) < 0) {
@@ -75,7 +81,7 @@ int main(int argc, char *argv[]) {
                 close(toParent[j][0]);
                 if(j != i) {
                     close(toChild[j][0]);
-                    close(toChild[j][1]);
+                    close(toParent[j][1]);
                 } 
             } // read: toChild[i][0] write: toParent[i][1]
             scheduler_base(i, toChild[i][0], argv);
@@ -140,6 +146,40 @@ int checkType(char *cmd) {
     return -1;
 }
 
+void initParticipant(Extra *newUser, char *userName) {
+    if (newUser == NULL) {
+        printf("Error: Out of memory..");
+        exit(1);
+    }
+    strcpy(newUser->name, userName);
+    newUser->next = NULL;
+}
+
+void addParticipant(Extra **head_ref, char *userName) {
+    Extra *temp, *newUser = (Extra*)malloc(sizeof(Extra));
+    
+    initParticipant(newUser, userName); // input data into list
+
+    if(*head_ref == NULL) {
+        *head_ref = newUser;
+    } else {
+        temp = *head_ref;
+        while(temp->next != NULL){
+            temp = temp->next;
+        }
+        temp->next = newUser;
+    }
+}
+
+void freeParticipantList(Extra *head_ref) {
+    Extra *temp;
+    while (head_ref != NULL) {
+       temp = head_ref;
+       head_ref = head_ref->next;
+       free(temp);
+    }
+}
+
 void debug_print(Job *head) {
     printf("Debug-log\n");
     while(head) {
@@ -151,7 +191,7 @@ void debug_print(Job *head) {
 }
 
 /*-------Parent_part-------*/
-void parent_checkUser(int num, char *users[]) {
+void parent_checkUserNum(int num, char *users[]) {
     if(num < 3 || num > 9) {
         printf("You're trolling: Range should be 3~9 users");
         exit(1);
@@ -189,43 +229,85 @@ void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2]) {
             *loop = 0;
             break;
         default:
-            printf("Meh..\n");
+            printf("Meh..parent\n");
+            break;
     }
 }
 
 void parent_request(char *cmd, char *users[], int toChild[][2]) {
     char str[MAX_INPUT_SZ] = "";
     char **wList = malloc(sizeof(char*) * 1);
-    int l;
+    int t;
 
     strcpy(str, cmd);
     strtok(cmd, " ");
-    l = splitString(wList, cmd);
-    if(parent_validate(l, wList, users)) 
+    splitString(wList, cmd);
+    t = checkType(cmd);
+    if((t > 0 && t < 4) && parent_validate(wList, users, t)) 
         parent_write(str,toChild);
 }
 
-int parent_validate(int length, char **wList, char *users[]){
+int parent_validate(char **wList, char *users[], int t) {
     int tStart = atoi(wList[3]) / 100;
-    int userLen = -1;
-    int ownerValid = 0;
+    int length = -1;
 
-	if(length < 5) printf("Error: Unvalid Argument Number\n");
+    while(wList[++length] != NULL) {}
+	if(length < NORMAL_LENGTH) printf("Error: Unvalid Argument Number\n");
     else if(atoi(wList[2]) < 20180401 || atoi(wList[2]) > 20180414) printf("Error: Unvalid Date\n");
 	else if(tStart < 8 || tStart > 17)                              printf("Error: Unvalid Starting Time\n");
     else if (atoi(wList[4]) < 1 || (atoi(wList[4]) + tStart) > 18)  printf("Error: Unvalid Duration\n");
-    else {
-        /* temp method */
-        while(users[++userLen] != NULL) {
-            if(strcmp(users[userLen], wList[1]) == 0) {
-                ownerValid = 1; // printf("ok!\n"); // debug
+    else return parent_checkUserExist(wList, users, t);
+    return 0;
+}
+
+int parent_checkUserExist(char **wList, char* users[], int t) {
+    int ownerValid, usersValid = 1;
+    Extra *usersList = NULL;
+    
+    ownerValid = parent_verifyUser(wList[1], users); // check if owner exist in list
+
+    /* check if participants exists and not repeated */ 
+    if(ownerValid == 1 && t != 1) {
+        int l = NORMAL_LENGTH -1;
+        while(wList[++l] != NULL) {
+            if(strcmp(wList[1], wList[l]) == 0 
+            || parent_verifyUser(wList[l], users) == 0 
+            || parent_checkDuplicate(&usersList, wList[l]) == 0) {
+                usersValid = 0;
                 break;
             }
         }
-        return ownerValid;
-        // TODO: Add check other users validity (consider create a function to do it)
-    }
+        if(l <= NORMAL_LENGTH) usersValid = 0; // no participant means useless
+    } 
+    else if(wList[NORMAL_LENGTH] != NULL) usersValid = 0;
+
+    freeParticipantList(usersList); // free the list
+    return (ownerValid && usersValid);
+}
+
+int parent_verifyUser(char* name, char* users[]) {
+    int userLen = -1;
+    while(users[++userLen] != NULL)
+        if(strcmp(users[userLen], name) == 0) return 1;
     return 0;
+}
+
+int parent_checkDuplicate(Extra **head_ref, char *userName) {
+    Extra *prev, *curr, *newUser = (Extra*)malloc(sizeof(Extra));
+    
+    initParticipant(newUser, userName);
+    if(*head_ref == NULL) {
+        *head_ref = newUser;
+    } else {
+        curr = *head_ref;
+        while(curr != NULL){
+            if(strcmp(curr->name, newUser->name) == 0) return 0;
+            prev = curr;
+            curr = curr->next;
+        }
+        prev->next = newUser;
+    }
+    return 1;
 }
 
 void parent_addBatch(char *cmd, char *users[], int toChild[][2]) {
@@ -257,17 +339,17 @@ void scheduler_base(int schedulerID, int fromParent, char *wList[]) {
     while(loop) {
         char cmdBuf[MAX_INPUT_SZ] = "";
         char **wList = malloc(sizeof(char*) * 1);
-        int t, l;
+        int t;
 
         read(fromParent, cmdBuf, MAX_INPUT_SZ);
         strtok(cmdBuf, " ");
-        l = splitString(wList, cmdBuf);
+        splitString(wList, cmdBuf);
         t = checkType(wList[0]);
 
         switch(t) {
             case 1: case 2: case 3:
                 // TODO: add each scheduler (new function for caseHandler)
-                scheduler_selector(schedulerID,&jobList,wList,l,t);
+                scheduler_selector(schedulerID, &jobList, wList, t);
                 break;
             case 5:
                 printf("for a user's schedule\n");
@@ -278,7 +360,7 @@ void scheduler_base(int schedulerID, int fromParent, char *wList[]) {
             case 0:
                 loop = 0; break;
             default:
-                printf("Meh..\n");
+                printf("Meh..child\n"); loop = 0;
                 break;
         }
     }
@@ -286,17 +368,17 @@ void scheduler_base(int schedulerID, int fromParent, char *wList[]) {
     free(jobList);
 }
 
-void scheduler_selector(int schedulerID, Job **head_ref, char **wList, int length, int t) {
+void scheduler_selector(int schedulerID, Job **head_ref, char **wList, int t) {
     switch(schedulerID) {
-        case 0: scheduler_sample(head_ref, wList, length, t); break;
-        case 1: scheduler_fcfs(head_ref, wList, length, t); break;
-        case 2: scheduler_priority(head_ref, wList, length, t); break;
-        case 3: scheduler_special(head_ref, wList, length, t); break;
+        case 0: scheduler_sample(head_ref, wList, t); break;
+        case 1: scheduler_fcfs(head_ref, wList, t); break;
+        case 2: scheduler_priority(head_ref, wList, t); break;
+        case 3: scheduler_special(head_ref, wList, t); break;
         default: break;
     }
 }
 
-void scheduler_initJob(Job *newJob, char **wList, int length, int t) {
+void scheduler_initJob(Job *newJob, char **wList, int t) {
     if (newJob == NULL) {
         printf("Error: Out of memory..");
         exit(1);
@@ -310,10 +392,10 @@ void scheduler_initJob(Job *newJob, char **wList, int length, int t) {
     // TODO: add other user's who also join this event
 }
 
-void scheduler_sample(Job **head_ref, char **wList, int length, int t) {
+void scheduler_sample(Job **head_ref, char **wList, int t) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
     
-    scheduler_initJob(newJob, wList, length, t); // input data into list
+    scheduler_initJob(newJob, wList, t); // input data into list
 
     /* ---Start implement how to insert your schedule--- */
     if(*head_ref == NULL) {
@@ -333,14 +415,14 @@ void scheduler_sample(Job **head_ref, char **wList, int length, int t) {
 }
 
 /* TODO: add each type of scheduler (use scheduler_fcfs_sample() as your template) */
-void scheduler_fcfs(Job **head_ref, char **wList, int length, int t) {
+void scheduler_fcfs(Job **head_ref, char **wList, int t) {
 
 }
 
-void scheduler_priority(Job **head_ref, char **wList, int length, int t) {
+void scheduler_priority(Job **head_ref, char **wList, int t) {
 
 }
 
-void scheduler_special(Job **head_ref, char **wList, int length, int t) {
+void scheduler_special(Job **head_ref, char **wList, int t) {
 
 }

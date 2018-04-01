@@ -1,0 +1,5 @@
+addClass john 20180401 1300 2 mary
+addMeeting john 20180402 1300 2 mary mary
+addGathering mary 20180403 1300 2 mary john
+addMeeting mary 20180404 1300 2
+addGathering mary 20180405 1300 2
