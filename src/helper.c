@@ -158,8 +158,7 @@ void initParticipant(Extra *newUser, char *userName) {
 void addParticipant(Extra **head_ref, char *userName) {
     Extra *temp, *newUser = (Extra*)malloc(sizeof(Extra));
     
-    initParticipant(newUser, userName); // input data into list
-
+    initParticipant(newUser, userName);
     if(*head_ref == NULL) {
         *head_ref = newUser;
     } else {
