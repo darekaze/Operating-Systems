@@ -11,7 +11,7 @@
 #define CLASSES 1
 #define MEETING 2
 #define GATHERING 3
-#define N_CHILD 2 // How many scheduler
+#define N_CHILD 4 // How many scheduler
 
 typedef struct Extra {
     char name[20];
@@ -37,7 +37,7 @@ void freeParticipantList(Extra*);
 
 void parent_checkUserNum(int, char *[]);
 void parent_write(char *, int [][2]);
-void parent_handler(char (*), char *[], int *, int [][2]);
+void parent_handler(char (*), char *[], int *, int [][2], int [][2]);
 void parent_request(char *, char *[], int [][2]);
 int parent_validate(char **, char *[], int);
 int parent_checkUserExist(char **, char* [], int);
@@ -46,7 +46,7 @@ int parent_verifyParticipant(char **, char *[]);
 int parent_checkDuplicate(Extra **, char *);
 void parent_addBatch(char*, char*[], int [][2]);
 
-void scheduler_base(int, int, char *[]);
+void scheduler_base(int, int, int, char *[]);
 void scheduler_initJob(Job *, char **, int);
 void scheduler_selector(int, Job **, char **, int);
 void scheduler_sample(Job **, char **, int);
@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
                     close(toParent[j][1]);
                 } 
             } // read: toChild[i][0] write: toParent[i][1]
-            scheduler_base(i, toChild[i][0], argv);
+            scheduler_base(i, toChild[i][0], toParent[i][1] argv);
 
             close(toChild[i][0]);
             close(toParent[j][1]);
@@ -97,12 +97,18 @@ int main(int argc, char *argv[]) {
     if(pid > 0) { /* parent */
         int loop = 1;
         char cmd[MAX_INPUT_SZ];
-        for(i = 0; i < N_CHILD; i++) close(toChild[i][0]);
+        for(i = 0; i < N_CHILD; i++) { 
+			close(toChild[i][0]);
+			close(toParent[i][1]);
+		}
         while(loop) {
             readInput(cmd);
             parent_handler(cmd, argv, &loop, toChild);
         }
-        for(j = 0; j < N_CHILD; j++) close(toChild[j][1]);
+        for(j = 0; j < N_CHILD; j++) { 
+			close(toChild[j][1]);
+			close(toParent[j][0]);
+		}
     }
     /* prevent zombie */
     for(i = 0; i < N_CHILD; i++)
@@ -204,7 +210,7 @@ void parent_write(char *str, int toChild[][2]) {
         write(toChild[i][1], str, MAX_INPUT_SZ);
 }
 
-void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2]) {
+void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int toParent[][2]) {
     char str[MAX_INPUT_SZ] = "";
     int t;
 
@@ -229,21 +235,26 @@ void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2]) {
             *loop = 0;
             break;
         default:
-            printf("Meh..parent\n");
+            printf("Unrecognized command.\n");
             break;
     }
 }
 
 void parent_request(char *cmd, char *users[], int toChild[][2]) {
-    char str[MAX_INPUT_SZ] = "";
-    char **wList = malloc(sizeof(char*) * 1);
+    char str[MAX_INPUT_SZ];
+	memset(str,0,sizeof(str));
+    char **wList = (char*)malloc(sizeof(char*) * 1);
     int t;
 
     strcpy(str, cmd);
     strtok(cmd, " ");
-    splitString(wList, cmd);
+    int n = splitString(wList, cmd);
     t = checkType(cmd);
-    if((t > 0 && t < 4) && parent_validate(wList, users, t)) 
+	if((t == 1 && n!=5) || (t != 1 && n <= 5)) {
+		printf("Error: Invalid format. \n");
+		return ;
+	}
+    if(parent_validate(wList, users, t)) 
         parent_write(str,toChild);
 }
 
@@ -252,11 +263,11 @@ int parent_validate(char **wList, char *users[], int t) {
     int cStart = atoi(wList[3]) % 100;
     int length = -1;
 
-    while(wList[++length] != NULL) {}
-	if(length < NORMAL_LENGTH) printf("Error: Unvalid Argument Number\n");
-    else if(atoi(wList[2]) < 20180401 || atoi(wList[2]) > 20180414) printf("Error: Unvalid Date\n");
-	else if(cStart != 0 || (tStart < 8 || tStart > 17))             printf("Error: Unvalid Starting Time\n");
-    else if (atoi(wList[4]) < 1 || (atoi(wList[4]) + tStart) > 18)  printf("Error: Unvalid Duration\n");
+    while(wList[++length] != NULL);
+	if(length < NORMAL_LENGTH) printf("Error: Invalid Argument Number\n");
+    else if(atoi(wList[2]) < 20180401 || atoi(wList[2]) > 20180414) printf("Error: Invalid Date\n");
+	else if(cStart != 0 || (tStart < 8 || tStart > 17))             printf("Error: Invalid Starting Time\n");
+    else if (atoi(wList[4]) < 1 || (atoi(wList[4]) + tStart) > 18)  printf("Error: Invalid Duration\n");
     else return parent_checkUserExist(wList, users, t);
     return 0;
 }
@@ -335,7 +346,7 @@ void parent_addBatch(char *cmd, char *users[], int toChild[][2]) {
 }
 
 /*------------Child_part------------*/
-void scheduler_base(int schedulerID, int fromParent, char *wList[]) {
+void scheduler_base(int schedulerID, int fromParent, int toParent, char *wList[]) {
     int loop = 1;
     Job *jobList = NULL;
 
