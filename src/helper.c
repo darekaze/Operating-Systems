@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
                     close(toParent[j][1]);
                 } 
             } // read: toChild[i][0] write: toParent[i][1]
-            scheduler_base(i, toChild[i][0], toParent[i][1] argv);
+            scheduler_base(i, toChild[i][0], toParent[i][1], argv);
 
             close(toChild[i][0]);
             close(toParent[j][1]);
