@@ -46,7 +46,7 @@ int parent_verifyParticipant(char **, char *[]);
 int parent_checkDuplicate(Extra **, char *);
 void parent_addBatch(char*, char*[], int [][2]);
 
-void scheduler_base(int, int, int, char *[]);
+void scheduler_base(int, int, int, int, char *[]);
 void scheduler_initJob(Job *, char **, int);
 void scheduler_selector(int, Job **, char **, int);
 void scheduler_sample(Job **, char **, int);
@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
                     close(toParent[j][1]);
                 } 
             } // read: toChild[i][0] write: toParent[i][1]
-            scheduler_base(i, toChild[i][0], toParent[i][1], argv);
+            scheduler_base(i, toChild[i][0], toParent[i][1], argc, argv);
 
             close(toChild[i][0]);
             close(toParent[j][1]);
@@ -346,7 +346,7 @@ void parent_addBatch(char *cmd, char *users[], int toChild[][2]) {
 }
 
 /*------------Child_part------------*/
-void scheduler_base(int schedulerID, int fromParent, int toParent, char *wList[]) {
+void scheduler_base(int schedulerID, int fromParent, int toParent, int users, char *userList[]) {
     int loop = 1;
     Job *jobList = NULL;
 
