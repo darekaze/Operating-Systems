@@ -3,3 +3,6 @@ addMeeting john 20180402 1300 2 mary mary
 addGathering mary 20180403 1300 2 mary john
 addMeeting mary 20180404 1300 2
 addGathering mary 20180405 1300 2
+addClass john 20180402 1330 1
+addClass may 20180404 1200 1
+addClass mary 20180331 1300 2

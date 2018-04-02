@@ -42,6 +42,7 @@ void parent_request(char *, char *[], int [][2]);
 int parent_validate(char **, char *[], int);
 int parent_checkUserExist(char **, char* [], int);
 int parent_verifyUser(char *, char* []);
+int parent_verifyParticipant(char **, char *[]);
 int parent_checkDuplicate(Extra **, char *);
 void parent_addBatch(char*, char*[], int [][2]);
 
@@ -248,12 +249,13 @@ void parent_request(char *cmd, char *users[], int toChild[][2]) {
 
 int parent_validate(char **wList, char *users[], int t) {
     int tStart = atoi(wList[3]) / 100;
+    int cStart = atoi(wList[3]) % 100;
     int length = -1;
 
     while(wList[++length] != NULL) {}
 	if(length < NORMAL_LENGTH) printf("Error: Unvalid Argument Number\n");
     else if(atoi(wList[2]) < 20180401 || atoi(wList[2]) > 20180414) printf("Error: Unvalid Date\n");
-	else if(tStart < 8 || tStart > 17)                              printf("Error: Unvalid Starting Time\n");
+	else if(cStart != 0 || (tStart < 8 || tStart > 17))             printf("Error: Unvalid Starting Time\n");
     else if (atoi(wList[4]) < 1 || (atoi(wList[4]) + tStart) > 18)  printf("Error: Unvalid Duration\n");
     else return parent_checkUserExist(wList, users, t);
     return 0;
@@ -261,26 +263,13 @@ int parent_validate(char **wList, char *users[], int t) {
 
 int parent_checkUserExist(char **wList, char* users[], int t) {
     int ownerValid, usersValid = 1;
-    Extra *usersList = NULL;
-    
-    ownerValid = parent_verifyUser(wList[1], users); // check if owner exist in list
+    /* check owner's and participants' names and avoid duplicate */
+    ownerValid = parent_verifyUser(wList[1], users);
+    if(ownerValid == 1 && t != 1) 
+        usersValid = parent_verifyParticipant(wList, users);
+    else if(wList[NORMAL_LENGTH] != NULL) 
+        usersValid = 0;
 
-    /* check if participants exists and not repeated */ 
-    if(ownerValid == 1 && t != 1) {
-        int l = NORMAL_LENGTH -1;
-        while(wList[++l] != NULL) {
-            if(strcmp(wList[1], wList[l]) == 0 
-            || parent_verifyUser(wList[l], users) == 0 
-            || parent_checkDuplicate(&usersList, wList[l]) == 0) {
-                usersValid = 0;
-                break;
-            }
-        }
-        if(l <= NORMAL_LENGTH) usersValid = 0; // no participant means useless
-    } 
-    else if(wList[NORMAL_LENGTH] != NULL) usersValid = 0;
-
-    freeParticipantList(usersList); // free the list
     return (ownerValid && usersValid);
 }
 
@@ -289,6 +278,21 @@ int parent_verifyUser(char* name, char* users[]) {
     while(users[++userLen] != NULL)
         if(strcmp(users[userLen], name) == 0) return 1;
     return 0;
+}
+
+int parent_verifyParticipant(char **wList, char* users[]) {
+    int l = NORMAL_LENGTH -1;
+    int res = 1;
+    Extra *usersList = NULL;
+    while(wList[++l] != NULL) {
+        if(strcmp(wList[1], wList[l]) == 0 
+        || parent_verifyUser(wList[l], users) == 0 
+        || parent_checkDuplicate(&usersList, wList[l]) == 0)
+            res = 0;
+    }
+    if(l <= NORMAL_LENGTH) res = 0; // no participant means useless
+    freeParticipantList(usersList); // free the list
+    return res;
 }
 
 int parent_checkDuplicate(Extra **head_ref, char *userName) {
