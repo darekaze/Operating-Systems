@@ -250,10 +250,6 @@ void parent_request(char *cmd, char *users[], int toChild[][2]) {
     strtok(cmd, " ");
     int n = splitString(wList, cmd);
     t = checkType(cmd);
-	if((t == 1 && n!=5) || (t != 1 && n <= 5)) {
-		printf("Error: Invalid format. \n");
-		return ;
-	}
     if(parent_validate(wList, users, t)) 
         parent_write(str,toChild);
 }
