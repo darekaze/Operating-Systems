@@ -1,6 +1,19 @@
 #include<stdio.h>
 #include<string.h>
 
+typedef struct session{
+	char begin[80], end[80];
+}session;
+
+int cmp(const void *a, const void *b)
+{
+	char *c;
+	strcpy(c, ((struct session *)a)->begin);
+	char *d;
+	strcpy(d, ((struct session *)b)->begin);
+	return strcmp(c,d);
+}
+
 /*Red Black Tree*/
 typedef struct rbtnode{
     int color; //Red: 0 Black: 1
@@ -96,7 +109,7 @@ char* maxstr(char *a, char *b)
 	return ans;
 }
 
-void conflict(rbtnode *node, char *begin, char *end, char *period)
+void conflict(rbtnode *node, char *begin, char *end, int *n, session a[])
 {
 	if(strcmp(begin,end)<=0) return ;
 	rbtnode *cur=node;
@@ -108,12 +121,11 @@ void conflict(rbtnode *node, char *begin, char *end, char *period)
             cur=cur->right;
         }
         else{
-			strcat(period, maxstr(begin,cur->begin));
-			strcat(period, " ");
-			strcat(period, minstr(end,cur->end));
-			strcat(period, " ");
-			conflict(cur, begin, maxstr(begin, cur->begin), period);
-			conflict(cur, minstr(end, cur->end), end, period);
+			strcpy(a[*n]->begin, maxstr(begin,cur->begin));
+			strcpy(a[*n]->end, minstr(end,cur->end));
+			*n=*n+1;
+			conflict(cur, begin, maxstr(begin, cur->begin), n, a);
+			conflict(cur, minstr(end, cur->end), end, n, a);
 			return ;
 		}
 	}
@@ -226,9 +238,25 @@ void grandchildProcess(int cToG[2], int gToC[2])
             write(gToC[1],"Y",3); //I have spare time to join
         }
         else{
+			int n=0;
+			session a[1000];
+			conflict(root, begin, end, &n, a);
+			qsort(a,n,sizeof(a[0]),cmp);
 			char period[80];
 			memset(period,0,sizeof(period));
-			conflict(root, begin, end, period);
+			strcat(period, a[0]->begin);
+			strcat(period, " ");
+			int i;
+			for(i=0;i<n-1;i++){
+				if(strcmp(a[i]->end,a[i+1]->begin)!=0){
+					strcat(period, a[i]->end);
+					strcat(period, " ");
+					strcat(period, a[i+1]->begin);
+					strcat(period, " ");
+				}
+			}
+			strcat(period, a[n-1]->end);
+			strcat(period, " ");
 			char con[90];
 			sprintf(con,"N %s",period);
 			write(gToC[1],con,strlen(con)); //I do not have time
