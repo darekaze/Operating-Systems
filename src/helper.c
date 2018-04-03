@@ -360,7 +360,6 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
 
         switch(t) {
             case 1: case 2: case 3:
-                // TODO: add each scheduler (new function for caseHandler)
                 scheduler_selector(schedulerID, &jobList, wList, t);
                 break;
             case 5:
@@ -431,12 +430,57 @@ void scheduler_sample(Job **head_ref, char **wList, int t) {
 }
 
 /* TODO: add each type of scheduler (use scheduler_fcfs_sample() as your template) */
-void scheduler_fcfs(Job **head_ref, char **wList, int t) {
 
+void scheduler_fcfs(Job **head_ref, char **wList, int t) {
+	Job *temp, *newJob = (Job*)malloc(sizeof(Job));
+    
+    scheduler_initJob(newJob, wList, t);
+    if(*head_ref == NULL) {
+        *head_ref = newJob;
+    } else {
+        temp = *head_ref;
+        Job *pre = (Job*)malloc(sizeof(Job));
+        
+        while(newJob->date > temp->date || 
+          (newJob->date == temp->date && 
+          newJob->startTime >= temp->startTime)){
+        	if (temp->next == NULL) break;
+        	pre=temp;
+            temp = temp->next;
+        }
+        if (temp == *head_ref) {
+			*head_ref=newJob;
+			newJob->next=temp;
+		}
+		else if (temp->next == NULL && 
+          !(newJob->date > temp->date || 
+          (newJob->date == temp->date && 
+          newJob->startTime >= temp->startTime))){
+			  temp->next = newJob;
+		}
+		else{
+			pre->next=newJob;
+			newJob->next=temp;
+		}
+    }
 }
 
 void scheduler_priority(Job **head_ref, char **wList, int t) {
+	Job *temp, *newJob = (Job*)malloc(sizeof(Job));
+    
+    scheduler_initJob(newJob, wList, t); // input data 
 
+    if(*head_ref == NULL || (*head_ref)->ssType > newJob->ssType) {
+        newJob->next = *head_ref;
+        *head_ref = newJob;
+    } else {
+        temp = *head_ref;
+        while(temp->next != NULL && temp->next->ssType <= newJob->ssType){
+            temp = temp->next;
+        }
+        newJob->next = temp->next;
+        temp->next = newJob;
+    }
 }
 
 void scheduler_special(Job **head_ref, char **wList, int t) {

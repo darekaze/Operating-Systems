@@ -4,6 +4,21 @@
 1. 若要中途离开，离开时间不应超过总时长的一半
 2. 在任何时间内参与总人数都需超过一半*/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <string.h>
+
+#define MAX_INPUT_SZ 128
+#define NORMAL_LENGTH 5
+
+#define CLASSES 1
+#define MEETING 2
+#define GATHERING 3
+#define N_CHILD 4 // How many scheduler
+
 typedef struct extra {
     char name[20];
     struct extra *next;
@@ -97,7 +112,7 @@ void rescheduler(char *jobList, char *acceptList, char *rejectList, int users, c
 		sprintf(se,"%s %s",dateToString(cur->date, cur->startTime),dateToString(cur->date, cur->endTime));
 		int userId[20];
 		userId[0]=findUser(cur->owner, users, userList);
-		extra p=cur->remark;
+		extra *p= cur->remark;
 		int j=1;
 		while(p!=NULL){
 			userId[j++]=findUser(p->name, users, userList);

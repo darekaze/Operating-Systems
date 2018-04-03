@@ -4,3 +4,12 @@ addClass mary 20180401 0900 3
 addClass amy 20180403 1200 4
 addMeeting amy 20180403 1600 2 john mary
 addGathering john 20180404 1300 2 mary amy
+addClass mary 20180401 0900 1
+addClass john 20180401 1000 3
+addClass amy 20180401 1100 3
+addClass mary 20180402 0900 2
+addClass mary 20180402 1500 3
+addMeeting amy 20180404 1300 2 john mary
+addMeeting john 20180407 1000 2 mary
+addMeeting amy 20180408 1600 2 john
+addMeeting mary 20180409 1400 2 amy john
