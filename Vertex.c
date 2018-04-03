@@ -10,6 +10,7 @@
 #define CLASSES 1
 #define MEETING 2
 #define GATHERING 3
+#define NORMAL_LENGTH 5
 #define N_CHILD 6 // How many scheduler
 
 typedef struct extra {
