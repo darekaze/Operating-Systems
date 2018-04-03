@@ -15,6 +15,7 @@
 
 typedef struct Extra {
     char name[20];
+	char note[100];
     struct Extra *next;
 } Extra;
 
@@ -159,6 +160,7 @@ void initParticipant(Extra *newUser, char *userName) {
         exit(1);
     }
     strcpy(newUser->name, userName);
+	memset(newUser->note, 0, sizeof(newUser->note));
     newUser->next = NULL;
 }
 
