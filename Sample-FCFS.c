@@ -182,7 +182,7 @@ void scheduler_fcfs(Job *head, char **wList, int length, int t) {
 	else{
 		Job *last=NULL;
 		Job *cur=head;
-		while(cur != NULL && (newJob->date > cur->date) || (newJob->date == cur->date && newJob->startTime >= cur->date)) {
+		while(cur != NULL && (newJob->date > cur->date) || (newJob->date == cur->date && newJob->startTime >= cur->startTime)) {
 			last=cur;
 			cur=cur->next;
 		}
