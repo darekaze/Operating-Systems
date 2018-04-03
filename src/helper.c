@@ -434,58 +434,53 @@ void scheduler_sample(Job **head_ref, char **wList, int t) {
 void scheduler_fcfs(Job **head_ref, char **wList, int t) {
 	Job *temp, *newJob = (Job*)malloc(sizeof(Job));
     
-    scheduler_initJob(newJob, wList, t); // input data 
-
+    scheduler_initJob(newJob, wList, t);
     if(*head_ref == NULL) {
         *head_ref = newJob;
     } else {
         temp = *head_ref;
-        while(newJob->date > temp->date || (newJob->date == temp->date && newJob->startTime > temp->startTime)){
+        Job *pre = (Job*)malloc(sizeof(Job));
+        
+        while(newJob->date > temp->date || 
+          (newJob->date == temp->date && 
+          newJob->startTime >= temp->startTime)){
         	if (temp->next == NULL) break;
+        	pre=temp;
             temp = temp->next;
         }
-        if (temp->next == NULL){
-        	temp->next = newJob;
-		}
-		else if (temp == *head_ref) {
-			*head_ref = newJob;
+        if (temp == *head_ref) {
+			*head_ref=newJob;
 			newJob->next=temp;
 		}
-		else{
-			newJob->next=temp->next;
-			temp->next = newJob;
+		else if (temp->next == NULL && 
+          !(newJob->date > temp->date || 
+          (newJob->date == temp->date && 
+          newJob->startTime >= temp->startTime))){
+			  temp->next = newJob;
 		}
-        
+		else{
+			pre->next=newJob;
+			newJob->next=temp;
+		}
     }
-
 }
 
 void scheduler_priority(Job **head_ref, char **wList, int t) {
-	// Job *temp, *newJob = (Job*)malloc(sizeof(Job));
+	Job *temp, *newJob = (Job*)malloc(sizeof(Job));
     
-    // scheduler_initJob(newJob, wList, t); // input data 
+    scheduler_initJob(newJob, wList, t); // input data 
 
-    // if(*head_ref == NULL) {
-    //     *head_ref = newJob;
-    // } else {
-    //     temp = *head_ref;
-    //     while(temp->next != NULL && newJob->ssType > temp->ssType){
-    //         temp = temp->next;
-    //     }
-    //     if (temp->next == NULL){
-    //     	temp->next = newJob;
-	// 	}
-	// 	else if (temp == *head_ref) {
-	// 		head_ref=&newJob;
-	// 		newJob->next=temp;
-	// 	}
-	// 	else{
-	// 		newJob->next=temp->next;
-	// 		temp->next = newJob;
-	// 	}
-        
-    // }
-	
+    if(*head_ref == NULL || (*head_ref)->ssType > newJob->ssType) {
+        newJob->next = *head_ref;
+        *head_ref = newJob;
+    } else {
+        temp = *head_ref;
+        while(temp->next != NULL && temp->next->ssType <= newJob->ssType){
+            temp = temp->next;
+        }
+        newJob->next = temp->next;
+        temp->next = newJob;
+    }
 }
 
 void scheduler_special(Job **head_ref, char **wList, int t) {
