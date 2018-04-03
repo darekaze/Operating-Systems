@@ -226,11 +226,8 @@ void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int
         case 4:
             parent_addBatch(str, users, toChild);
             break;
-        case 5:
-            printf("printSchedule: Only need to write to specified scheduler\n");
-            break;
-        case 6:
-            printf("printReport: Take turn to call each scheduler\n");
+        case 5: case 6: 
+            parent_write(str, toChild);
             break;
         case 0:
             parent_write(str, toChild);
@@ -363,15 +360,15 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
                 scheduler_selector(schedulerID, &jobList, wList, t);
                 break;
             case 5:
-                printf("for a user's schedule\n");
+                printf("for a user's schedule\n"); // TODO: you know what to do
                 break;
             case 6:
-                printf("for a report of all users' schedule\n");
+                printf("for a report of all users' schedule\n"); // Same
                 break;
             case 0:
                 loop = 0; break;
             default:
-                printf("Meh..child\n"); loop = 0;
+                printf("Meh..child\n"); // loop = 0;
                 break;
         }
     }
