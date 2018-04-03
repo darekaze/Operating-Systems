@@ -172,25 +172,31 @@ void scheduler_initJobNode(Job *newJob, char **wList, int t) {
     newJob->next = NULL;
 }
 
-void scheduler_fcfs(Job *head, char **wList, int length, int t) {
+void add_fcfs(Job *head, Job *node)
+{
 	//add to the linked list based on the time order
-    Job *newJob = (Job *)malloc(sizeof(Job));
-    scheduler_initJob(newJob, wList, t);
 	if(head == NULL) {
-		head=newJob;
+		head=node;
 	}
 	else{
 		Job *last=NULL;
 		Job *cur=head;
-		while(cur != NULL && (newJob->date > cur->date) || (newJob->date == cur->date && newJob->startTime >= cur->startTime)) {
+		while(cur != NULL && (node->date > cur->date) || (node->date == cur->date && node->startTime >= cur->startTime)) {
 			last=cur;
 			cur=cur->next;
 		}
 		if(last!=NULL){
-			last->next=newJob;
+			last->next=node;
 		}
-		newJob->cur=cur;
+		node->cur=cur;
 	}
+}
+
+void scheduler_fcfs(Job *head, char **wList, int length, int t) {
+	
+    Job *newJob = (Job *)malloc(sizeof(Job));
+    scheduler_initJob(newJob, wList, t);
+	add_fcfs(head, newJob);
 }
 
 
