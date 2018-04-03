@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
 		}
         while(loop) {
             readInput(cmd);
-            parent_handler(cmd, argv, &loop, toChild);
+            parent_handler(cmd, argv, &loop, toChild, toParent);
         }
         for(j = 0; j < N_CHILD; j++) { 
 			close(toChild[j][1]);
@@ -243,7 +243,7 @@ void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int
 void parent_request(char *cmd, char *users[], int toChild[][2]) {
     char str[MAX_INPUT_SZ];
 	memset(str,0,sizeof(str));
-    char **wList = (char*)malloc(sizeof(char*) * 1);
+    char **wList = malloc(sizeof(char*) * 1);
     int t;
 
     strcpy(str, cmd);
