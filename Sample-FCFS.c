@@ -14,6 +14,7 @@
 
 typedef struct extra {
     char name[20];
+	char note[100];
     struct extra *next;
 } extra;
 
@@ -69,6 +70,7 @@ void initParticipant(Extra *newUser, char *userName) {
         exit(1);
     }
     strcpy(newUser->name, userName);
+	memset(newUser->note, 0, sizeof(newUser->note));
     newUser->next = NULL;
 }
 
@@ -111,7 +113,6 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
     int loop = 1;
 	Job *jobList = NULL;
 
-    int i;
 
 	while (loop) {
 		char cmdBuf[MAX_INPUT_SZ] = "";
@@ -122,16 +123,18 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
 		strtok(cmdBuf, " ");
 		l = splitString(wList, cmdBuf);
 		t = checkType(wList[0]);
-
+		
+		
 		switch (t) {
 			case 1: case 2: case 3:
-				scheduler_selector(i, jobList, wList, l, t);
+				scheduler_selector(schedulerID, jobList, wList, l, t);
 				break;
-			case 5:
-				printSchd(i, &acceptList, wList, l, t);
+			case 5://example
+				printSchd(schedulerID, jobList, users, userList); 
+				write(toParent, "finish", MAX_INPUT_SZ);
 				break;
 			case 6:
-				printRepo(i, &acceptList, &rejectList, wList, l, t);
+				printRepo(schedulerID, &acceptList, &rejectList, wList, l, t);
 				break;
 			case 0:
 				loop = 0;
@@ -169,6 +172,10 @@ void scheduler_initJobNode(Job *newJob, char **wList, int t) {
     newJob->date = atoi(wList[2]);
     newJob->startTime = atoi(wList[3]) / 100;
     newJob->endTime = newJob->startTime + atoi(wList[4]);
+	
+	newJob->remark = (Extra*)malloc(sizeof(Extra));
+    while(wList[++l] != NULL)
+        addParticipant(&(newJob->remark), wList[l]);
     newJob->next = NULL;
 }
 
@@ -207,44 +214,6 @@ void scheduler_fcfs(Job *head, char **wList, int length, int t) {
 
 
 
-
-
-
-
-
-
-
-
-
-void scheduler_sample(Job **head_ref, Job **achead_ref, Job **rehaead_ref, char **wList, int length, int t) {
-    Job *temp, *newJob = (Job*)malloc(sizeof(Job));
-
-    scheduler_initJob(newJob, wList, length, t); // input data into list
-
-    /* ---Start implement how to insert your schedule--- */
-    if(*head_ref == NULL) {
-        *head_ref = newJob;
-    } else {
-        temp = *head_ref;
-        while(temp->next != NULL){
-            temp = temp->next;
-        }
-        temp->next = newJob;
-    }
-    /* ---end here--- */
-
-    // Just for debug
-    // printf("%d %s %d %d %d\n",
-    //         newJob->ssType, newJob->owner, newJob->date, newJob->startTime, newJob->endTime);
-}
-
-void scheduler_priority(Job **head_ref, Job **achead_ref, Job **rehaead_ref, char **wList, int length, int t) {
-
-}
-
-void scheduler_special(Job **head_ref, Job **achead_ref, Job **rehaead_ref, char **wList, int length, int t) {
-
-}
 
 //print the schedule
 void printSchd(int schedulerID, Job **head_ref, char **wList, int length, int t){
