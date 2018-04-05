@@ -485,12 +485,9 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
         int t;
 
         read(fromParent, cmdBuf, MAX_INPUT_SZ);
-		printf("S %d: from parent info [%s]\n", schedulerID, cmdBuf);
         strtok(cmdBuf, " ");
-        strcpy(ty, cmdBuf);
         splitString(wList, cmdBuf);
-        printf("dafaq %s\n", ty);
-        printf("dafkk %d\n", t);
+        t = checkType(wList[0]);
 		switch(t) {
             case 1: case 2: case 3:
                 scheduler_selector(schedulerID, &jobList, wList, t);
