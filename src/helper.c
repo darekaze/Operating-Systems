@@ -226,8 +226,16 @@ void freeParticipantList(Extra *head_ref) {
     }
 }
 
+void freeJobList(Job *head_ref) {
+    Job *temp;
+    while (head_ref != NULL) {
+       temp = head_ref;
+       head_ref = head_ref->next;
+       free(temp);
+    }
+}
+
 void debug_print(Job *head) {
-    printf("Debug-log\n");
     while(head) {
         printf("%d %s %d %d %d\n", 
             head->ssType, head->owner, head->date, head->startTime, head->endTime);
@@ -237,12 +245,16 @@ void debug_print(Job *head) {
 }
 
 void addToList(Job **head, Job *node) {
+    printf("child: i am writing to list\n");
     if(*head == NULL) {
+        printf("child: the head is null\n");
         *head=node;
     }
     else{
+        printf("child: the head is not null\n");
         Job *cur=*head;
         while(cur->next != NULL) {
+            //printf("child: ppp %s\n", cur->owner);
             cur=cur->next;
         }
         cur->next=node;
@@ -345,8 +357,7 @@ void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int
         case 0: 
             parent_write(str, toChild); *loop = 0;  break;
         default:
-            printf("Unrecognized command.\n");
-            break;
+            printf("Unrecognized command.\n");      break;
     }
 }
 
@@ -362,6 +373,7 @@ void parent_request(char *cmd, char *users[], int toChild[][2]) {
     t = checkType(cmd);
     if(parent_validate(wList, users, t)) 
         parent_write(str,toChild);
+    free(wList);
 }
 
 int parent_validate(char **wList, char *users[], int t) {
@@ -534,7 +546,7 @@ void scheduler_initJob(Job *newJob, char **wList, int t) {
     newJob->startTime = atoi(wList[3]) / 100;
     newJob->endTime = newJob->startTime + atoi(wList[4]);
 
-    newJob->remark = (Extra*)malloc(sizeof(Extra));
+    newJob->remark = NULL;
     while(wList[++l] != NULL)
         addParticipant(&(newJob->remark), wList[l]);
     newJob->next = NULL;
@@ -609,10 +621,11 @@ void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], 
         printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users);
 		printf("S %d: Finished. \n", schedulerID);
 	}
+    freeJobList(acceptList);
+    freeJobList(rejectList);
 }
 
-int getTimeslot(char *buf)
-{
+int getTimeslot(char *buf) {
 	char **wList=malloc(sizeof(char*)*1);
 	strtok(buf, " ");
 	splitString(wList, buf);
@@ -629,7 +642,7 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 	printf("The job list is: \n");
 	debug_print(jobList); 
 	
-	int i, j;
+	int i, j, pid;
 	int cToG[users][2],gToC[users][2];
 	// grandChild process
 	for(i=0;i<users;i++){
@@ -637,7 +650,7 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 			printf("Create pipe error...\n");
 			exit(1);
 		}
-		int pid=fork();
+		pid=fork();
 		if(pid==0){
 			grandchildProcess(i, cToG[i], gToC[i]);
 		}
@@ -654,15 +667,19 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 	Job *cur=jobList;
 	while(cur!=NULL){
 		char se[BUF_SZ], buf[1000], start[BUF_SZ], end[BUF_SZ];
+        Job *cloneJob = (Job*)malloc(sizeof(Job));
+        Extra *now; 
+        int userId[20];
+        int n=1;
+
 		memset(se,0,sizeof(se));
 		strcpy(start, dateToString(cur->date, cur->startTime));
 		strcpy(end, dateToString(cur->date, cur->endTime));
 		sprintf(se,"%s %s",start,end);
+        copyJob(cloneJob, cur);
 		
-		int userId[20];
 		userId[0]=findUser(cur->owner, users, userList);
-		int n=1;
-		Extra *now=cur->remark;
+		now=cur->remark;
 		while(now!=NULL){
 			userId[n++]=findUser(now->name, users, userList);
 			now=now->next;
@@ -680,15 +697,22 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 						printf("child: i send [Y] to %d\n", userId[j]);
 						write(cToG[userId[j]][1], "Y", BUF_SZ);
 					}
-					addToList(acceptList, cur);
+					addToList(acceptList, cloneJob);
+                    printf("The accept list is: \n");
+	                // debug_print(*acceptList);
 				}
 			}
 			else{
 				//The job cannot be accepted
 				for(j=0;j<=i;j++){
+                    printf("child: send to user %d [N]\n", userId[j]);
 					write(cToG[userId[j]][1], "N", BUF_SZ);
 				}
-				addToList(rejectList, cur);
+                printf("child: hhh\n");
+				addToList(rejectList, cloneJob);
+                printf("The reject list is: \n");
+	            // debug_print(*rejectList);
+                printf("child: kkk\n");
 			}
 		}
 		cur=cur->next;
@@ -1128,6 +1152,7 @@ void grandchildProcess(int a, int cToG[2], int gToC[2])
 		memset(end,0,sizeof(end));
         strcpy(begin, wList[0]);
         strcpy(end, wList[1]);
+        free(wList);
         if(addable(root,begin,end)){
 			printf("grandchild %d: send to child [Y]\n", a);
             write(gToC[1],"Y",3); //I have spare time to join
