@@ -78,16 +78,16 @@ void scheduler_exct(int, int, Job *, char *[], char **, int);
 void printer_userSchedule(char *, char *, Job *);
 void printer_report(char *, int, Job *, Job *);
 
-void leftRotate(rbtnode *root, rbtnode *x);
-void rightRotate(rbtnode *root, rbtnode *y);
+rbtnode* leftRotate(rbtnode *root, rbtnode *x);
+rbtnode* rightRotate(rbtnode *root, rbtnode *y);
 int addable(rbtnode *root, char *begin, char *end);
 char* minstr(char *a, char *b);
 char* maxstr(char *a, char *b);
 void conflict(rbtnode *node, char *begin, char *end, char *period);
-void insert(rbtnode *root, char *begin, char *end);
-void insert_fixup(rbtnode *root, rbtnode *node);
+rbtnode* insert(rbtnode *root, char *begin, char *end);
+rbtnode* insert_fixup(rbtnode *root, rbtnode *node);
 void freetree(rbtnode *node);
-void grandchildProcess(int cToG[2], int gToC[2]);
+void grandchildProcess(int a, int cToG[2], int gToC[2]);
 
 //rescheduler
 void rescheduler(Job *jobList, Job **acceptList, Job **rejectList, int users, char *userList[]);
@@ -228,7 +228,7 @@ void freeParticipantList(Extra *head_ref) {
 
 void debug_print(Job *head) {
 	Job *cur=head;
-    printf("Debug-log\n");
+    //printf("Debug-log\n");
     while(cur != NULL) {
         printf("%d %s %d %d %d\n", 
             cur->ssType, cur->owner, cur->date, cur->startTime, cur->endTime);
@@ -284,6 +284,17 @@ int checkSchd(char *schd) {
     return -1;
 }
 
+int findUser(char *name, int users, char *userList[])
+{
+    int i;
+    for(i=0;i<users;i++){
+        if(strcmp(userList[i],name)==0){
+            return i;
+        }
+    }
+    return -1;
+}
+
 /*-------Parent_part-------*/
 void parent_checkUserNum(int num, char *users[]) {
     if(num < 3 || num > 9) {
@@ -307,6 +318,7 @@ void parent_write_print(char *str, int toChild[][2], int toParent[][2]) {
 		printf("P: send [%s] to child %d\n", str, i);
         write(toChild[i][1], str, MAX_INPUT_SZ);
 		read(toParent[i][0], temp, MAX_INPUT_SZ);
+		printf("P: receive [%s] from child %d\n", temp, i);
 	}
 }
 
@@ -472,13 +484,12 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
         splitString(wList, cmdBuf);
         t = checkType(wList[0]);
 		
-		
 		switch(t) {
             case 1: case 2: case 3:
                 scheduler_selector(schedulerID, &jobList, wList, t);
                 break;
             case 5: case 6:
-                scheduler_exct(schedulerID, users, jobList, userList, wList, t);
+                scheduler_exct(schedulerID, users, jobList, userList, wList, toParent);
                 break;
             case 0:
                 loop = 0; break;
@@ -513,7 +524,7 @@ void scheduler_initJob(Job *newJob, char **wList, int t) {
     newJob->startTime = atoi(wList[3]) / 100;
     newJob->endTime = newJob->startTime + atoi(wList[4]);
 
-    newJob->remark = (Extra*)malloc(sizeof(Extra));
+    newJob->remark = NULL;
     while(wList[++l] != NULL)
         addParticipant(&(newJob->remark), wList[l]);
     newJob->next = NULL;
@@ -593,16 +604,22 @@ void scheduler_special(Job **head_ref, char **wList, int t) {
 void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], char **wList, int toParent) {
     Job *acceptList=NULL;
 	Job *rejectList=NULL;
-    int t = checkType(wList[0]), r = checkSchd(wList[2]);
-
-    printf("S %d: Begin print. \n", schedulerID);
-    scheduler_print(jobList, &acceptList, &rejectList, users, userList);
-    printf("S %d: Finished. \n", schedulerID);
-
-    if(t == 5 && schedulerID == r)
-        printer_userSchedule(wList[1], wList[3], acceptList);
-    else if (t == 6)
-        printer_report(wList[1], toParent, acceptList, rejectList);
+	int t = checkType(wList[0]);
+	if(t==5){
+		int r = checkSchd(wList[2]);
+		if(schedulerID == r){
+			printf("S %d: Begin print. \n", schedulerID);
+			scheduler_print(jobList, &acceptList, &rejectList, users, userList);
+			printf("S %d: Finished. \n", schedulerID);
+			printer_userSchedule(wList[1], wList[3], acceptList);
+		}
+	}
+	else if(t==6){
+		printf("S %d: Begin print. \n", schedulerID);
+		scheduler_print(jobList, &acceptList, &rejectList, users, userList);
+		printf("S %d: Finished. \n", schedulerID);
+		printer_report(wList[1], toParent, acceptList, rejectList);
+	}
 }
 
 void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users, char *userList[]) {
@@ -619,9 +636,7 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		}
 		int pid=fork();
 		if(pid==0){
-			printf("grandchild %d pid: %d\n",i, getpid());
-			sleep(1);
-			grandchildProcess(cToG[i], gToC[i]);
+			grandchildProcess(i, cToG[i], gToC[i]);
 		}
 	}
 	
@@ -635,9 +650,11 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 	printf("child: begin to get ac and re. \n");
 	Job *cur=jobList;
 	while(cur!=NULL){
-		char se[BUF_SZ], buf[BUF_SZ];
+		char se[BUF_SZ], buf[BUF_SZ], start[BUF_SZ], end[BUF_SZ];
 		memset(se,0,sizeof(se));
-		sprintf(se,"%s %s",dateToString(cur->date, cur->startTime),dateToString(cur->date, cur->endTime));
+		strcpy(start, dateToString(cur->date, cur->startTime));
+		strcpy(end, dateToString(cur->date, cur->endTime));
+		sprintf(se,"%s %s",start,end);
 		
 		int userId[20];
 		userId[0]=findUser(cur->owner, users, userList);
@@ -657,6 +674,7 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 				if(i==n-1){
 					//The job can be accepted
 					for(j=0;j<n;j++){
+						printf("child: i send [Y] to %d\n", userId[j]);
 						write(cToG[userId[j]][1], "Y", BUF_SZ);
 					}
 					addToAccept(acceptList, cur);
@@ -676,7 +694,8 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 	
 	//close grandchild process
 	for(i=0;i<users;i++){
-		write(cToG[i][0], "c", BUF_SZ);
+		printf("child: i send [c] to %d\n", i);
+		write(cToG[i][1], "c", BUF_SZ);
 	}
 	
 	for(i=0; i<users; i++) wait(NULL);
@@ -686,9 +705,9 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		close(gToC[i][0]);
 	}
 	
-	printf("\nThe accept list is: \n");
+	printf("The accept list is: \n");
 	debug_print(*acceptList);
-	printf("\nThe reject list is: \n");
+	printf("The reject list is: \n");
 	debug_print(*rejectList);
 }
 
@@ -706,8 +725,8 @@ void printer_report(char *fileName, int toParent, Job *acceptList, Job *rejectLi
     write(toParent, "Finished", BUF_SZ); // fin
 }
 
-/* Grandchild process */
-void leftRotate(rbtnode *root, rbtnode *x)
+/*-------------Grandchild process-------------*/
+rbtnode* leftRotate(rbtnode *root, rbtnode *x)
 {
     rbtnode *y=x->right;
     x->right=y->left;
@@ -722,19 +741,10 @@ void leftRotate(rbtnode *root, rbtnode *x)
     }
     y->left=x;
     x->parent=y;
+	return root;
 }
 
-/*Right Rotate*/
-/*
- *       py                     py
- *       /                      /
- *      y                      x
- *     / \     --right-->     / \
- *    x  ry                  lx  y
- *   / \                        / \
- *  lx rx                      rx ry
- */
-void rightRotate(rbtnode *root, rbtnode *y){
+rbtnode* rightRotate(rbtnode *root, rbtnode *y){
     rbtnode *x=y->left;
     y->left=x->right;
     if(x->right!=NULL) x->right->parent=y;
@@ -748,6 +758,7 @@ void rightRotate(rbtnode *root, rbtnode *y){
     }
     x->right=y;
     y->parent=x;
+	return root;
 }
 
 /*Check whether the time can be added*/
@@ -805,7 +816,7 @@ void conflict(rbtnode *node, char *begin, char *end, char *period)
     }
 }
 
-void insert(rbtnode *root, char *begin, char *end)
+rbtnode* insert(rbtnode *root, char *begin, char *end)
 {
     rbtnode *node=(rbtnode*)malloc(sizeof(rbtnode));
     strcpy(node->begin,begin);
@@ -827,10 +838,11 @@ void insert(rbtnode *root, char *begin, char *end)
     }
     else root=node;
     node->color=0;
-    insert_fixup(root,node);
+    root=insert_fixup(root,node);
+	return root;
 }
 
-void insert_fixup(rbtnode *root, rbtnode *node)
+rbtnode* insert_fixup(rbtnode *root, rbtnode *node)
 {
     rbtnode *parent,*gparent;
     while((parent=node->parent) && (parent->color==0)){
@@ -846,14 +858,14 @@ void insert_fixup(rbtnode *root, rbtnode *node)
             }
             if(parent->right==node){
                 rbtnode *temp;
-                leftRotate(root,parent);
+                root=leftRotate(root,parent);
                 temp=parent;
                 parent=node;
                 node=temp;
             }
             parent->color=1;
             gparent->color=0;
-            rightRotate(root,gparent);
+            root=rightRotate(root,gparent);
         }
         else{
             rbtnode *uncle=gparent->left;
@@ -866,17 +878,18 @@ void insert_fixup(rbtnode *root, rbtnode *node)
             }
             if(parent->left==node){
                 rbtnode *temp;
-                rightRotate(root,parent);
+                root=rightRotate(root,parent);
                 temp=parent;
                 parent=node;
                 node=temp;
             }
             parent->color=1;
             gparent->color=0;
-            leftRotate(root,gparent);
+            root=leftRotate(root,gparent);
         }
     }
     root->color=1;
+	return root;
 }
 
 void freetree(rbtnode *node)
@@ -887,7 +900,15 @@ void freetree(rbtnode *node)
     free(node);
 }
 
-void grandchildProcess(int cToG[2], int gToC[2])
+void preorder(rbtnode *cur)
+{
+	if(cur==NULL) return;
+	preorder(cur->left);
+	printf("%s %s\n",cur->begin,cur->end);
+	preorder(cur->right);
+}
+
+void grandchildProcess(int a, int cToG[2], int gToC[2])
 {
     rbtnode *root=NULL;
     int n;
@@ -897,7 +918,7 @@ void grandchildProcess(int cToG[2], int gToC[2])
         char se[100];
         memset(se,0,sizeof(se));
         n = read(cToG[0], se, 100);
-		printf("grandchild, pid %d: %s\n",getpid(), se);
+		printf("grandchild %d: receive from child [%s]\n", a, se);
         se[n] = 0;
         if(se[0] == 'c'){
             // close the process
@@ -915,180 +936,32 @@ void grandchildProcess(int cToG[2], int gToC[2])
         strcpy(begin, wList[0]);
         strcpy(end, wList[1]);
         if(addable(root,begin,end)){
-			printf("grandchild, pid %d: Y\n",getpid());
+			printf("grandchild %d: send to child [Y]\n", a);
             write(gToC[1],"Y",3); //I have spare time to join
         }
         else{
-			printf("grandchild, pid: %d N\n",getpid());
             char period[BUF_SZ];
             memset(period,0,sizeof(period));
             conflict(root, begin, end, period);
             char con[90];
             sprintf(con,"N %s",period);
+			printf("grandchild %d: send to child [%s]\n", a, con);
             write(gToC[1],con,strlen(con)); //I do not have time
         }
         char buf[BUF_SZ];
         read(cToG[0],buf,BUF_SZ);
+		printf("grandchild %d: receive from child [%s]\n", a, buf);
         if(buf[0]=='Y'){
+			printf("grandchild %d: begin adding\n",a);
             //add it to my time schedule
-            insert(root,begin,end);
+            root=insert(root,begin,end);
+			printf("grandchild %d: finish adding\n",a);
         }
+		printf("user %d: My current tree: \n",a);
+		preorder(root);
+		printf("\n");
     }
 }
 
-int findUser(char *name, int users, char *userList[])
-{
-    int i;
-    for(i=0;i<users;i++){
-        if(strcmp(userList[i],name)==0){
-            return i;
-        }
-    }
-    return -1;
-}
 
-void rescheduler(Job *jobList, Job **acceptList, Job **rejectList, int users, char *userList[])
-{
-    int i, cToG[users][2], gToC[users][2];
-    for(i=0;i<users;i++){
-        if(cToG[i]<0 || gToC[i]<0){
-            printf("Oops... Pipe creation error. \n");
-            exit(1);
-        }
-        int pid=fork();
-        if(pid==0){
-            grandchildProcess(cToG[i], gToC[i]);
-        }
-    }
-    for(i=0;i<users;i++){
-        close(cToG[i][0]);
-        close(gToC[i][1]);
-    }
-    Job *cur=jobList;
-    while(cur!=NULL){
-        char se[BUF_SZ];
-        char buf[BUF_SZ];
-        memset(se, 0, sizeof(se));
-        sprintf(se,"%s %s",dateToString(cur->date, cur->startTime),dateToString(cur->date, cur->endTime));
-        int userId[20];
-        userId[0]=findUser(cur->owner, users, userList);
-        Extra *p = cur->remark;
-        int j=1;
-        while(p!=NULL){
-            userId[j++]=findUser(p->name, users, userList);
-            p=p->next;
-        }
-        write(cToG[userId[0]][1],se,BUF_SZ);
-        read(gToC[userId[0]][0],buf,BUF_SZ);
-        if(buf[0]=='N'){
-            write(cToG[userId[0]][1],"N",3); //reject
-            addToReject(rejectList, cur);
-        }
-        else{
-            int agree=0;
-            int leaveTime[TIME_SZ];
-            char info[TIME_SZ][BUF_SZ];
-            char str[BUF_SZ]; // TODO:
-            
 
-            memset(info,0,sizeof(info));
-            memset(leaveTime,0,sizeof(leaveTime));
-            for(i=1;i<j;i++){
-                write(cToG[userId[i]][1],se,BUF_SZ);
-                read(gToC[userId[i]][0],info[i],BUF_SZ);
-                if(info[i][0]=='Y') agree++;
-                else {
-                    char **wList = malloc(sizeof(char*) * 1);
-                    strcpy(str, info[i]);
-                    strtok(info[i], " ");
-                    int n = splitString(wList, info[i]);
-                    int k;
-                    for(k=1;k<n;k=k+2){
-                        leaveTime[i]=leaveTime[i]+(wList[k+1][8]-wList[k][8])*10+(wList[k+1][9]-wList[k][9]);
-                    }
-                    if(leaveTime[i] <= (cur->endTime - cur->startTime)/2) agree++;
-                }
-            }
-            if(agree>(j+1)/2){
-                write(cToG[userId[0]][1],"Y",BUF_SZ);
-                Extra *last=NULL;
-                Extra *now=cur->remark;
-                i=0;
-                while(now != NULL){
-                    i++;
-                    if(leaveTime[i]==0){
-                        write(cToG[userId[i]][1],"Y",BUF_SZ);
-                        now=now->next;
-                    }
-                    else if(leaveTime[i] > (cur->endTime - cur->startTime)/2){
-                        write(cToG[userId[i]][1],"N",BUF_SZ);
-                        if(last!=NULL){
-                            last->next=now->next;
-                            free(now);
-                            now=last->next;
-                        }
-                        else{
-                            Extra *temp=now->next;
-                            free(now);
-                            now=temp;
-                        }
-                    }
-                    else{
-                        write(cToG[userId[i]][1],"N",BUF_SZ);
-                        char **wList = malloc(sizeof(char*) * 1);
-                        strcpy(str, info[i]);
-                        strtok(info[i], " ");
-                        int n = splitString(wList, info[i]);
-
-                        char begin[BUF_SZ], end[BUF_SZ];
-                        char temp[BUF_SZ];
-                        strcpy(begin,dateToString(cur->date, cur->startTime));
-                        strcpy(end, dateToString(cur->date, cur->endTime));
-                        int flag=0;
-                        memset(now->note, 0, sizeof(now->note));
-                        if(strcmp(begin, wList[1])!=0){
-                            memset(temp,0,sizeof(temp));
-                            sprintf(temp, "leave at %c%c00",wList[1][8],wList[1][9]);
-                            strcat(now->note, temp);
-                            memset(se,0,sizeof(se));
-                            sprintf(se,"%s %s",begin,wList[1]);
-                            write(cToG[userId[i]][1],se,BUF_SZ);
-                            read(gToC[userId[i]][0],info[i],BUF_SZ);
-                            write(cToG[userId[i]][1],"Y",BUF_SZ);
-                            flag=1;
-                        }
-                        int k;
-                        for(k=2;k<n-1;k=k+2){
-                            memset(temp,0,sizeof(temp));
-                            if(flag) strcat(now->note, " -> ");
-                            sprintf(temp, "come back at %c%c00 -> leave at %c%c00", wList[k][8], wList[k][9], wList[k+1][8], wList[k+1][9]);
-                            strcat(now->note, temp);
-                            memset(se,0,sizeof(se));
-                            sprintf(se,"%s %s",wList[k],wList[k+1]);
-                            write(cToG[userId[i]][1],se,BUF_SZ);
-                            read(gToC[userId[i]][0],info[i],BUF_SZ);
-                            write(cToG[userId[i]][1],"Y",BUF_SZ);
-                            flag=1;
-                        }
-                        if(strcmp(end, wList[n-1])!=0){
-                            memset(temp, 0, sizeof(temp));
-                            if(flag) strcat(now->note, " -> ");
-                            sprintf(temp, "come back at %c%c00",wList[n-1][8],wList[n-1][9]);
-                            strcat(now->note, temp);
-                            memset(se,0,sizeof(se));
-                            sprintf(se,"%s %s",wList[n-1],end);
-                            write(cToG[userId[i]][1],se,BUF_SZ);
-                            read(gToC[userId[i]][0],info[i],BUF_SZ);
-                            write(cToG[userId[i]][1],"Y",BUF_SZ);
-                            flag=1;
-                        }
-                    }
-                }
-            }
-            else{
-                for(i=0;i<j;i++) write(cToG[userId[i]][1],"N",BUF_SZ);
-            }
-        }
-        cur=cur->next;
-    }
-}
