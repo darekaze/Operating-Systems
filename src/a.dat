@@ -13,3 +13,13 @@ addMeeting amy 20180404 1300 2 john mary
 addMeeting john 20180407 1000 2 mary
 addMeeting amy 20180408 1600 2 john
 addMeeting mary 20180409 1400 2 amy john
+addGathering tom 20180411 0900 3
+addMeeting simon 20180407 1100 3
+addGathering kate 20180402 1600 2
+addGathering tom 20180403 1600 1
+addClass amy 20180403 1200 2
+addMeeting kate 20180409 1700 3
+addGathering simon 20180412 1700 1
+addMeeting tom 20180408 1400 1
+addGathering tom 20180403 1200 1
+addGathering kate 20180408 1200 2

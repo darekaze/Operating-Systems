@@ -168,8 +168,7 @@ int splitString(char **wList, char (*p)) {
     int nSpace = 0;
     while(p) {
         wList = realloc(wList, sizeof(char*) * ++nSpace);
-        if(wList == NULL)
-            exit(1);
+        if(wList == NULL) exit(1);
         wList[nSpace-1] = p;
         p = strtok(NULL, " ");
     }
@@ -261,7 +260,7 @@ int checkSchd(char *schd) {
     return -1;
 }
 
-char * schdName(int schedulerID) {
+char *schdName(int schedulerID) {
     switch(schedulerID) {
         case 0: return "First Come First Serve"; break;
         case 1: return "Priority"; break;
@@ -280,8 +279,7 @@ int findUser(char *name, int users, char *userList[]) {
     return -1;
 }
 
-void copyJob(Job *dest, Job *src)
-{
+void copyJob(Job *dest, Job *src) {
 	dest->ssType=src->ssType;
 	strcpy(dest->owner, src->owner);
 	dest->date=src->date;
@@ -347,7 +345,7 @@ void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int
             parent_request(str, users, toChild);    break;
         case 4:
             parent_addBatch(str, users, toChild);   break;
-        case 5: 
+        case 5:
             parent_askSchd(str, users, toChild);    break;
         case 6:
             parent_repo(str, toChild, toParent);    break;
@@ -369,7 +367,8 @@ void parent_askSchd(char *cmd, char *users[], int toChild[][2]) {
     n = splitString(wList, cmd);
     m = parent_verifyUser(wList[1], users);
     t = checkSchd(wList[2]);
-    if(n > 3 && m > 0 && t > 0) 
+    printf("%d %d %d\n",n,m,t);
+    if(n > 2 && m > 0 && t > 0)
         write(toChild[t][1], str, MAX_INPUT_SZ);
 }
 
@@ -482,14 +481,16 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
     while(loop) {
         char cmdBuf[MAX_INPUT_SZ] = "";
         char **wList = malloc(sizeof(char*) * 1);
+        char ty[20] = "";
         int t;
 
         read(fromParent, cmdBuf, MAX_INPUT_SZ);
 		printf("S %d: from parent info [%s]\n", schedulerID, cmdBuf);
         strtok(cmdBuf, " ");
+        strcpy(ty, cmdBuf);
         splitString(wList, cmdBuf);
-        t = checkType(wList[0]);
-		
+        printf("dafaq %s\n", ty);
+        printf("dafkk %d\n", t);
 		switch(t) {
             case 1: case 2: case 3:
                 scheduler_selector(schedulerID, &jobList, wList, t);
@@ -503,6 +504,7 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
                 printf("Meh..child\n"); loop = 0;
                 break;
         }
+        free(wList);
     }
     debug_print(jobList);
     free(jobList);
@@ -523,6 +525,7 @@ void scheduler_initJob(Job *newJob, char **wList, int t) {
         printf("Error: Out of memory..");
         exit(1);
     }
+    
     newJob->ssType = t;
     strcpy(newJob->owner, wList[1]);
     newJob->date = atoi(wList[2]);
@@ -530,8 +533,10 @@ void scheduler_initJob(Job *newJob, char **wList, int t) {
     newJob->endTime = newJob->startTime + atoi(wList[4]);
 
     newJob->remark = NULL;
-    while(wList[++l] != NULL)
+    while(wList[++l] != NULL) {
         addParticipant(&(newJob->remark), wList[l]);
+    }
+        
     newJob->next = NULL;
 }
 
