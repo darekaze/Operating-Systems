@@ -75,7 +75,8 @@ void scheduler_print(Job *, Job **, Job **, int, char *[]);
 void scheduler_exct(int, int, Job *, char *[], char **, int);
 
 void printer_userSchedule(int, char *, char *, Job *);
-void printer_report(int, char *, int, Job *, Job *);
+void printer_report(int, char *, int, Job *, Job *, int);
+void printer_outputJob(Job *, FILE *);
 
 rbtnode* leftRotate(rbtnode *root, rbtnode *x);
 rbtnode* rightRotate(rbtnode *root, rbtnode *y);
@@ -614,7 +615,7 @@ void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], 
         printf("S %d: Finished. \n", schedulerID);
 	} else {
 		printf("S %d: Begin print. \n", schedulerID);
-        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList);
+        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users);
 		printf("S %d: Finished. \n", schedulerID);
 	}
 }
