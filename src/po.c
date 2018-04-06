@@ -48,6 +48,7 @@ int findUser            (char*, int, char*[]);
 char* dateToString      (int, int);
 void addToList          (Job**, Job*);
 void copyJob            (Job*, Job*);
+int countTotalTime      (Job*);
 
 void parent_checkUserNum    (int, char*[]);
 void parent_write           (char*, int[][2]);
@@ -290,6 +291,17 @@ void copyJob(Job *dest, Job *src) {
 		}
 	}
 	dest->next=NULL;
+}
+
+int countTotalTime(Job *event) {
+    int eTime = event->endTime - event->startTime;
+    int res = eTime;
+    Extra *temp = event->remark;
+    while(temp != NULL) {
+        res = res + eTime;
+        temp = temp->next;
+    }
+    return res;
 }
 
 /*-------Parent_part-------*/
@@ -575,17 +587,13 @@ void scheduler_special(Job **head_ref, char **wList, int t) {
     if(*head_ref == NULL) 
         *head_ref = newJob;
     else {
-        if(((*head_ref)->ssType > newJob->ssType || (
-            (*head_ref)->ssType == newJob->ssType && 
-            ((*head_ref)->endTime - (*head_ref)->startTime < newJob->endTime - newJob->startTime)
-        ))) {
-        newJob->next = *head_ref;
-        *head_ref = newJob;
+        if(countTotalTime(*head_ref) < countTotalTime(newJob)) {
+            newJob->next = *head_ref;
+            *head_ref = newJob;
         } else {
             temp = *head_ref;
-            while(temp->next != NULL && (temp->next->ssType < newJob->ssType ||
-            (temp->next->ssType == newJob->ssType &&
-            temp->next->endTime - temp->next->startTime >= newJob->endTime - newJob->startTime))){
+            while(temp->next != NULL && 
+            countTotalTime(*head_ref) >= countTotalTime(newJob)){
                 temp = temp->next;
             }
             newJob->next = temp->next;
@@ -856,8 +864,8 @@ void printer_outputJob(Job *curr, FILE *f, char *userName) {
     else sprintf(end, "%d:00", curr->endTime);
     switch(curr->ssType) {
         case CLASSES:   strcpy(type, "Class    ");      break;
-        case MEETING:   strcpy(type, "Meeting  ");    break;
-        case GATHERING: strcpy(type, "Gathering");  break;
+        case MEETING:   strcpy(type, "Meeting  ");      break;
+        case GATHERING: strcpy(type, "Gathering");      break;
     }
     if(userName == NULL) { // Report
         sprintf(remark, "%s", curr->owner);

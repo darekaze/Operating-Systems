@@ -1,0 +1,255 @@
+Personal Organizer
+***Schedule Report***
+
+Algorithm used: First Come First Serve
+***Accept List***
+There are 33 requests accepted.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   11:00   14:00   Gathering	kate simon tom
+2018-04-02   08:00   12:00   Class    	tom
+2018-04-02   09:00   15:00   Class    	amy
+2018-04-02   16:00   17:00   Meeting  	amy kate simon
+2018-04-03   09:00   10:00   Gathering	kate tom simon amy
+2018-04-03   10:00   13:00   Class    	kate
+2018-04-03   14:00   15:00   Class    	amy
+2018-04-03   17:00   18:00   Class    	amy
+2018-04-04   10:00   16:00   Class    	tom
+2018-04-05   09:00   11:00   Meeting  	simon amy tom
+2018-04-05   11:00   16:00   Meeting  	tom kate
+2018-04-06   09:00   16:00   Meeting  	simon kate
+2018-04-06   10:00   11:00   Gathering	tom amy
+2018-04-06   14:00   18:00   Meeting  	kate simon tom amy
+2018-04-07   08:00   11:00   Class    	simon
+2018-04-07   11:00   17:00   Meeting  	kate tom
+2018-04-08   08:00   13:00   Class    	kate
+2018-04-08   10:00   12:00   Gathering	amy tom simon
+2018-04-08   13:00   17:00   Meeting  	simon amy tom
+2018-04-09   08:00   10:00   Gathering	kate tom
+2018-04-09   10:00   12:00   Gathering	simon tom amy kate
+2018-04-09   12:00   16:00   Gathering	tom simon
+2018-04-10   09:00   16:00   Gathering	kate simon
+2018-04-10   09:00   18:00   Class    	amy
+2018-04-11   11:00   17:00   Meeting  	amy kate simon
+2018-04-12   08:00   17:00   Class    	kate
+2018-04-12   09:00   15:00   Class    	tom
+2018-04-12   16:00   17:00   Class    	tom
+2018-04-13   08:00   14:00   Class    	simon
+2018-04-13   09:00   18:00   Gathering	kate amy
+2018-04-14   08:00   18:00   Class    	amy
+2018-04-14   08:00   11:00   Class    	kate
+2018-04-14   09:00   12:00   Class    	simon
+
+=========================================================
+
+***Reject List***
+There are 27 requests rejected.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-03   09:00   16:00   Class    	amy
+2018-04-04   10:00   13:00   Meeting  	tom kate
+2018-04-04   11:00   18:00   Gathering	simon kate amy tom
+2018-04-04   13:00   16:00   Gathering	simon tom kate
+2018-04-05   11:00   12:00   Meeting  	tom simon
+2018-04-05   13:00   16:00   Gathering	simon tom
+2018-04-05   14:00   18:00   Gathering	amy tom simon kate
+2018-04-07   10:00   16:00   Meeting  	tom simon amy
+2018-04-08   09:00   16:00   Meeting  	simon kate tom amy
+2018-04-08   10:00   16:00   Gathering	tom kate
+2018-04-09   11:00   17:00   Gathering	kate simon
+2018-04-10   11:00   14:00   Gathering	amy simon tom
+2018-04-10   17:00   18:00   Gathering	simon amy
+2018-04-11   12:00   13:00   Meeting  	amy simon kate tom
+2018-04-11   13:00   16:00   Meeting  	amy simon
+2018-04-12   09:00   10:00   Class    	kate
+2018-04-12   09:00   11:00   Class    	tom
+2018-04-12   13:00   16:00   Gathering	kate amy simon tom
+2018-04-13   09:00   17:00   Gathering	kate tom
+2018-04-13   11:00   18:00   Gathering	amy kate tom
+2018-04-13   11:00   13:00   Class    	amy
+2018-04-13   11:00   12:00   Gathering	kate tom amy
+2018-04-13   13:00   15:00   Gathering	tom amy kate simon
+2018-04-14   11:00   12:00   Meeting  	tom amy simon kate
+2018-04-14   12:00   14:00   Meeting  	tom kate amy simon
+2018-04-14   15:00   18:00   Gathering	tom simon kate amy
+2018-04-14   16:00   17:00   Gathering	kate amy tom
+
+=========================================================
+Total number of request:    60
+Timeslot in use:            228
+Timeslot not in use:        612
+Utilization:                27%
+
+	- End -
+
+
+Personal Organizer
+***Schedule Report***
+
+Algorithm used: Priority
+***Accept List***
+There are 33 requests accepted.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-04   10:00   16:00   Class    	tom
+2018-04-02   09:00   15:00   Class    	amy
+2018-04-12   09:00   15:00   Class    	tom
+2018-04-13   11:00   13:00   Class    	amy
+2018-04-12   16:00   17:00   Class    	tom
+2018-04-03   09:00   16:00   Class    	amy
+2018-04-13   08:00   14:00   Class    	simon
+2018-04-14   08:00   18:00   Class    	amy
+2018-04-07   08:00   11:00   Class    	simon
+2018-04-03   10:00   13:00   Class    	kate
+2018-04-14   08:00   11:00   Class    	kate
+2018-04-12   09:00   10:00   Class    	kate
+2018-04-14   09:00   12:00   Class    	simon
+2018-04-03   17:00   18:00   Class    	amy
+2018-04-10   09:00   18:00   Class    	amy
+2018-04-08   08:00   13:00   Class    	kate
+2018-04-02   08:00   12:00   Class    	tom
+2018-04-05   11:00   16:00   Meeting  	tom kate
+2018-04-11   12:00   13:00   Meeting  	amy simon kate tom
+2018-04-06   14:00   18:00   Meeting  	kate simon tom amy
+2018-04-06   09:00   18:00   Meeting  	simon kate
+2018-04-08   13:00   17:00   Meeting  	simon amy tom
+2018-04-07   11:00   17:00   Meeting  	kate tom
+2018-04-02   16:00   17:00   Meeting  	amy kate simon
+2018-04-05   09:00   11:00   Meeting  	simon amy tom
+2018-04-11   13:00   16:00   Meeting  	amy simon
+2018-04-09   11:00   17:00   Gathering	kate simon
+2018-04-10   09:00   16:00   Gathering	kate simon
+2018-04-08   10:00   12:00   Gathering	amy tom simon
+2018-04-13   09:00   17:00   Gathering	kate tom
+2018-04-06   10:00   11:00   Gathering	tom amy
+2018-04-01   11:00   14:00   Gathering	kate simon tom
+2018-04-09   08:00   10:00   Gathering	kate tom
+
+=========================================================
+
+***Reject List***
+There are 27 requests rejected.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-03   14:00   15:00   Class    	amy
+2018-04-12   08:00   17:00   Class    	kate
+2018-04-12   09:00   11:00   Class    	tom
+2018-04-11   11:00   17:00   Meeting  	amy kate simon
+2018-04-14   11:00   12:00   Meeting  	tom amy simon kate
+2018-04-07   10:00   16:00   Meeting  	tom simon amy
+2018-04-14   12:00   14:00   Meeting  	tom kate amy simon
+2018-04-04   10:00   13:00   Meeting  	tom kate
+2018-04-05   11:00   12:00   Meeting  	tom simon
+2018-04-08   09:00   16:00   Meeting  	simon kate tom amy
+2018-04-14   16:00   17:00   Gathering	kate amy tom
+2018-04-13   11:00   18:00   Gathering	amy kate tom
+2018-04-05   14:00   18:00   Gathering	amy tom simon kate
+2018-04-03   09:00   10:00   Gathering	kate tom simon amy
+2018-04-08   10:00   16:00   Gathering	tom kate
+2018-04-10   17:00   18:00   Gathering	simon amy
+2018-04-14   15:00   18:00   Gathering	tom simon kate amy
+2018-04-13   09:00   18:00   Gathering	kate amy
+2018-04-04   11:00   18:00   Gathering	simon kate amy tom
+2018-04-09   10:00   12:00   Gathering	simon tom amy kate
+2018-04-05   13:00   16:00   Gathering	simon tom
+2018-04-13   11:00   12:00   Gathering	kate tom amy
+2018-04-10   11:00   14:00   Gathering	amy simon tom
+2018-04-12   13:00   16:00   Gathering	kate amy simon tom
+2018-04-04   13:00   16:00   Gathering	simon tom kate
+2018-04-13   13:00   15:00   Gathering	tom amy kate simon
+2018-04-09   12:00   16:00   Gathering	tom simon
+
+=========================================================
+Total number of request:    60
+Timeslot in use:            210
+Timeslot not in use:        630
+Utilization:                25%
+
+	- End -
+
+
+Personal Organizer
+***Schedule Report***
+
+Algorithm used: Special
+***Accept List***
+There are 32 requests accepted.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-12   16:00   17:00   Class    	tom
+2018-04-10   17:00   18:00   Gathering	simon amy
+2018-04-14   16:00   17:00   Gathering	kate amy tom
+2018-04-04   10:00   16:00   Class    	tom
+2018-04-05   11:00   16:00   Meeting  	tom kate
+2018-04-13   11:00   18:00   Gathering	amy kate tom
+2018-04-02   09:00   15:00   Class    	amy
+2018-04-11   12:00   13:00   Meeting  	amy simon kate tom
+2018-04-03   09:00   10:00   Gathering	kate tom simon amy
+2018-04-08   10:00   16:00   Gathering	tom kate
+2018-04-12   09:00   15:00   Class    	tom
+2018-04-13   08:00   14:00   Class    	simon
+2018-04-09   11:00   17:00   Gathering	kate simon
+2018-04-06   14:00   18:00   Meeting  	kate simon tom amy
+2018-04-10   09:00   16:00   Gathering	kate simon
+2018-04-14   11:00   12:00   Meeting  	tom amy simon kate
+2018-04-07   08:00   11:00   Class    	simon
+2018-04-03   10:00   13:00   Class    	kate
+2018-04-06   09:00   13:00   Meeting  	simon kate
+2018-04-14   08:00   11:00   Class    	kate
+2018-04-12   09:00   10:00   Class    	kate
+2018-04-07   11:00   17:00   Meeting  	kate tom
+2018-04-03   14:00   15:00   Class    	amy
+2018-04-06   10:00   11:00   Gathering	tom amy
+2018-04-14   12:00   14:00   Meeting  	tom kate amy simon
+2018-04-01   11:00   14:00   Gathering	kate simon tom
+2018-04-09   08:00   10:00   Gathering	kate tom
+2018-04-02   16:00   17:00   Meeting  	amy kate simon
+2018-04-03   17:00   18:00   Class    	amy
+2018-04-05   09:00   11:00   Meeting  	simon amy tom
+2018-04-02   08:00   12:00   Class    	tom
+2018-04-11   13:00   16:00   Meeting  	amy simon
+
+=========================================================
+
+***Reject List***
+There are 28 requests rejected.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-05   14:00   18:00   Gathering	amy tom simon kate
+2018-04-14   15:00   18:00   Gathering	tom simon kate amy
+2018-04-11   11:00   17:00   Meeting  	amy kate simon
+2018-04-13   09:00   18:00   Gathering	kate amy
+2018-04-13   11:00   13:00   Class    	amy
+2018-04-04   11:00   18:00   Gathering	simon kate amy tom
+2018-04-03   09:00   16:00   Class    	amy
+2018-04-14   08:00   18:00   Class    	amy
+2018-04-09   10:00   12:00   Gathering	simon tom amy kate
+2018-04-05   13:00   16:00   Gathering	simon tom
+2018-04-13   11:00   12:00   Gathering	kate tom amy
+2018-04-10   11:00   14:00   Gathering	amy simon tom
+2018-04-07   10:00   16:00   Meeting  	tom simon amy
+2018-04-08   10:00   12:00   Gathering	amy tom simon
+2018-04-08   13:00   17:00   Meeting  	simon amy tom
+2018-04-12   13:00   16:00   Gathering	kate amy simon tom
+2018-04-04   13:00   16:00   Gathering	simon tom kate
+2018-04-13   09:00   17:00   Gathering	kate tom
+2018-04-12   08:00   17:00   Class    	kate
+2018-04-12   09:00   11:00   Class    	tom
+2018-04-04   10:00   13:00   Meeting  	tom kate
+2018-04-14   09:00   12:00   Class    	simon
+2018-04-05   11:00   12:00   Meeting  	tom simon
+2018-04-08   09:00   16:00   Meeting  	simon kate tom amy
+2018-04-13   13:00   15:00   Gathering	tom amy kate simon
+2018-04-10   09:00   18:00   Class    	amy
+2018-04-08   08:00   13:00   Class    	kate
+2018-04-09   12:00   16:00   Gathering	tom simon
+
+=========================================================
+Total number of request:    60
+Timeslot in use:            195
+Timeslot not in use:        645
+Utilization:                23%
+
+	- End -
+
+
