@@ -38,10 +38,6 @@ typedef struct rbtnode{
     struct rbtnode *parent;
 } rbtnode;
 
-typedef struct occupy{
-	char start[20], end[20];
-} occupy;
-
 /* Prototype */
 void readInput          (char(*));
 int splitString         (char**, char (*));
@@ -72,7 +68,7 @@ void scheduler_selector     (int, Job**, char**, int);
 void scheduler_fcfs         (Job**, char**, int);
 void scheduler_priority     (Job**, char**, int);
 void scheduler_special      (Job**, char**, int);
-void scheduler_print        (Job*, Job**, Job**, int, char*[], int);
+void scheduler_print        (Job*, Job**, Job**, int, char*[]);
 void scheduler_exct         (int, int, Job*, char*[], char**, int);
 
 void printer_userSchedule   (int, char *, char *, Job *);
@@ -90,8 +86,6 @@ rbtnode* insert_fixup       (rbtnode *root, rbtnode *node);
 void freetree               (rbtnode *node);
 void grandchildProcess      (int a, int cToG[2], int gToC[2]);
 
-// Reschedule
-void reschd(Job **rejectList, Job **acceptList, int cToG[][2], int gToC[][2],int users, char *userList[]);
 
 /*-------Main-------*/
 int main(int argc, char *argv[]) {
@@ -314,7 +308,7 @@ int countTotalTime(Job *event) {
 /*-------Parent_part-------*/
 void parent_checkUserNum(int num, char *users[]) {
     if(num < 3 || num > 9) {
-        printf("You're trolling: Range should be 3~9 users");
+        printf("E: Range should be 3~9 users");
         exit(1);
     }
 }
@@ -602,20 +596,7 @@ void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], 
     Job *acceptList=NULL;
 	Job *rejectList=NULL;
 	int t = checkType(wList[0]);
-    int i=0, flag=1;
-
-    while(wList[++i]!=NULL){
-		if(strcmp(wList[i], "reschedule")==0){
-			scheduler_print(jobList, &acceptList, &rejectList, users, userList, 1);
-			flag=0;
-			break;
-		}
-	}
-    if(flag){
-		scheduler_print(jobList, &acceptList, &rejectList, users, userList, 0);
-	}
-
-    // TODO: check isFile duplicate (true -> need to change title)
+    scheduler_print(jobList, &acceptList, &rejectList, users, userList);
 
 	if(t == 5)  printer_userSchedule(schedulerID, wList[1], wList[3], acceptList);
 	else        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users);
@@ -638,14 +619,10 @@ int getTimeslot(char *buf) {
 	return ans;
 }
 
-void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users, char *userList[], int rescheduler) {
-	printf("This is rescheduler %d.\n", rescheduler);
-	printf("The job list is: \n");
-	debug_print(jobList); 
-	
+void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users, char *userList[]) {
 	int i, j;
 	int cToG[users][2],gToC[users][2];
-	// grandChild process
+	/* grandChild process */
 	for(i=0;i<users;i++){
 		if(pipe(cToG[i])<0 || pipe(gToC[i])<0) {
 			printf("Create pipe error...\n");
@@ -666,7 +643,6 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 	//get acceptList and rejectList
 	Job *cur=jobList;
 	while(cur!=NULL){
-		printf("child %d: current job is %s\n",getpid(),cur->owner);
 		char se[BUF_SZ], buf[1000], start[BUF_SZ], end[BUF_SZ];
 		memset(se,0,sizeof(se));
 		strcpy(start, dateToString(cur->date, cur->startTime));
@@ -677,7 +653,7 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		userId[0]=findUser(cur->owner, users, userList);
 		int n=1;
 		Extra *now=cur->remark;
-		while(now!=NULL){
+		while(now != NULL){
 			userId[n++]=findUser(now->name, users, userList);
 			now=now->next;
 		}
@@ -685,47 +661,32 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 			write(cToG[userId[i]][1], se, BUF_SZ);
 			memset(buf, 0, sizeof(buf));
 			read(gToC[userId[i]][0], buf, 1000);
-			printf("child: from user %d [%s]\n",userId[i], buf);
 			if(buf[0]=='Y'){
-				if(i==n-1){
-					printf("This job will be accepted.\n");
-					//The job can be accepted
+				if(i == n-1) { // The job can be accepted
 					for(j=0;j<n;j++){
 						write(cToG[userId[j]][1], "Y", BUF_SZ);
 					}
 					Job* node = (Job*)malloc(sizeof(Job)*1);
 					copyJob(node, cur);
 					addToList(acceptList, node);
-					printf("Accepted! \n");
+					// printf("Accepted! \n");
 				}
 			}
-			else{
-				printf("This job will be rejected.\n");
-				//The job cannot be accepted
+			else { // The job cannot be accepted
 				for(j=0;j<=i;j++){
 					write(cToG[userId[j]][1], "N", BUF_SZ);
 				}
-				printf("user rejected.\n");
 				Job *node = (Job*)malloc(sizeof(Job)*1);
 				copyJob(node, cur);
 				addToList(rejectList, node);
-				printf("Rejected! \n");
+				// printf("Rejected! \n");
 				break;
 			}
 		}
 		cur=cur->next;
 	}
-	printf("child: finished getting \n");
 	
-	if(rescheduler){
-		printf("Here will implemented rescheduler. \n");
-		sleep(1);
-		reschd(rejectList, acceptList, cToG, gToC, users, userList);
-	}
-	printf("child: finished rescheduling \n");
-	
-	int tot=0;
-	//get total time slot
+	int tot=0; // Get total time slot
 	for(i=0;i<users;i++){
 		char buf[1000];
 		write(cToG[i][1], "201804010700 201804141900", BUF_SZ);
@@ -734,7 +695,6 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		write(cToG[i][1], "N", BUF_SZ);
 		tot+=getTimeslot(buf);
 	}
-	
 	//close grandchild process
 	for(i=0;i<users;i++){
 		write(cToG[i][1], "c", BUF_SZ);
@@ -746,11 +706,10 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		close(cToG[i][1]);
 		close(gToC[i][0]);
 	}
-	
-	printf("(%d)The accept list is: \n",getpid());
-	debug_print(*acceptList);
-	printf("(%d)The reject list is: \n",getpid());
-	debug_print(*rejectList);
+	// printf("(%d)The accept list is: \n",getpid());
+	// debug_print(*acceptList);
+	// printf("(%d)The reject list is: \n",getpid());
+	// debug_print(*rejectList);
 }
 
 /* Printer part */
@@ -1166,149 +1125,4 @@ void grandchildProcess(int a, int cToG[2], int gToC[2]) {
 		//preorder(root);
         free(wList[l]);
     }
-}
-
-/*---rescheduler---*/
-int distance(char *start, char *end, int d) {
-	printf("%s %s\n", start, end);
-	if(strcmp(start, end)<=0) return 0;
-	int day=1;
-	int i;
-	int sd=(start[6]-'0')*10+(start[7]-'0');
-	int ed=(end[6]-'0')*10+(end[7]-'0');
-	int sr=(start[8]-'0')*10+(start[9]-'0');
-	int er=(end[8]-'0')*10+(end[9]-'0');
-	for(i=sd;i<=ed;i++){
-		int s,e;
-		if(i==sd) s=sr;
-		else s=8;
-		if(i==ed) e=er;
-		else e=18;
-		if(e-s>=d){
-			start[6]=i/10+'0';
-			start[7]=i%10+'0';
-			start[8]=s/10+'0';
-			start[9]=s%10+'0';
-			return 1;
-		}
-	}
-	return 0;
-}
-
-void plus(char *start, int d, char *end)
-{
-	strcpy(end, start);
-	if(end[9]+d>'0'+10){
-		end[8]+=1;
-		end[9]=end[9]+d-10;
-	}
-}
-
-void inverse(occupy a[], int n, Job *node, int d)
-{
-	char start[20];
-	int i;
-	strcpy(start, "201804010800");
-	for(i=0;i<n;i++){
-		if(distance(start, a[i].start, d)){
-			char end[20];
-			node->date=(start[0]-'0')*10000000+(start[1]-'0')*1000000+(start[2]-'0')*100000+
-						(start[3]-'0')*10000+(start[4]-'0')*1000+(start[5]-'0')*100+(start[6]-'0')*10+(start[7]-'0');
-			node->startTime=(start[8]-'0')*10+start[9]-'0';
-			plus(start, d, end);
-			node->endTime=(end[8]-'0')*10+(end[9]-'0');
-			return ;
-		}
-		else strcpy(start, a[i].end);
-	}
-}
-
-void deleteNode(Job **head, Job *node)
-{
-	Job *cur=*head;
-	if(cur==node){
-		Job *temp=*head;
-		*head=(*head)->next;
-		free(temp);
-	}
-	else{
-		while(cur->next!=node) cur=cur->next;
-		cur->next=node->next;
-		free(node);
-	}
-}
-
-void storeToOccupy(char *buf, occupy list[], int *tot)
-{
-	char **wList=malloc(sizeof(char*)*1);
-    int l, i=0;
-	strtok(buf, " ");
-	l = splitString(wList, buf);
-	while(wList[++i]!=NULL){
-		strcpy(list[*tot].start, wList[i]);
-		strcpy(list[*tot].start, wList[++i]);
-		*tot=*tot+1;
-	}
-    free(wList[l]);
-}
-
-int cmp(const void *a, const void *b)
-{
-	struct occupy *c = (struct occupy *)a;
-	struct occupy *d = (struct occupy *)b;
-	if(strcmp(c->start, d->start) == 0) return strcmp(d->end, c->end);
-	return strcmp(c->start, d->start);
-}
-
-void merge(occupy a[], occupy mer[], int n, int *tot)
-{
-	strcpy(mer[0].start, a[0].start);
-	strcpy(mer[0].end, a[0].end);
-	*tot=0;
-	int i;
-	for(i=1;i<n;i++){
-		if(strcmp(mer[*tot].start, a[i].start)<=0 && strcmp(a[i].start, mer[*tot].start)<=0){
-			if(strcmp(mer[0].end, a[i].end)<0) strcpy(mer[0].end, a[i].end);
-		}
-		else{
-			*tot=*tot+1;
-			strcpy(mer[*tot].start, a[i].start);
-			strcpy(mer[*tot].end, a[i].end);
-		}
-	}
-	*tot=*tot+1;
-}
-
-void reschd(Job **rejectList, Job **acceptList, int cToG[][2], int gToC[][2],int users, char *userList[])
-{
-	Job *cur=*rejectList;
-	while(cur!=NULL){
-		printf("reschedule child %d: current job is %s\n",getpid(),cur->owner);
-		occupy a[2000];
-		int userId[20];
-		userId[0]=findUser(cur->owner, users, userList);
-		int n=1;
-		Extra *now=cur->remark;
-		while(now!=NULL){
-			userId[n++]=findUser(now->name, users, userList);
-			now=now->next;
-		}
-		int d=cur->endTime-cur->startTime;
-		int i;
-		for(i=0;i<n;i++){
-			printf("child: send [201804010700 201804141900] to user %d\n", userId[i]);
-			write(cToG[userId[i]][1], "201804010700 201804141900", BUF_SZ);
-		}
-		
-		int seg=0;
-		for(i=0;i<n;i++){
-			char buf[2000];
-			memset(buf, 0, sizeof(buf));
-			read(gToC[userId[i]][0], buf, 2000);
-			printf("child: information from user %d [%s]\n", userId[i], buf);
-			write(cToG[userId[i]][1], "N", 3);
-			//storeToOccupy(buf, a, &seg);
-		}
-		cur=cur->next;
-	}
 }
