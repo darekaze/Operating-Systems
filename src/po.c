@@ -582,18 +582,20 @@ void scheduler_priority(Job **head_ref, char **wList, int t) {
 
 void scheduler_special(Job **head_ref, char **wList, int t) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
+    int tNew;
     
     scheduler_initJob(newJob, wList, t);
     if(*head_ref == NULL) 
         *head_ref = newJob;
     else {
-        if(countTotalTime(*head_ref) < countTotalTime(newJob)) {
+        tNew = countTotalTime(newJob);
+        if(countTotalTime(*head_ref) < tNew) {
             newJob->next = *head_ref;
             *head_ref = newJob;
         } else {
             temp = *head_ref;
             while(temp->next != NULL && 
-            countTotalTime(*head_ref) >= countTotalTime(newJob)){
+            countTotalTime(*head_ref) >= tNew){
                 temp = temp->next;
             }
             newJob->next = temp->next;
