@@ -6,7 +6,7 @@
 #include <string.h>
 
 #define MAX_INPUT_SZ 128
-#define BUF_SZ 80
+#define BUF_SZ 256
 #define TIME_SZ 50
 #define NORMAL_LENGTH 5
 #define CLASSES 1
@@ -604,21 +604,6 @@ void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], 
 	freeJob(rejectList);
 }
 
-int getTimeslot(char *buf) {
-	char **wList = malloc(sizeof(char*)*1);
-    int l;
-
-	strtok(buf, " ");
-	l = splitString(wList, buf);
-	int i = 0, ans = 0;
-	while(wList[++i]!=NULL){
-		ans = ans+(wList[i+1][8]-wList[i][8])*10+(wList[i+1][9]-wList[i][9]);
-		i++;
-	}
-    free(wList[l]);
-	return ans;
-}
-
 void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users, char *userList[]) {
 	int i, j;
 	int cToG[users][2],gToC[users][2];
@@ -660,7 +645,7 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		for(i=0;i<n;i++){
 			write(cToG[userId[i]][1], se, BUF_SZ);
 			memset(buf, 0, sizeof(buf));
-			read(gToC[userId[i]][0], buf, 1000);
+			read(gToC[userId[i]][0], buf, BUF_SZ);
 			if(buf[0]=='Y'){
 				if(i == n-1) { // The job can be accepted
 					for(j=0;j<n;j++){
@@ -686,15 +671,6 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		cur=cur->next;
 	}
 	
-	int tot=0; // Get total time slot
-	for(i=0;i<users;i++){
-		char buf[1000];
-		write(cToG[i][1], "201804010700 201804141900", BUF_SZ);
-		memset(buf, 0, sizeof(buf));
-		read(gToC[i][0], buf, 1000);
-		write(cToG[i][1], "N", BUF_SZ);
-		tot+=getTimeslot(buf);
-	}
 	//close grandchild process
 	for(i=0;i<users;i++){
 		write(cToG[i][1], "c", BUF_SZ);
@@ -1086,7 +1062,7 @@ void grandchildProcess(int a, int cToG[2], int gToC[2]) {
         char se[100];
         int l;
         memset(se,0,sizeof(se));
-        n = read(cToG[0], se, 100);
+        n = read(cToG[0], se, BUF_SZ);
         se[n] = 0;
         if(se[0] == 'c'){ // close the process
             freetree(root);
@@ -1103,7 +1079,7 @@ void grandchildProcess(int a, int cToG[2], int gToC[2]) {
         strcpy(begin, wList[0]);
         strcpy(end, wList[1]);
         if(addable(root,begin,end)){
-            write(gToC[1],"Y",3); // I have spare time to join
+            write(gToC[1],"Y",BUF_SZ); // I have spare time to join
         }
         else{
             char period[1000];
@@ -1113,7 +1089,7 @@ void grandchildProcess(int a, int cToG[2], int gToC[2]) {
 			memset(con, 0, sizeof(con));
             sprintf(con,"N %s",period);
 			con[strlen(con)-1]=0;
-            write(gToC[1],con,strlen(con)); // I do not have time
+            write(gToC[1],con,BUF_SZ); // I do not have time
         }
         char buf[BUF_SZ];
 		memset(buf, 0, sizeof(0));
