@@ -9,11 +9,10 @@
 #define BUF_SZ 80
 #define TIME_SZ 50
 #define NORMAL_LENGTH 5
-
 #define CLASSES 1
 #define MEETING 2
 #define GATHERING 3
-#define N_CHILD 3 // How many scheduler
+#define N_CHILD 3 	// How many scheduler
 
 typedef struct Extra {
     char name[20];
@@ -23,73 +22,68 @@ typedef struct Extra {
 typedef struct Job {
     int ssType;
     char owner[20];
-    int date; // YYYYMMDD
-    int startTime; // hr only
-    int endTime; // hr only
-    Extra *remark; // NULL by default
+    int date; 		// YYYYMMDD
+    int startTime; 	// hr only
+    int endTime; 	// hr only
+    Extra *remark; 	// NULL by default
     struct Job *next;
 } Job;
 
 typedef struct rbtnode{
-    int color; //Red: 0 Black: 1
+    int color; 		//Red: 0 Black: 1
     char begin[15];
     char end[15];
     struct rbtnode *left;
     struct rbtnode *right;
     struct rbtnode *parent;
-}rbtnode;
+} rbtnode;
 
 /* Prototype */
-void readInput(char (*));
-int splitString(char**, char (*));
-int checkType(char*);
-void debug_print(Job*);
+void readInput          (char(*));
+int splitString         (char**, char (*));
+int checkType           (char*);
+void debug_print        (Job*);
 void freeParticipantList(Extra*);
-int findUser(char *, int , char *[]);
-char* dateToString(int date, int time);
-void addToList(Job **head, Job *node);
-void copyJob(Job *, Job *);
+int findUser            (char*, int, char*[]);
+char* dateToString      (int, int);
+void addToList          (Job**, Job*);
+void copyJob            (Job*, Job*);
 
-void parent_checkUserNum(int, char *[]);
-void parent_write(char *, int [][2]);
-void parent_handler(char (*), char *[], int *, int [][2], int [][2], int);
-void parent_request(char *, char *[], int [][2], int);
-int parent_validate(char **, char *[], int, int);
-int parent_checkUserExist(char **, char* [], int, int);
-int parent_verifyUser(char *, char* []);
-int parent_verifyParticipant(char **, char *[], int);
-int parent_checkDuplicate(Extra **, char *);
-void parent_addBatch(char*, char*[], int [][2], int);
-void parent_askSchd(char *, char *[], int [][2]);
+void parent_checkUserNum    (int, char*[]);
+void parent_write           (char*, int[][2]);
+void parent_handler         (char(*), char*[], int*, int[][2], int[][2], int);
+void parent_request         (char*, char*[], int[][2], int);
+int parent_validate         (char**, char*[], int, int);
+int parent_checkUserExist   (char**, char*[], int, int);
+int parent_verifyUser       (char*, char*[]);
+int parent_verifyParticipant(char**, char*[], int);
+int parent_checkDuplicate   (Extra**, char*);
+void parent_addBatch        (char*, char*[], int[][2], int);
+void parent_askSchd         (char*, char*[], int[][2]);
 
-void scheduler_base(int, int, int, int, char *[]);
-void scheduler_initJob(Job *, char **, int);
-void scheduler_selector(int, Job **, char **, int);
-void scheduler_fcfs(Job **, char **, int);
-void scheduler_priority(Job **, char **, int);
-void scheduler_special(Job **, char **, int);
-void scheduler_print(Job *, Job **, Job **, int, char *[]);
-void scheduler_exct(int, int, Job *, char *[], char **, int);
+void scheduler_base         (int, int, int, int, char*[]);
+void scheduler_initJob      (Job*, char**, int);
+void scheduler_selector     (int, Job**, char**, int);
+void scheduler_fcfs         (Job**, char**, int);
+void scheduler_priority     (Job**, char**, int);
+void scheduler_special      (Job**, char**, int);
+void scheduler_print        (Job*, Job**, Job**, int, char*[]);
+void scheduler_exct         (int, int, Job*, char*[], char**, int);
 
-void printer_userSchedule(int, char *, char *, Job *);
-void printer_report(int, char *, int, Job *, Job *, int);
-void printer_outputJob(Job *, FILE *, char*);
+void printer_userSchedule   (int, char *, char *, Job *);
+void printer_report         (int, char *, int, Job *, Job *, int);
+void printer_outputJob      (Job *, FILE *, char*);
 
-rbtnode* leftRotate(rbtnode *root, rbtnode *x);
-rbtnode* rightRotate(rbtnode *root, rbtnode *y);
-int addable(rbtnode *root, char *begin, char *end);
-char* minstr(char *a, char *b);
-char* maxstr(char *a, char *b);
-void conflict(rbtnode *node, char *begin, char *end, char *period);
-rbtnode* insert(rbtnode *root, char *begin, char *end);
-rbtnode* insert_fixup(rbtnode *root, rbtnode *node);
-void freetree(rbtnode *node);
-void grandchildProcess(int a, int cToG[2], int gToC[2]);
-
-//rescheduler
-void rescheduler(Job *jobList, Job **acceptList, Job **rejectList, int users, char *userList[]);
-
-
+rbtnode* leftRotate         (rbtnode *root, rbtnode *x);
+rbtnode* rightRotate        (rbtnode *root, rbtnode *y);
+int addable                 (rbtnode *root, char *begin, char *end);
+char* minstr                (char *a, char *b);
+char* maxstr                (char *a, char *b);
+void conflict               (rbtnode *node, char *begin, char *end, char *period);
+rbtnode* insert             (rbtnode *root, char *begin, char *end);
+rbtnode* insert_fixup       (rbtnode *root, rbtnode *node);
+void freetree               (rbtnode *node);
+void grandchildProcess      (int a, int cToG[2], int gToC[2]);
 
 /*-------Main-------*/
 int main(int argc, char *argv[]) {
@@ -98,15 +92,13 @@ int main(int argc, char *argv[]) {
     int pid, i, j;
 
     parent_checkUserNum(--argc, ++argv);
-    // Pipes
-    for(i = 0; i < N_CHILD; i++) {
+    for(i = 0; i < N_CHILD; i++) { // Pipes
         if(pipe(toChild[i]) < 0 || pipe(toParent[i]) < 0) {
             printf("Pipe creation error\n");
             exit(1);
         }
     }
-    // Fork
-    for(i = 0; i < N_CHILD; i++) {
+    for(i = 0; i < N_CHILD; i++) { // Fork
         pid = fork();
         if(pid < 0) {
             printf("Error");
@@ -115,8 +107,7 @@ int main(int argc, char *argv[]) {
         else if (pid == 0) { /* child */
             close(toChild[i][1]);
 			close(toParent[i][0]);
-			
-			// read: toChild[i][0] write: toParent[i][1]
+
             scheduler_base(i, toChild[i][0], toParent[i][1], argc, argv);
 			
             close(toChild[i][0]);
@@ -135,7 +126,6 @@ int main(int argc, char *argv[]) {
 		}
         while(loop) {
             readInput(cmd);
-			//printf("parent: the user input is [%s]. \n", cmd);
             parent_handler(cmd, argv, &loop, toChild, toParent, argc);
         }
         for(j = 0; j < N_CHILD; j++) { 
@@ -143,10 +133,9 @@ int main(int argc, char *argv[]) {
 			close(toParent[j][0]);
 		}
     }
-    /* prevent zombie */
+    /* wait for all child */
     for(i = 0; i < N_CHILD; i++)
         waitpid(shut_down[i], NULL, 0);
-    
     printf("-> Bye!!!!!!\n");
     return 0;
 }
@@ -218,19 +207,18 @@ void freeParticipantList(Extra *head_ref) {
     }
 }
 
-void freeJob(Job* node)
-{
+void freeJob(Job* node) {
 	Job *temp;
-	while(node!=NULL){
-		temp=node;
-		node=node->next;
+	while(node != NULL){
+		temp = node;
+		node = node->next;
 		freeParticipantList(temp->remark);
 		free(temp);
 	}
 }
 
 void debug_print(Job *head) {
-	Job *cur=head;
+	Job *cur = head;
     while(cur != NULL) {
         printf("%d %s %d %d %d ", cur->ssType, cur->owner, cur->date, cur->startTime, cur->endTime);
 		Extra *tex = cur->remark;
@@ -254,28 +242,26 @@ char* dateToString(int date, int time) {
 void addToList(Job **head, Job *node) {
     if(*head == NULL) {
         *head=node;
-    }
-    else{
+    } else {
         Job *cur=*head;
-        while(cur->next != NULL) {
+        while(cur->next != NULL)
             cur=cur->next;
-        }
         cur->next=node;
     }
 }
 
 int checkSchd(char *schd) {
-    if (strcmp(schd, "fcfs") == 0)      return 0;
-    else if (strcmp(schd, "pr") == 0)    return 1;
-    else if (strcmp(schd, "special") == 0)    return 2;
+    if      (strcmp(schd, "fcfs") == 0)     return 0;
+    else if (strcmp(schd, "pr") == 0)       return 1;
+    else if (strcmp(schd, "special") == 0)  return 2;
     return -1;
 }
 
 char *schdName(int schedulerID) {
     switch(schedulerID) {
         case 0: return "First Come First Serve"; break;
-        case 1: return "Priority"; break;
-        case 2: return "Special"; break;
+        case 1: return "Priority";               break;
+        case 2: return "Special";                break;
         default: return NULL;
     }
 }
@@ -283,9 +269,8 @@ char *schdName(int schedulerID) {
 int findUser(char *name, int users, char *userList[]) {
     int i;
     for(i=0;i<users;i++){
-        if(strcmp(userList[i],name)==0){
+        if(strcmp(userList[i],name)==0)
             return i;
-        }
     }
     return -1;
 }
@@ -317,10 +302,8 @@ void parent_checkUserNum(int num, char *users[]) {
 
 void parent_write(char *str, int toChild[][2]) {
     int i;
-    for(i = 0; i < N_CHILD; i++) {
-        //printf("P: send [%s] to child %d\n", str, i);
+    for(i = 0; i < N_CHILD; i++)
         write(toChild[i][1], str, MAX_INPUT_SZ);
-    }
 }
 
 void parent_repo(char *cmd, int toChild[][2], int toParent[][2]) {
@@ -337,10 +320,8 @@ void parent_repo(char *cmd, int toChild[][2], int toParent[][2]) {
 	}
 	
 	for(i=0;i<N_CHILD;i++){
-		printf("P: send [%s] to child %d\n", str, i);
         write(toChild[i][1], str, MAX_INPUT_SZ);
 		read(toParent[i][0], temp, MAX_INPUT_SZ);
-		printf("P: receive [%s] from child %d\n", temp, i);
 	}
 }
 
@@ -352,20 +333,19 @@ void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int
     strcpy(str, cmd);
     strtok(cmd," ");
     t = checkType(cmd);
-	//printf("parent: I am in the handler. %d\n", t);
     switch(t) {
         case 1: case 2: case 3:
-            parent_request(str, users, toChild, user);    break;
+            parent_request(str, users, toChild, user);  break;
         case 4:
-            parent_addBatch(str, users, toChild, user);   break;
+            parent_addBatch(str, users, toChild, user); break;
         case 5:
-            parent_askSchd(str, users, toChild);    break;
+            parent_askSchd(str, users, toChild);        break;
         case 6:
-            parent_repo(str, toChild, toParent);    break;
+            parent_repo(str, toChild, toParent);        break;
         case 0: 
-            parent_write(str, toChild); *loop = 0;  break;
+            parent_write(str, toChild); *loop = 0;      break;
         default:
-            printf("Unrecognized command.\n");      break;
+            printf("Unrecognized command.\n");          break;
     }
 }
 
@@ -410,7 +390,7 @@ int parent_validate(char **wList, char *users[], int t, int user) {
     int tStart = atoi(wList[3]) / 100;
     int cStart = atoi(wList[3]) % 100;
 	
-    if(atoi(wList[2]) < 20180401 || atoi(wList[2]) > 20180414) printf("Error: Invalid Date\n");
+    if(atoi(wList[2]) < 20180401 || atoi(wList[2]) > 20180414)      printf("Error: Invalid Date\n");
 	else if(cStart != 0 || (tStart < 8 || tStart > 17))             printf("Error: Invalid Starting Time\n");
     else if (atoi(wList[4]) < 1 || (atoi(wList[4]) + tStart) > 18)  printf("Error: Invalid Duration\n");
     else return parent_checkUserExist(wList, users, t, user);
@@ -426,9 +406,6 @@ int parent_checkUserExist(char **wList, char* users[], int t, int user) {
     else if(wList[NORMAL_LENGTH] != NULL) 
         usersValid = 0;
 
-	if(ownerValid == 0) {
-		printf("gg\n");
-	}
     return (ownerValid && usersValid);
 }
 
@@ -442,12 +419,11 @@ int parent_verifyUser(char* name, char* users[]) {
 int parent_verifyParticipant(char **wList, char* users[], int user) {
     int l = NORMAL_LENGTH -1;
     int res = 1;
-    // Extra *usersList = NULL;
+
     while(wList[++l] != NULL) {
-        if(findUser(wList[l], user, users) == -1) res=0; 
+        if(findUser(wList[l], user, users) == -1) res = 0; 
     }
-    if(l <= NORMAL_LENGTH) res = 0; // no participant means useless
-    // freeParticipantList(usersList); // free the list
+    if(l <= NORMAL_LENGTH) res = 0;
     return res;
 }
 
@@ -482,7 +458,7 @@ void parent_addBatch(char *cmd, char *users[], int toChild[][2], int user) {
         return;
     }
     while (getline(&line, &len, fp) != -1) {
-        if ((strlen(line) > 0) && (line[strlen(line) - 1] == '\n'))
+        if (strlen(line) > 0 && (line[strlen(line) - 1] == '\n')) // LF only
             line[strlen(line) - 1] = '\0';
         parent_request(line, users, toChild, user);
     }
@@ -499,15 +475,11 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
         char cmdBuf[MAX_INPUT_SZ];
 		memset(cmdBuf, 0, sizeof(cmdBuf));
         char **wList = malloc(sizeof(char*) * 1);
-        char ty[20] = "";
         int t;
-		//printf("		child %d: I am waiting to read\n", schedulerID);
+
         read(fromParent, cmdBuf, MAX_INPUT_SZ);
-		//printf("   child %d: read %s\n", schedulerID, cmdBuf);
-		
         strtok(cmdBuf, " ");
-        int n=splitString(wList, cmdBuf);
-		
+        splitString(wList, cmdBuf);
         t = checkType(wList[0]);
 		switch(t) {
             case 1: case 2: case 3:
@@ -519,12 +491,11 @@ void scheduler_base(int schedulerID, int fromParent, int toParent, int users, ch
             case 0:
                 loop = 0; break;
             default:
-                printf("Meh..child\n"); loop = 0;
+                printf("Child: Unknown input\n"); // loop = 0;
                 break;
         }
-		//printf("		child %d: I am in the scheduler base loop: %d\n", schedulerID, loop);
     }
-    debug_print(jobList);
+    // debug_print(jobList);
     freeJob(jobList);
 }
 
@@ -549,12 +520,10 @@ void scheduler_initJob(Job *newJob, char **wList, int t) {
     newJob->date = atoi(wList[2]);
     newJob->startTime = atoi(wList[3]) / 100;
     newJob->endTime = newJob->startTime + atoi(wList[4]);
-
     newJob->remark = NULL;
     while(wList[++l] != NULL) {
         addParticipant(&(newJob->remark), wList[l]);
     }
-        
     newJob->next = NULL;
 }
 
@@ -563,15 +532,17 @@ void scheduler_fcfs(Job **head_ref, char **wList, int t) {
     
     scheduler_initJob(newJob, wList, t);
     if(*head_ref == NULL) {
-        // newJob->next = *head_ref;
         *head_ref = newJob;
     } else {
-		if((*head_ref)->date > newJob->date ||((*head_ref)->date == newJob->date && (*head_ref)->startTime > newJob->startTime)) {
+		if((*head_ref)->date > newJob->date ||
+        ((*head_ref)->date == newJob->date && (*head_ref)->startTime > newJob->startTime)) {
 			newJob->next = *head_ref;
 			*head_ref = newJob;
 		} else {
 			temp = *head_ref;
-			while(temp->next != NULL && ( (temp->next->date < newJob->date) || (temp->next->date == newJob->date && temp->next->startTime <= newJob->startTime)) ){
+			while(temp->next != NULL && 
+            ((temp->next->date < newJob->date) || 
+            (temp->next->date == newJob->date && temp->next->startTime <= newJob->startTime)) ){
 				temp = temp->next;
 			}
 			newJob->next = temp->next;
@@ -583,8 +554,7 @@ void scheduler_fcfs(Job **head_ref, char **wList, int t) {
 void scheduler_priority(Job **head_ref, char **wList, int t) {
 	Job *temp, *newJob = (Job*)malloc(sizeof(Job));
     
-    scheduler_initJob(newJob, wList, t); // input data 
-
+    scheduler_initJob(newJob, wList, t); 
     if(*head_ref == NULL || (*head_ref)->ssType > newJob->ssType) {
         newJob->next = *head_ref;
         *head_ref = newJob;
@@ -601,25 +571,26 @@ void scheduler_priority(Job **head_ref, char **wList, int t) {
 void scheduler_special(Job **head_ref, char **wList, int t) {
     Job *temp, *newJob = (Job*)malloc(sizeof(Job));
     
-    scheduler_initJob(newJob, wList, t); // input data 
-
-    if(*head_ref == NULL 
-    || ((*head_ref)->ssType > newJob->ssType &&
-        (*head_ref)->endTime - (*head_ref)->startTime < newJob->endTime - newJob->startTime)) {
+    scheduler_initJob(newJob, wList, t);
+    if(*head_ref == NULL) 
+        *head_ref = newJob;
+    else {
+        if(((*head_ref)->ssType > newJob->ssType || (
+            (*head_ref)->ssType == newJob->ssType && 
+            ((*head_ref)->endTime - (*head_ref)->startTime < newJob->endTime - newJob->startTime)
+        ))) {
         newJob->next = *head_ref;
         *head_ref = newJob;
-    } else {
-        temp = *head_ref;
-        while(temp->next != NULL && (temp->next->ssType < newJob->ssType) ){
-            temp = temp->next;
+        } else {
+            temp = *head_ref;
+            while(temp->next != NULL && (temp->next->ssType < newJob->ssType ||
+            (temp->next->ssType == newJob->ssType &&
+            temp->next->endTime - temp->next->startTime >= newJob->endTime - newJob->startTime))){
+                temp = temp->next;
+            }
+            newJob->next = temp->next;
+            temp->next = newJob;
         }
-        while(temp->next != NULL &&
-         (temp->next->ssType == newJob->ssType &&
-          temp->endTime - temp->startTime > newJob->endTime - newJob->startTime)){
-            temp = temp->next;
-        }
-        newJob->next = temp->next;
-        temp->next = newJob;
     }
 }
 
@@ -628,41 +599,31 @@ void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], 
 	Job *rejectList=NULL;
 	int t = checkType(wList[0]);
     scheduler_print(jobList, &acceptList, &rejectList, users, userList);
-    // No need to check schd as already done in parent
-	if(t == 5){
-        printf("S %d: Begin print. \n", schedulerID);
-        printer_userSchedule(schedulerID, wList[1], wList[3], acceptList);
-        printf("S %d: Finished. \n", schedulerID);
-	} else {
-		printf("S %d: Begin print. \n", schedulerID);
-        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users);
-		printf("S %d: Finished. \n", schedulerID);
-	}
+
+    // TODO: check isFile duplicate (true -> need to change title)
+
+	if(t == 5)  printer_userSchedule(schedulerID, wList[1], wList[3], acceptList);
+	else        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users);
 	freeJob(acceptList);
 	freeJob(rejectList);
 }
 
-int getTimeslot(char *buf)
-{
-	char **wList=malloc(sizeof(char*)*1);
+int getTimeslot(char *buf) {
+	char **wList = malloc(sizeof(char*)*1);
 	strtok(buf, " ");
 	splitString(wList, buf);
-	int i=0;
-	int ans=0;
+	int i = 0, ans = 0;
 	while(wList[++i]!=NULL){
-		ans=ans+(wList[i+1][8]-wList[i][8])*10+(wList[i+1][9]-wList[i][9]);
+		ans = ans+(wList[i+1][8]-wList[i][8])*10+(wList[i+1][9]-wList[i][9]);
 		i++;
 	}
 	return ans;
 }
 
 void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users, char *userList[]) {
-	printf("The job list is: \n");
-	debug_print(jobList); 
-	
 	int i, j;
 	int cToG[users][2],gToC[users][2];
-	// grandChild process
+	/* grandChild process */
 	for(i=0;i<users;i++){
 		if(pipe(cToG[i])<0 || pipe(gToC[i])<0) {
 			printf("Create pipe error...\n");
@@ -683,7 +644,6 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 	//get acceptList and rejectList
 	Job *cur=jobList;
 	while(cur!=NULL){
-		printf("child %d: current job is %s\n",getpid(),cur->owner);
 		char se[BUF_SZ], buf[1000], start[BUF_SZ], end[BUF_SZ];
 		memset(se,0,sizeof(se));
 		strcpy(start, dateToString(cur->date, cur->startTime));
@@ -694,7 +654,7 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		userId[0]=findUser(cur->owner, users, userList);
 		int n=1;
 		Extra *now=cur->remark;
-		while(now!=NULL){
+		while(now != NULL){
 			userId[n++]=findUser(now->name, users, userList);
 			now=now->next;
 		}
@@ -702,31 +662,25 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 			write(cToG[userId[i]][1], se, BUF_SZ);
 			memset(buf, 0, sizeof(buf));
 			read(gToC[userId[i]][0], buf, 1000);
-			printf("child: from user %d [%s]\n",userId[i], buf);
 			if(buf[0]=='Y'){
-				if(i==n-1){
-					printf("This job will be accepted.\n");
-					//The job can be accepted
+				if(i == n-1) { // The job can be accepted
 					for(j=0;j<n;j++){
 						write(cToG[userId[j]][1], "Y", BUF_SZ);
 					}
 					Job* node = (Job*)malloc(sizeof(Job)*1);
 					copyJob(node, cur);
 					addToList(acceptList, node);
-					printf("Accepted! \n");
+					// printf("Accepted! \n");
 				}
 			}
-			else{
-				printf("This job will be rejected.\n");
-				//The job cannot be accepted
+			else { // The job cannot be accepted
 				for(j=0;j<=i;j++){
 					write(cToG[userId[j]][1], "N", BUF_SZ);
 				}
-				printf("user rejected.\n");
 				Job *node = (Job*)malloc(sizeof(Job)*1);
 				copyJob(node, cur);
 				addToList(rejectList, node);
-				printf("Rejected! \n");
+				// printf("Rejected! \n");
 				break;
 			}
 		}
@@ -734,7 +688,7 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 	}
 	
 	int tot=0;
-	//get total time slot
+	// Get total time slot
 	for(i=0;i<users;i++){
 		char buf[1000];
 		write(cToG[i][1], "201804010700 201804141900", BUF_SZ);
@@ -755,11 +709,10 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 		close(cToG[i][1]);
 		close(gToC[i][0]);
 	}
-	
-	printf("(%d)The accept list is: \n",getpid());
-	debug_print(*acceptList);
-	printf("(%d)The reject list is: \n",getpid());
-	debug_print(*rejectList);
+	// printf("(%d)The accept list is: \n",getpid());
+	// debug_print(*acceptList);
+	// printf("(%d)The reject list is: \n",getpid());
+	// debug_print(*rejectList);
 }
 
 /* Printer part */
@@ -769,7 +722,6 @@ void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *
     char *schedulerName;
     Job *temp;
 
-    // TODO: check isFile duplicate (true -> need to change title)
     f = fopen(fileName, "w");
     if (f == NULL) {
         printf("Error opening file\n"); return;
@@ -778,7 +730,6 @@ void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *
     temp = acceptList;
     while(temp != NULL) {
 		isExist = 0;
-		printf("o: %s / user: %s\n", temp->owner, userName);
         if(strcmp(temp->owner, userName) == 0) isExist = 1;
         else {
             Extra *tex = temp->remark;
@@ -795,12 +746,11 @@ void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *
         }
         temp = temp->next;
     }
-
     fprintf(f, "Personal Organizer\n***Appointment Schedule***\n\n"
         "%s, you have %d appointments\n"
         "Algorithm used: %s\n"
         "%d timeslots occupied.\n\n"
-        "Date     Start     End     Type    Remarks\n"
+        "   Date      Start    End     Type      Remarks\n"
         "=========================================================\n"
     ,userName, eventCount, schedulerName, slotUsed);
 
@@ -831,7 +781,6 @@ void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptLi
     int slotUsed = 0, maxSlot = num * 14 * 10;
     char *schedulerName;
     Job *temp = NULL;
-    // TODO: check isFile duplicate (true -> need to change title)
 	
     f = fopen(fileName, "a");
     if (f == NULL) {
@@ -848,13 +797,11 @@ void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptLi
         rejectCount++;
         temp = temp->next;
     }
-	
-	
     fprintf(f, "Personal Organizer\n***Schedule Report***\n\n"
         "Algorithm used: %s\n"
         "***Accept List***\n"
         "There are %d requests accepted.\n"
-        "Date     Start     End     Type    Remarks\n"
+        "   Date      Start    End     Type      Remarks\n"
         "=========================================================\n"
     , schedulerName, acceptCount);
     temp = acceptList;
@@ -869,12 +816,11 @@ void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptLi
         printer_outputJob(temp, f, NULL);
         temp = temp->next;
     }
-	printf("Hi\n");
     fprintf(f, "\n"
         "=========================================================\n\n"
         "***Reject List***\n"
         "There are %d requests rejected.\n"
-        "Date\tStart\tEnd\tType\tRemarks\n"
+        "   Date      Start    End     Type      Remarks\n"
         "=========================================================\n"
     , rejectCount);
     temp = rejectList;
@@ -882,14 +828,13 @@ void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptLi
         printer_outputJob(temp, f, NULL);
         temp = temp->next;
     }
-
     fprintf(f, "\n"
         "=========================================================\n"
         "Total number of request:    %d\n"
         "Timeslot in use:            %d\n"
         "Timeslot not in use:        %d\n"
         "Utilization:                %d%%\n"
-        "\n\t- End -\n"
+        "\n\t- End -\n\n\n"
     , acceptCount + rejectCount,slotUsed, maxSlot-slotUsed, (slotUsed*100)/maxSlot);
     fclose(f);
     write(toParent, "Finished", BUF_SZ); // fin
@@ -910,17 +855,17 @@ void printer_outputJob(Job *curr, FILE *f, char *userName) {
     if(curr->endTime < 10) sprintf(start, "0%d:00", curr->endTime);
     else sprintf(end, "%d:00", curr->endTime);
     switch(curr->ssType) {
-        case CLASSES:   strcpy(type, "Class");      break;
-        case MEETING:   strcpy(type, "Meeting");    break;
+        case CLASSES:   strcpy(type, "Class    ");      break;
+        case MEETING:   strcpy(type, "Meeting  ");    break;
         case GATHERING: strcpy(type, "Gathering");  break;
     }
-    if(userName == NULL) { // report
+    if(userName == NULL) { // Report
         sprintf(remark, "%s", curr->owner);
         while(tex != NULL) {
             sprintf(remark, "%s %s", remark, tex->name);
             tex = tex->next;
         }
-    } else if(strcmp(userName, curr->owner) == 0) { // owner
+    } else if(strcmp(userName, curr->owner) == 0) { // Owner
         if(tex == NULL) strcpy(remark, "-");
         else {
             sprintf(remark, "%s", tex->name);
@@ -930,7 +875,7 @@ void printer_outputJob(Job *curr, FILE *f, char *userName) {
                 tex = tex->next;
             }  
         }
-    } else { // participant
+    } else { // Participant
         sprintf(remark, "%s", curr->owner);
         while(tex != NULL) {
             if(strcmp(userName, tex->name) != 0)
@@ -938,12 +883,11 @@ void printer_outputJob(Job *curr, FILE *f, char *userName) {
             tex = tex->next;
         }  
     }
-    fprintf(f, "%s-%s-%s   %s   %s   %s      %s\n", YY, MM, DD, start, end, type, remark);
+    fprintf(f, "%s-%s-%s   %s   %s   %s\t%s\n", YY, MM, DD, start, end, type, remark);
 }
 
 /*-------------Grandchild process-------------*/
-rbtnode* leftRotate(rbtnode *root, rbtnode *x)
-{
+rbtnode* leftRotate(rbtnode *root, rbtnode *x) {
     rbtnode *y=x->right;
     x->right=y->left;
     if(y->left!=NULL) y->left->parent=x;
@@ -960,7 +904,7 @@ rbtnode* leftRotate(rbtnode *root, rbtnode *x)
 	return root;
 }
 
-rbtnode* rightRotate(rbtnode *root, rbtnode *y){
+rbtnode* rightRotate(rbtnode *root, rbtnode *y) {
     rbtnode *x=y->left;
     y->left=x->right;
     if(x->right!=NULL) x->right->parent=y;
@@ -978,8 +922,7 @@ rbtnode* rightRotate(rbtnode *root, rbtnode *y){
 }
 
 /*Check whether the time can be added*/
-int addable(rbtnode *root, char *begin, char *end)
-{
+int addable(rbtnode *root, char *begin, char *end) {
     rbtnode *cur=root;
     while(cur!=NULL){
         if(strcmp(end,cur->begin)<=0){
@@ -993,24 +936,21 @@ int addable(rbtnode *root, char *begin, char *end)
     return 1;
 }
 
-char* minstr(char *a, char *b)
-{
+char* minstr(char *a, char *b) {
     static char *ans;
     if(strcmp(a,b)<0) strcpy(ans,a);
     else strcpy(ans,b);
     return ans;
 }
 
-char* maxstr(char *a, char *b)
-{
+char* maxstr(char *a, char *b) {
     static char *ans;
     if(strcmp(a,b)>0) strcpy(ans,a);
     else strcpy(ans,b);
     return ans;
 }
 
-void conflict(rbtnode *node, char *begin, char *end, char *period)
-{
+void conflict(rbtnode *node, char *begin, char *end, char *period) {
 	if(node==NULL) return ;
     rbtnode *cur=node;
 	if(strcmp(end, cur->begin)<=0){
@@ -1052,8 +992,7 @@ void conflict(rbtnode *node, char *begin, char *end, char *period)
 	}
 }
 
-rbtnode* insert(rbtnode *root, char *begin, char *end)
-{
+rbtnode* insert(rbtnode *root, char *begin, char *end) {
     rbtnode *node=(rbtnode*)malloc(sizeof(rbtnode));
     strcpy(node->begin,begin);
     strcpy(node->end,end);
@@ -1078,8 +1017,7 @@ rbtnode* insert(rbtnode *root, char *begin, char *end)
 	return root;
 }
 
-rbtnode* insert_fixup(rbtnode *root, rbtnode *node)
-{
+rbtnode* insert_fixup(rbtnode *root, rbtnode *node) {
     rbtnode *parent,*gparent;
     while((parent=node->parent) && (parent->color==0)){
         gparent=parent->parent;
@@ -1128,24 +1066,21 @@ rbtnode* insert_fixup(rbtnode *root, rbtnode *node)
 	return root;
 }
 
-void freetree(rbtnode *node)
-{
+void freetree(rbtnode *node) {
     if(node==NULL) return;
     freetree(node->left);
     freetree(node->right);
     free(node);
 }
 
-void preorder(rbtnode *cur)
-{
+void preorder(rbtnode *cur) {
 	if(cur==NULL) return;
 	preorder(cur->left);
 	printf("%s %s\n",cur->begin,cur->end);
 	preorder(cur->right);
 }
 
-void grandchildProcess(int a, int cToG[2], int gToC[2])
-{
+void grandchildProcess(int a, int cToG[2], int gToC[2]) {
     rbtnode *root=NULL;
     int n;
     close(cToG[1]);
@@ -1155,8 +1090,7 @@ void grandchildProcess(int a, int cToG[2], int gToC[2])
         memset(se,0,sizeof(se));
         n = read(cToG[0], se, 100);
         se[n] = 0;
-        if(se[0] == 'c'){
-            // close the process
+        if(se[0] == 'c'){ // close the process
             freetree(root);
             close(cToG[0]);
             close(gToC[0]);
@@ -1171,7 +1105,7 @@ void grandchildProcess(int a, int cToG[2], int gToC[2])
         strcpy(begin, wList[0]);
         strcpy(end, wList[1]);
         if(addable(root,begin,end)){
-            write(gToC[1],"Y",3); //I have spare time to join
+            write(gToC[1],"Y",3); // I have spare time to join
         }
         else{
             char period[1000];
@@ -1181,17 +1115,15 @@ void grandchildProcess(int a, int cToG[2], int gToC[2])
 			memset(con, 0, sizeof(con));
             sprintf(con,"N %s",period);
 			con[strlen(con)-1]=0;
-            write(gToC[1],con,strlen(con)); //I do not have time
+            write(gToC[1],con,strlen(con)); // I do not have time
         }
         char buf[BUF_SZ];
 		memset(buf, 0, sizeof(0));
         read(cToG[0],buf,BUF_SZ);
-        if(buf[0]=='Y'){
-            //add it to my time schedule
+        if(buf[0]=='Y'){ // add it to my time schedule
             root=insert(root,begin,end);
         }
 		//printf("%d My current tree is: \n",a);
 		//preorder(root);
-		
     }
 }
