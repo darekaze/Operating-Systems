@@ -39,10 +39,10 @@ typedef struct rbtnode{
 } rbtnode;
 
 /* Prototype */
+void debug_print        (Job*);
 void readInput          (char(*));
 int splitString         (char**, char (*));
 int checkType           (char*);
-void debug_print        (Job*);
 void freeParticipantList(Extra*);
 int findUser            (char*, int, char*[]);
 char* dateToString      (int, int);
@@ -50,6 +50,10 @@ void addToList          (Job**, Job*);
 void copyJob            (Job*, Job*);
 int countTotalTime      (Job*);
 void addParticipant     (Extra**, char*);
+Job *getTail            (Job *);
+Job *partition          (Job *, Job *, Job **, Job **);
+Job *quickSortRecur     (Job *, Job *);
+void quickSort          (Job **);
 
 void parent_checkUserNum    (int, char*[]);
 void parent_write           (char*, int[][2]);
@@ -89,6 +93,7 @@ void grandchildProcess      (int, int[], int[]);
 void deleteNode(Job **, Job *);
 void reschd(Job **, Job **, int[][2], int[][2],int, char *[]);
 
+/*---------------------------*/
 /*-------Main-------*/
 int main(int argc, char *argv[]) {
     int toChild[N_CHILD][2], toParent[N_CHILD][2];
@@ -176,6 +181,20 @@ int checkType(char *cmd) {
     else if (strcmp(cmd, "printSchd") == 0)     return 5;
     else if (strcmp(cmd, "printReport") == 0)   return 6;
     return -1;
+}
+
+void debug_print(Job *head) {
+	Job *cur = head;
+    while(cur != NULL) {
+        printf("%d %s %d %d %d ", cur->ssType, cur->owner, cur->date, cur->startTime, cur->endTime);
+		Extra *tex = cur->remark;
+		while(tex != NULL) {
+			printf("%s ", tex->name);
+			tex = tex->next; 
+		}
+		printf("\n");
+		cur = cur->next;
+    }
 }
 
 void initParticipant(Extra *newUser, char *userName) {
@@ -291,6 +310,60 @@ int countTotalTime(Job *event) {
         temp = temp->next;
     }
     return res;
+}
+
+Job *getTail(Job *cur) {
+    while (cur != NULL && cur->next != NULL)
+        cur = cur->next;
+    return cur;
+}
+
+Job *partition(Job *head, Job *end, Job **newHead, Job **newEnd) {
+    Job *pivot = end;
+    Job *prev = NULL, *cur = head, *tail = pivot;
+    while (cur != pivot) {
+        if (cur->date < pivot->date || 
+        (cur->date == pivot->date && cur->startTime < pivot->startTime) || 
+        (cur->date == pivot->date && cur->startTime == pivot->startTime && cur->endTime < pivot->endTime)) {
+            if ((*newHead) == NULL)
+                (*newHead) = cur;
+            prev = cur;  
+            cur = cur->next;
+        } else {
+            if (prev) prev->next = cur->next;
+            Job *tmp = cur->next;
+            cur->next = NULL;
+            tail->next = cur;
+            tail = cur;
+            cur = tmp;
+        }
+    }
+    if ((*newHead) == NULL)
+        (*newHead) = pivot;
+    (*newEnd) = tail;
+    return pivot;
+}
+ 
+Job *quickSortRecur(Job *head, Job *end) {
+    if (!head || head == end) return head;
+    Job *newHead = NULL, *newEnd = NULL;
+    Job *pivot = partition(head, end, &newHead, &newEnd);
+    if (newHead != pivot) {
+        Job *tmp = newHead;
+        while (tmp->next != pivot)
+            tmp = tmp->next;
+        tmp->next = NULL;
+        newHead = quickSortRecur(newHead, tmp);
+        tmp = getTail(newHead);
+        tmp->next =  pivot;
+    }
+    pivot->next = quickSortRecur(pivot->next, newEnd);
+    return newHead;
+}
+ 
+void quickSort(Job **headRef) {
+    (*headRef) = quickSortRecur(*headRef, getTail(*headRef));
+    return;
 }
 
 /*-------Parent_part-------*/
@@ -587,11 +660,14 @@ void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], 
     while(wList[++i]!=NULL){
 		if(strcmp(wList[i], "reschedule")==0){
 			scheduler_print(jobList, &acceptList, &rejectList, users, userList, 1);
-			flag=0;
+			flag = 0;
 			break;
 		}
 	}
-    if(flag)    scheduler_print(jobList, &acceptList, &rejectList, users, userList, 0);
+    if(flag) scheduler_print(jobList, &acceptList, &rejectList, users, userList, 0); // Reschedule
+    // quickSort(&acceptList);
+    // quickSort(&rejectList);
+
 	if(t == 5)  printer_userSchedule(schedulerID, wList[1], wList[3], acceptList);
 	else        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users);
 	freeJob(acceptList);
