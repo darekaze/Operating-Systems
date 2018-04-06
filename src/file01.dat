@@ -1,0 +1,60 @@
+addGathering kate 20180414 1600 1 amy tom
+addClass tom 20180404 1000 6
+addMeeting tom 20180405 1100 5 kate
+addGathering amy 20180413 1100 7 kate tom
+addGathering amy 20180405 1400 4 tom simon kate
+addClass amy 20180402 0900 6
+addMeeting amy 20180411 1200 1 simon kate tom
+addGathering kate 20180403 0900 1 tom simon amy
+addGathering tom 20180408 1000 6 kate
+addGathering simon 20180410 1700 1 amy
+addGathering tom 20180414 1500 3 simon kate amy
+addMeeting amy 20180411 1100 6 kate simon
+addGathering kate 20180413 0900 9 amy
+addClass tom 20180412 0900 6
+addClass amy 20180413 1100 2
+addGathering simon 20180404 1100 7 kate amy tom
+addClass tom 20180412 1600 1
+addClass amy 20180403 0900 7
+addClass simon 20180413 0800 6
+addGathering kate 20180409 1100 6 simon
+addClass amy 20180414 0800 10
+addMeeting kate 20180406 1400 4 simon tom amy
+addGathering kate 20180410 0900 7 simon
+addMeeting tom 20180414 1100 1 amy simon kate
+addClass simon 20180407 0800 3
+addGathering simon 20180409 1000 2 tom amy kate
+addGathering simon 20180405 1300 3 tom
+addClass kate 20180403 1000 3
+addMeeting simon 20180406 0800 1 kate
+addGathering kate 20180413 1100 1 tom amy
+addGathering amy 20180410 1100 3 simon tom
+addClass kate 20180414 0800 3
+addClass kate 20180412 0900 1
+addMeeting tom 20180407 1000 6 simon amy
+addGathering amy 20180408 1000 2 tom simon
+addMeeting simon 20180408 1300 4 amy tom
+addGathering kate 20180412 1300 3 amy simon tom
+addGathering simon 20180404 1300 3 tom kate
+addMeeting kate 20180407 1100 6 tom
+addClass amy 20180403 1400 1
+addGathering kate 20180413 0900 8 tom
+addGathering tom 20180406 1000 1 amy
+addMeeting tom 20180414 1200 2 kate amy simon
+addGathering kate 20180401 1100 3 simon tom
+addGathering kate 20180409 0800 2 tom
+addClass kate 20180412 0800 9
+addMeeting amy 20180402 1600 1 kate simon
+addClass tom 20180412 0900 2
+addMeeting tom 20180404 1000 3 kate
+addClass simon 20180414 0900 3
+addMeeting tom 20180405 1100 1 simon
+addMeeting simon 20180408 0900 7 kate tom amy
+addGathering tom 20180413 1300 2 amy kate simon
+addClass amy 20180403 1700 1
+addClass amy 20180410 0900 9
+addClass kate 20180408 0800 5
+addMeeting simon 20180405 0900 2 amy tom
+addClass tom 20180402 0800 4
+addGathering tom 20180409 1200 4 simon
+addMeeting amy 20180411 1300 3 simon
