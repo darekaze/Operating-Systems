@@ -1,0 +1,150 @@
+Personal Organizer
+***Schedule Report***
+
+Algorithm used: First Come First Serve
+***Accept List***
+There are 20 requests accepted.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   09:00   12:00   Class    	mary
+2018-04-01   10:00   13:00   Class    	john
+2018-04-01   11:00   14:00   Class    	amy
+2018-04-02   09:00   11:00   Class    	mary
+2018-04-02   15:00   18:00   Class    	mary
+2018-04-03   12:00   16:00   Class    	amy
+2018-04-03   12:00   14:00   Class    	kate
+2018-04-03   16:00   18:00   Meeting  	amy john mary
+2018-04-04   13:00   15:00   Gathering	john mary amy
+2018-04-07   10:00   12:00   Meeting  	john mary
+2018-04-07   11:00   14:00   Meeting  	simon tom kate
+2018-04-08   12:00   14:00   Gathering	kate simon tom
+2018-04-08   14:00   15:00   Meeting  	tom john simon amy kate
+2018-04-08   16:00   18:00   Meeting  	amy john
+2018-04-09   14:00   16:00   Meeting  	mary amy john
+2018-04-09   17:00   18:00   Meeting  	kate tom john
+2018-04-11   09:00   12:00   Gathering	tom simon john
+2018-04-12   09:00   10:00   Gathering	simon mary
+2018-04-12   16:00   17:00   Class    	john
+2018-04-13   14:00   16:00   Class    	amy
+
+=========================================================
+
+***Reject List***
+There are 5 requests rejected.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   09:00   10:00   Class    	mary
+2018-04-02   16:00   18:00   Gathering	kate mary amy
+2018-04-03   12:00   13:00   Gathering	tom kate
+2018-04-03   16:00   17:00   Gathering	tom simon john mary
+2018-04-04   13:00   15:00   Meeting  	amy john mary
+
+=========================================================
+Total number of request:    25
+Timeslot in use:            83
+Timeslot not in use:        757
+Utilization:                9%
+
+	- End -
+
+
+Personal Organizer
+***Schedule Report***
+
+Algorithm used: Priority
+***Accept List***
+There are 20 requests accepted.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-13   14:00   16:00   Class    	amy
+2018-04-12   16:00   17:00   Class    	john
+2018-04-01   09:00   12:00   Class    	mary
+2018-04-03   12:00   16:00   Class    	amy
+2018-04-01   10:00   13:00   Class    	john
+2018-04-01   11:00   14:00   Class    	amy
+2018-04-02   09:00   11:00   Class    	mary
+2018-04-02   15:00   18:00   Class    	mary
+2018-04-03   12:00   14:00   Class    	kate
+2018-04-03   16:00   18:00   Meeting  	amy john mary
+2018-04-04   13:00   15:00   Meeting  	amy john mary
+2018-04-07   10:00   12:00   Meeting  	john mary
+2018-04-08   16:00   18:00   Meeting  	amy john
+2018-04-09   14:00   16:00   Meeting  	mary amy john
+2018-04-07   11:00   14:00   Meeting  	simon tom kate
+2018-04-09   17:00   18:00   Meeting  	kate tom john
+2018-04-08   14:00   15:00   Meeting  	tom john simon amy kate
+2018-04-11   09:00   12:00   Gathering	tom simon john
+2018-04-12   09:00   10:00   Gathering	simon mary
+2018-04-08   12:00   14:00   Gathering	kate simon tom
+
+=========================================================
+
+***Reject List***
+There are 5 requests rejected.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   09:00   10:00   Class    	mary
+2018-04-04   13:00   15:00   Gathering	john mary amy
+2018-04-02   16:00   18:00   Gathering	kate mary amy
+2018-04-03   16:00   17:00   Gathering	tom simon john mary
+2018-04-03   12:00   13:00   Gathering	tom kate
+
+=========================================================
+Total number of request:    25
+Timeslot in use:            83
+Timeslot not in use:        757
+Utilization:                9%
+
+	- End -
+
+
+Personal Organizer
+***Schedule Report***
+
+Algorithm used: Special
+***Accept List***
+There are 20 requests accepted.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-03   12:00   16:00   Class    	amy
+2018-04-01   09:00   12:00   Class    	mary
+2018-04-01   10:00   13:00   Class    	john
+2018-04-01   11:00   14:00   Class    	amy
+2018-04-02   15:00   18:00   Class    	mary
+2018-04-13   14:00   16:00   Class    	amy
+2018-04-02   09:00   11:00   Class    	mary
+2018-04-03   12:00   14:00   Class    	kate
+2018-04-12   16:00   17:00   Class    	john
+2018-04-07   11:00   14:00   Meeting  	simon tom kate
+2018-04-03   16:00   18:00   Meeting  	amy john mary
+2018-04-04   13:00   15:00   Meeting  	amy john mary
+2018-04-07   10:00   12:00   Meeting  	john mary
+2018-04-08   16:00   18:00   Meeting  	amy john
+2018-04-09   14:00   16:00   Meeting  	mary amy john
+2018-04-09   17:00   18:00   Meeting  	kate tom john
+2018-04-08   14:00   15:00   Meeting  	tom john simon amy kate
+2018-04-11   09:00   12:00   Gathering	tom simon john
+2018-04-08   12:00   14:00   Gathering	kate simon tom
+2018-04-12   09:00   10:00   Gathering	simon mary
+
+=========================================================
+
+***Reject List***
+There are 5 requests rejected.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   09:00   10:00   Class    	mary
+2018-04-04   13:00   15:00   Gathering	john mary amy
+2018-04-02   16:00   18:00   Gathering	kate mary amy
+2018-04-03   16:00   17:00   Gathering	tom simon john mary
+2018-04-03   12:00   13:00   Gathering	tom kate
+
+=========================================================
+Total number of request:    25
+Timeslot in use:            83
+Timeslot not in use:        757
+Utilization:                9%
+
+	- End -
+
+
