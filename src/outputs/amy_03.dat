@@ -1,0 +1,66 @@
+Personal Organizer
+***Appointment Schedule***
+
+amy, you have 53 appointments
+Algorithm used: First Come First Serve
+99 timeslots occupied.
+
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   08:00   11:00   Class    	-
+2018-04-01   11:00   13:00   Gathering	tom
+2018-04-01   13:00   15:00   Class    	-
+2018-04-01   15:00   16:00   Class    	-
+2018-04-01   16:00   17:00   Meeting  	simon tom kate
+2018-04-02   09:00   17:00   Class    	-
+2018-04-02   10:00   11:00   Class    	-
+2018-04-02   11:00   12:00   Gathering	simon tom kate
+2018-04-02   12:00   14:00   Meeting  	tom
+2018-04-02   14:00   15:00   Class    	-
+2018-04-03   08:00   11:00   Gathering	kate
+2018-04-03   12:00   14:00   Meeting  	kate
+2018-04-03   15:00   16:00   Class    	-
+2018-04-04   08:00   10:00   Class    	-
+2018-04-04   10:00   13:00   Class    	-
+2018-04-04   13:00   15:00   Class    	-
+2018-04-04   15:00   17:00   Class    	-
+2018-04-05   09:00   17:00   Gathering	kate simon tom
+2018-04-05   09:00   11:00   Meeting  	kate
+2018-04-05   11:00   14:00   Gathering	kate
+2018-04-05   14:00   17:00   Class    	-
+2018-04-06   08:00   10:00   Meeting  	kate simon
+2018-04-06   12:00   15:00   Class    	-
+2018-04-06   15:00   16:00   Gathering	kate simon tom
+2018-04-06   16:00   17:00   Meeting  	tom
+2018-04-07   09:00   17:00   Class    	-
+2018-04-07   10:00   13:00   Class    	-
+2018-04-07   13:00   16:00   Class    	-
+2018-04-07   16:00   17:00   Gathering	kate
+2018-04-08   08:00   10:00   Meeting  	kate simon
+2018-04-08   10:00   11:00   Gathering	tom kate
+2018-04-08   11:00   12:00   Meeting  	kate
+2018-04-08   12:00   13:00   Meeting  	kate simon tom
+2018-04-08   13:00   16:00   Class    	-
+2018-04-09   09:00   10:00   Class    	-
+2018-04-09   10:00   12:00   Gathering	tom
+2018-04-09   12:00   14:00   Meeting  	tom kate
+2018-04-09   15:00   16:00   Gathering	kate simon
+2018-04-10   09:00   16:00   Gathering	tom kate simon
+2018-04-10   09:00   11:00   Class    	-
+2018-04-10   12:00   15:00   Class    	-
+2018-04-10   16:00   17:00   Meeting  	tom kate
+2018-04-11   09:00   12:00   Gathering	tom kate
+2018-04-11   12:00   15:00   Gathering	simon tom
+2018-04-11   15:00   17:00   Class    	-
+2018-04-12   08:00   10:00   Gathering	kate simon tom
+2018-04-12   10:00   13:00   Gathering	simon tom
+2018-04-12   13:00   14:00   Class    	-
+2018-04-12   14:00   17:00   Class    	-
+2018-04-13   08:00   11:00   Gathering	tom
+2018-04-09   09:00   11:00   Class    	-
+2018-04-14   08:00   10:00   Class    	-
+2018-04-11   09:00   10:00   Class    	-
+
+=========================================================
+
+	- End -
