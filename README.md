@@ -10,8 +10,8 @@ Keep calm and **commit** !! o(〃＾▽＾〃)o
 
 ## Some useful links for you to explore :thinking:
 ### Project Report
-+ [Report not finished](https://drive.google.com/open?id=1eKwFKE1B7TcK2Z4hMu-jefQHRJoN-f2n)
-+ [PDF VERSION](https://drive.google.com/open?id=1qGl7Gsz_Q8ua_2NgqlQ8qapGPZQL7e1s)
++ [Report.doc](https://drive.google.com/open?id=12FRtLWDHTRIrv0eajyQKSbbxxS461pue)
++ [PDF VERSION](https://drive.google.com/open?id=1uLjDwr_sa6EuZLl145UetNF99bftJjpC)
 
 ### OS tutorial
 + [Operating System tutorial](https://www.tutorialspoint.com/operating_system/index.htm)
