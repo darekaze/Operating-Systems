@@ -1,0 +1,40 @@
+Personal Organizer
+***Appointment Schedule***
+
+yan, you have 27 appointments
+Algorithm used: Special 
+64 timeslots occupied.
+
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   08:00   09:00   Meeting  	simon
+2018-04-01   10:00   14:00   Class    	-
+2018-04-01   16:00   18:00   Class    	-
+2018-04-02   09:00   12:00   Gathering	tom
+2018-04-02   15:00   17:00   Meeting  	amy
+2018-04-02   17:00   18:00   Gathering	amy kate simon
+2018-04-04   08:00   13:00   Meeting  	amy kate tom
+2018-04-04   16:00   17:00   Meeting  	tom
+2018-04-05   08:00   11:00   Gathering	amy
+2018-04-05   16:00   17:00   Meeting  	amy simon
+2018-04-06   13:00   16:00   Gathering	kate tom
+2018-04-07   08:00   09:00   Class    	-
+2018-04-07   09:00   10:00   Gathering	simon kate tom
+2018-04-07   13:00   17:00   Class    	-
+2018-04-08   08:00   11:00   Meeting  	tom amy
+2018-04-08   17:00   18:00   Gathering	simon amy
+2018-04-09   08:00   09:00   Meeting  	kate amy simon tom
+2018-04-09   09:00   10:00   Class    	-
+2018-04-09   10:00   14:00   Class    	-
+2018-04-09   15:00   17:00   Meeting  	amy kate simon tom
+2018-04-10   10:00   15:00   Gathering	kate simon
+2018-04-10   15:00   18:00   Gathering	simon tom
+2018-04-11   12:00   16:00   Class    	-
+2018-04-12   14:00   16:00   Class    	-
+2018-04-12   16:00   18:00   Gathering	amy tom
+2018-04-13   09:00   12:00   Meeting  	simon
+2018-04-13   16:00   17:00   Meeting  	amy kate tom
+
+=========================================================
+
+	- End -

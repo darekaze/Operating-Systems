@@ -76,8 +76,8 @@ void scheduler_special      (Job**, char**, int);
 void scheduler_print        (Job*, Job**, Job**, int, char*[], int);
 void scheduler_exct         (int, int, Job*, char*[], char**, int);
 
-void printer_userSchedule   (int, char *, char *, Job *);
-void printer_report         (int, char *, int, Job *, Job *, int);
+void printer_userSchedule   (int, char *, char *, Job *, int);
+void printer_report         (int, char *, int, Job *, Job *, int, int);
 void printer_outputJob      (Job *, FILE *, char*);
 
 rbtnode* leftRotate         (rbtnode *, rbtnode *);
@@ -692,8 +692,8 @@ void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], 
     quickSort(&acceptList);
     quickSort(&rejectList);
 	
-	if(t == 5)  printer_userSchedule(schedulerID, wList[1], wList[3], acceptList);
-	else        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users);
+	if(t == 5)  printer_userSchedule(schedulerID, wList[1], wList[3], acceptList, flag);
+	else        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users, flag);
 	freeJob(acceptList);
 	freeJob(rejectList);
 }
@@ -780,10 +780,11 @@ void scheduler_print(Job *jobList, Job **acceptList, Job **rejectList, int users
 }
 
 /* Printer part */
-void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *acceptList) {
+void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *acceptList, int flag) {
     FILE *f;
     int slotUsed = 0, eventCount = 0, isExist = 0;
     char *schedulerName;
+    char *rec;
     Job *temp;
 
     f = fopen(fileName, "w");
@@ -791,6 +792,7 @@ void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *
         printf("Error opening file\n"); return;
     }
     schedulerName = schdName(schedulerID);
+    if(!flag) rec = "(Reschedule)";
     temp = acceptList;
     while(temp != NULL) {
 		isExist = 0;
@@ -812,11 +814,11 @@ void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *
     }
     fprintf(f, "Personal Organizer\n***Appointment Schedule***\n\n"
         "%s, you have %d appointments\n"
-        "Algorithm used: %s\n"
+        "Algorithm used: %s %s\n"
         "%d timeslots occupied.\n\n"
         "   Date      Start    End     Type      Remarks\n"
         "=========================================================\n"
-    ,userName, eventCount, schedulerName, slotUsed);
+    ,userName, eventCount, schedulerName, rec, slotUsed);
 
     temp = acceptList;
     while(temp != NULL) {
@@ -839,11 +841,12 @@ void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *
     fclose(f);
 }
 
-void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptList, Job *rejectList, int num) {
+void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptList, Job *rejectList, int num, int flag) {
     FILE *f;
     int acceptCount = 0, rejectCount = 0;
     int slotUsed = 0, maxSlot = num * 14 * 10;
     char *schedulerName;
+    char *rec;
     Job *temp = NULL;
 	
     f = fopen(fileName, "a");
@@ -851,6 +854,7 @@ void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptLi
         printf("Error opening file\n"); return;
     }
     schedulerName = schdName(schedulerID);
+    if(!flag) rec = "(Reschedule)";
     temp = acceptList;
     while(temp != NULL) {
         acceptCount++;
@@ -862,12 +866,12 @@ void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptLi
         temp = temp->next;
     }
     fprintf(f, "Personal Organizer\n***Schedule Report***\n\n"
-        "Algorithm used: %s\n"
+        "Algorithm used: %s %s\n"
         "***Accept List***\n"
         "There are %d requests accepted.\n"
         "   Date      Start    End     Type      Remarks\n"
         "=========================================================\n"
-    , schedulerName, acceptCount);
+    , schedulerName, rec, acceptCount);
     temp = acceptList;
     while(temp != NULL) {
         Extra *tex = temp->remark;

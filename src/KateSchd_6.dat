@@ -1,0 +1,51 @@
+Personal Organizer
+***Appointment Schedule***
+
+kate, you have 38 appointments
+Algorithm used: Special (Reschedule)
+87 timeslots occupied.
+
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   08:00   10:00   Class    	-
+2018-04-01   12:00   14:00   Class    	-
+2018-04-02   08:00   09:00   Meeting  	simon
+2018-04-02   09:00   13:00   Class    	-
+2018-04-02   14:00   15:00   Gathering	amy
+2018-04-02   17:00   18:00   Gathering	yan amy simon
+2018-04-03   08:00   10:00   Class    	-
+2018-04-03   10:00   12:00   Class    	-
+2018-04-03   12:00   17:00   Gathering	amy
+2018-04-04   08:00   13:00   Meeting  	yan amy tom
+2018-04-04   15:00   18:00   Gathering	amy
+2018-04-05   08:00   13:00   Class    	-
+2018-04-05   13:00   15:00   Meeting  	amy tom
+2018-04-06   08:00   10:00   Class    	-
+2018-04-06   13:00   16:00   Gathering	tom yan
+2018-04-07   09:00   10:00   Gathering	simon tom yan
+2018-04-07   10:00   15:00   Meeting  	amy simon tom
+2018-04-07   17:00   18:00   Gathering	simon amy tom
+2018-04-08   08:00   12:00   Gathering	simon
+2018-04-09   08:00   09:00   Meeting  	amy simon tom yan
+2018-04-09   10:00   11:00   Class    	-
+2018-04-09   14:00   15:00   Meeting  	amy simon tom
+2018-04-09   15:00   17:00   Meeting  	yan amy simon tom
+2018-04-10   08:00   10:00   Gathering	amy yan
+2018-04-10   10:00   15:00   Gathering	simon yan
+2018-04-11   08:00   09:00   Meeting  	yan amy tom
+2018-04-11   13:00   17:00   Class    	-
+2018-04-12   08:00   09:00   Meeting  	tom
+2018-04-12   11:00   15:00   Meeting  	amy
+2018-04-13   08:00   11:00   Gathering	tom amy
+2018-04-13   11:00   13:00   Class    	-
+2018-04-13   13:00   14:00   Class    	-
+2018-04-13   14:00   16:00   Gathering	amy simon tom
+2018-04-13   16:00   17:00   Meeting  	amy tom yan
+2018-04-13   17:00   18:00   Gathering	tom amy simon
+2018-04-14   08:00   10:00   Class    	-
+2018-04-14   15:00   16:00   Class    	-
+2018-04-14   16:00   17:00   Gathering	amy
+
+=========================================================
+
+	- End -
