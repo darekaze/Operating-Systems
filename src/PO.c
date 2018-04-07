@@ -792,7 +792,7 @@ void printer_userSchedule(int schedulerID, char *userName, char *fileName, Job *
         printf("Error opening file\n"); return;
     }
     schedulerName = schdName(schedulerID);
-    if(!flag) rec = "(Reschedule)";
+    rec = flag ? " " : "(Reschedule)";
     temp = acceptList;
     while(temp != NULL) {
 		isExist = 0;
@@ -854,7 +854,7 @@ void printer_report(int schedulerID, char *fileName, int toParent, Job *acceptLi
         printf("Error opening file\n"); return;
     }
     schedulerName = schdName(schedulerID);
-    if(!flag) rec = "(Reschedule)";
+    rec = flag ? " " : "(Reschedule)";
     temp = acceptList;
     while(temp != NULL) {
         acceptCount++;

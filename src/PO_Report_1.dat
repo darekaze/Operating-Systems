@@ -1,35 +1,37 @@
 Personal Organizer
 ***Schedule Report***
 
-Algorithm used: First Come First Serve
+Algorithm used: First Come First Serve  
 ***Accept List***
-There are 75 requests accepted.
+There are 76 requests accepted.
    Date      Start    End     Type      Remarks
 =========================================================
-2018-04-01   08:00   09:00   Meeting  	simon kate tom yan
+2018-04-01   08:00   09:00   Meeting  	simon yan
 2018-04-01   10:00   14:00   Class    	kate
 2018-04-01   10:00   14:00   Class    	yan
 2018-04-01   10:00   15:00   Class    	amy
 2018-04-01   15:00   16:00   Class    	amy
 2018-04-01   15:00   16:00   Class    	tom
 2018-04-01   16:00   18:00   Class    	yan
-2018-04-02   08:00   11:00   Gathering	kate yan
+2018-04-02   08:00   11:00   Gathering	kate simon tom yan
 2018-04-02   12:00   15:00   Class    	tom
-2018-04-02   14:00   15:00   Gathering	kate simon
-2018-04-02   14:00   17:00   Class    	amy
-2018-04-02   17:00   18:00   Gathering	yan kate tom
-2018-04-03   08:00   12:00   Meeting  	kate amy simon tom
-2018-04-03   12:00   15:00   Class    	amy
-2018-04-03   12:00   17:00   Gathering	kate simon yan
-2018-04-04   08:00   13:00   Meeting  	yan amy kate simon
+2018-04-02   13:00   17:00   Meeting  	kate amy simon
+2018-04-02   17:00   18:00   Gathering	yan amy kate simon
+2018-04-03   08:00   12:00   Meeting  	kate amy yan
+2018-04-03   09:00   11:00   Class    	simon
+2018-04-03   12:00   17:00   Gathering	kate amy
+2018-04-04   08:00   13:00   Meeting  	yan amy kate tom
 2018-04-04   14:00   17:00   Meeting  	simon amy kate tom
 2018-04-04   15:00   18:00   Class    	yan
 2018-04-04   17:00   18:00   Class    	amy
-2018-04-05   08:00   11:00   Gathering	amy kate simon tom
-2018-04-05   11:00   16:00   Meeting  	yan amy kate tom
-2018-04-05   16:00   17:00   Meeting  	amy kate
-2018-04-05   16:00   18:00   Meeting  	simon tom yan
-2018-04-06   10:00   14:00   Gathering	simon kate tom yan
+2018-04-05   08:00   11:00   Gathering	amy yan
+2018-04-05   09:00   10:00   Class    	tom
+2018-04-05   09:00   14:00   Class    	simon
+2018-04-05   11:00   15:00   Class    	amy
+2018-04-05   12:00   14:00   Class    	kate
+2018-04-05   12:00   17:00   Class    	yan
+2018-04-06   10:00   14:00   Gathering	simon kate
+2018-04-06   11:00   12:00   Class    	tom
 2018-04-06   12:00   16:00   Class    	amy
 2018-04-06   15:00   16:00   Class    	simon
 2018-04-07   08:00   11:00   Meeting  	kate amy yan
@@ -38,43 +40,42 @@ There are 75 requests accepted.
 2018-04-07   14:00   16:00   Class    	kate
 2018-04-07   14:00   18:00   Class    	simon
 2018-04-07   15:00   16:00   Class    	tom
-2018-04-08   08:00   12:00   Meeting  	yan amy simon
-2018-04-08   12:00   17:00   Gathering	simon yan
-2018-04-08   13:00   17:00   Meeting  	amy kate tom
+2018-04-08   08:00   11:00   Meeting  	tom amy yan
+2018-04-08   12:00   17:00   Gathering	simon amy tom
 2018-04-08   17:00   18:00   Gathering	simon amy yan
-2018-04-09   08:00   09:00   Meeting  	kate tom
-2018-04-09   08:00   10:00   Meeting  	amy yan
+2018-04-09   08:00   09:00   Meeting  	kate amy simon tom yan
+2018-04-09   09:00   10:00   Class    	yan
 2018-04-09   09:00   11:00   Class    	simon
 2018-04-09   09:00   14:00   Class    	kate
 2018-04-09   10:00   11:00   Class    	tom
-2018-04-09   10:00   14:00   Class    	yan
-2018-04-09   11:00   13:00   Gathering	simon amy tom
-2018-04-09   13:00   18:00   Class    	amy
-2018-04-09   15:00   17:00   Meeting  	yan tom
+2018-04-09   10:00   15:00   Meeting  	yan amy
+2018-04-09   15:00   17:00   Meeting  	yan amy kate simon tom
 2018-04-10   08:00   09:00   Class    	tom
-2018-04-10   09:00   13:00   Gathering	yan tom
-2018-04-10   11:00   16:00   Meeting  	amy kate simon
-2018-04-11   09:00   11:00   Meeting  	simon kate tom
+2018-04-10   09:00   13:00   Gathering	yan kate
+2018-04-10   11:00   15:00   Meeting  	simon tom
+2018-04-10   12:00   13:00   Class    	amy
+2018-04-10   13:00   18:00   Meeting  	yan kate
+2018-04-11   09:00   11:00   Meeting  	simon tom
 2018-04-11   12:00   13:00   Class    	amy
 2018-04-11   12:00   16:00   Class    	yan
 2018-04-11   12:00   17:00   Class    	tom
 2018-04-11   13:00   17:00   Class    	kate
-2018-04-12   08:00   09:00   Meeting  	kate amy tom yan
-2018-04-12   09:00   14:00   Gathering	yan amy kate
+2018-04-12   08:00   09:00   Meeting  	kate tom
+2018-04-12   08:00   11:00   Gathering	amy simon
 2018-04-12   10:00   11:00   Class    	tom
+2018-04-12   11:00   15:00   Meeting  	amy kate
 2018-04-12   14:00   16:00   Class    	yan
 2018-04-12   14:00   16:00   Class    	tom
 2018-04-12   15:00   17:00   Class    	simon
-2018-04-12   16:00   18:00   Gathering	yan tom
-2018-04-13   08:00   11:00   Gathering	tom yan
-2018-04-13   11:00   13:00   Class    	kate
+2018-04-12   16:00   18:00   Gathering	yan amy tom
+2018-04-13   09:00   12:00   Meeting  	yan amy kate tom
 2018-04-13   11:00   14:00   Class    	simon
 2018-04-13   13:00   14:00   Class    	kate
-2018-04-13   14:00   16:00   Gathering	amy kate simon yan
+2018-04-13   14:00   16:00   Gathering	amy kate simon tom
 2018-04-13   16:00   17:00   Meeting  	amy kate tom yan
 2018-04-13   17:00   18:00   Gathering	tom amy kate simon
+2018-04-14   08:00   09:00   Gathering	simon amy tom
 2018-04-14   08:00   10:00   Class    	kate
-2018-04-14   08:00   11:00   Meeting  	tom yan
 2018-04-14   11:00   16:00   Class    	simon
 2018-04-14   12:00   14:00   Class    	amy
 2018-04-14   13:00   18:00   Class    	tom
@@ -85,177 +86,18 @@ There are 75 requests accepted.
 =========================================================
 
 ***Reject List***
-There are 149 requests rejected.
+There are 148 requests rejected.
    Date      Start    End     Type      Remarks
 =========================================================
-2018-04-01   08:00   09:00   Meeting  	yan kate tom
-2018-04-01   11:00   13:00   Gathering	amy tom
-2018-04-01   11:00   14:00   Meeting  	simon yan
-2018-04-01   11:00   16:00   Gathering	simon amy kate tom
-2018-04-01   11:00   16:00   Gathering	yan simon tom
-2018-04-01   12:00   14:00   Class    	kate
-2018-04-01   12:00   17:00   Meeting  	yan kate tom
-2018-04-01   13:00   15:00   Meeting  	kate simon yan
-2018-04-01   13:00   16:00   Meeting  	kate tom
-2018-04-01   13:00   16:00   Meeting  	yan amy kate
-2018-04-01   15:00   16:00   Meeting  	kate tom yan
-2018-04-02   09:00   11:00   Gathering	amy tom yan
-2018-04-02   09:00   12:00   Meeting  	amy simon yan
-2018-04-02   09:00   12:00   Gathering	yan amy kate simon tom
-2018-04-02   09:00   13:00   Class    	kate
-2018-04-02   10:00   15:00   Meeting  	kate amy
-2018-04-02   13:00   17:00   Meeting  	kate amy tom yan
-2018-04-02   15:00   17:00   Meeting  	amy tom yan
-2018-04-02   15:00   18:00   Class    	amy
-2018-04-02   16:00   18:00   Gathering	kate amy simon
-2018-04-03   08:00   11:00   Meeting  	kate amy simon tom
-2018-04-03   09:00   11:00   Class    	simon
-2018-04-03   10:00   12:00   Class    	kate
-2018-04-03   10:00   15:00   Class    	simon
-2018-04-03   11:00   12:00   Gathering	kate amy yan
-2018-04-03   11:00   14:00   Gathering	yan simon
-2018-04-03   11:00   15:00   Gathering	yan kate
-2018-04-03   13:00   14:00   Meeting  	yan kate simon tom
-2018-04-03   15:00   16:00   Gathering	simon amy kate yan
-2018-04-04   09:00   13:00   Gathering	yan simon tom
-2018-04-04   09:00   14:00   Gathering	kate amy simon
-2018-04-04   11:00   12:00   Meeting  	simon yan
-2018-04-04   11:00   16:00   Meeting  	yan amy kate simon
-2018-04-04   12:00   16:00   Gathering	kate amy tom yan
-2018-04-04   15:00   18:00   Gathering	amy kate tom yan
-2018-04-04   15:00   18:00   Gathering	kate amy simon tom
-2018-04-04   15:00   18:00   Meeting  	yan kate simon tom
-2018-04-04   16:00   17:00   Meeting  	yan amy
-2018-04-04   16:00   18:00   Gathering	amy kate tom
-2018-04-05   08:00   12:00   Gathering	amy simon tom
-2018-04-05   09:00   10:00   Gathering	amy kate simon
-2018-04-05   09:00   10:00   Class    	tom
-2018-04-05   09:00   12:00   Meeting  	amy yan
-2018-04-05   09:00   14:00   Class    	simon
-2018-04-05   11:00   14:00   Gathering	tom amy kate simon
-2018-04-05   11:00   15:00   Class    	amy
-2018-04-05   12:00   13:00   Gathering	yan amy simon tom
-2018-04-05   12:00   14:00   Class    	kate
-2018-04-05   12:00   16:00   Gathering	tom amy yan
-2018-04-05   12:00   17:00   Class    	yan
-2018-04-05   13:00   15:00   Class    	kate
-2018-04-05   13:00   15:00   Meeting  	amy simon tom yan
-2018-04-05   13:00   17:00   Gathering	yan kate simon tom
-2018-04-05   14:00   16:00   Meeting  	yan kate
-2018-04-05   14:00   17:00   Meeting  	tom amy simon
-2018-04-05   15:00   18:00   Class    	yan
-2018-04-06   11:00   12:00   Class    	tom
-2018-04-06   11:00   13:00   Class    	simon
-2018-04-06   11:00   16:00   Meeting  	tom amy kate
-2018-04-06   12:00   16:00   Class    	simon
-2018-04-06   13:00   16:00   Gathering	kate tom yan
-2018-04-06   14:00   15:00   Gathering	kate amy simon tom yan
-2018-04-06   15:00   18:00   Gathering	amy simon tom
-2018-04-07   08:00   09:00   Meeting  	tom simon yan
-2018-04-07   08:00   09:00   Class    	yan
-2018-04-07   09:00   10:00   Gathering	simon kate tom yan
-2018-04-07   09:00   11:00   Class    	amy
-2018-04-07   09:00   14:00   Meeting  	kate amy simon yan
-2018-04-07   10:00   14:00   Meeting  	kate amy simon tom
-2018-04-07   10:00   15:00   Meeting  	kate yan
-2018-04-07   11:00   14:00   Gathering	kate yan
-2018-04-07   12:00   15:00   Class    	amy
-2018-04-07   12:00   15:00   Gathering	amy kate simon tom
-2018-04-07   12:00   17:00   Gathering	yan simon tom
-2018-04-07   12:00   17:00   Meeting  	yan tom
-2018-04-07   13:00   15:00   Gathering	simon amy
-2018-04-07   13:00   18:00   Class    	tom
-2018-04-07   14:00   18:00   Gathering	kate amy tom
-2018-04-07   15:00   16:00   Gathering	yan kate simon tom
-2018-04-07   15:00   18:00   Gathering	tom amy kate yan
-2018-04-07   17:00   18:00   Gathering	simon yan
-2018-04-08   09:00   12:00   Class    	amy
-2018-04-08   09:00   14:00   Gathering	yan kate simon
-2018-04-08   10:00   13:00   Class    	amy
-2018-04-08   13:00   14:00   Gathering	yan kate tom
-2018-04-08   13:00   15:00   Meeting  	yan simon
-2018-04-08   15:00   16:00   Class    	tom
-2018-04-08   15:00   17:00   Meeting  	amy simon tom
-2018-04-08   16:00   18:00   Class    	tom
-2018-04-09   08:00   09:00   Gathering	yan simon tom
-2018-04-09   09:00   10:00   Class    	yan
-2018-04-09   09:00   13:00   Gathering	simon amy
-2018-04-09   10:00   11:00   Class    	kate
-2018-04-09   10:00   15:00   Class    	simon
-2018-04-09   10:00   15:00   Meeting  	yan kate simon tom
-2018-04-09   12:00   17:00   Meeting  	amy kate simon yan
-2018-04-09   13:00   15:00   Gathering	yan amy kate tom
-2018-04-09   13:00   18:00   Meeting  	yan amy
-2018-04-09   14:00   15:00   Meeting  	amy simon yan
-2018-04-09   14:00   16:00   Gathering	simon amy tom yan
-2018-04-09   15:00   16:00   Class    	tom
-2018-04-09   15:00   18:00   Class    	yan
-2018-04-10   10:00   11:00   Meeting  	yan kate simon tom
-2018-04-10   10:00   11:00   Meeting  	yan amy simon tom
-2018-04-10   10:00   15:00   Gathering	kate amy simon tom
-2018-04-10   10:00   15:00   Gathering	kate amy tom yan
-2018-04-10   11:00   15:00   Meeting  	simon tom
-2018-04-10   11:00   16:00   Gathering	amy kate simon yan
-2018-04-10   12:00   13:00   Meeting  	simon yan
-2018-04-10   12:00   13:00   Class    	amy
-2018-04-10   12:00   13:00   Gathering	kate amy simon tom yan
-2018-04-10   12:00   17:00   Meeting  	kate amy tom
-2018-04-10   13:00   18:00   Meeting  	yan amy tom
-2018-04-10   15:00   18:00   Gathering	yan simon tom
-2018-04-11   09:00   13:00   Meeting  	yan kate tom
-2018-04-11   12:00   13:00   Gathering	kate yan
-2018-04-11   13:00   15:00   Gathering	kate amy simon tom yan
-2018-04-11   13:00   17:00   Meeting  	yan tom
-2018-04-11   13:00   18:00   Gathering	simon tom
-2018-04-11   14:00   15:00   Gathering	tom kate yan
-2018-04-11   14:00   15:00   Class    	tom
-2018-04-11   14:00   18:00   Class    	yan
-2018-04-12   08:00   11:00   Gathering	amy simon
-2018-04-12   11:00   15:00   Gathering	yan amy kate simon tom
-2018-04-12   11:00   15:00   Meeting  	amy simon tom
-2018-04-12   12:00   17:00   Meeting  	amy yan
-2018-04-12   15:00   18:00   Gathering	tom amy yan
-2018-04-12   16:00   18:00   Gathering	simon amy kate yan
-2018-04-13   09:00   12:00   Meeting  	yan simon
-2018-04-13   09:00   12:00   Meeting  	yan kate tom
-2018-04-13   10:00   12:00   Meeting  	yan amy kate simon
-2018-04-13   10:00   14:00   Meeting  	kate simon tom yan
-2018-04-13   11:00   15:00   Class    	kate
-2018-04-13   12:00   15:00   Gathering	amy kate simon yan
-2018-04-13   12:00   16:00   Meeting  	yan amy simon tom
-2018-04-13   12:00   16:00   Class    	simon
-2018-04-13   13:00   15:00   Class    	kate
-2018-04-13   13:00   17:00   Meeting  	simon tom
-2018-04-13   14:00   15:00   Gathering	tom simon yan
-2018-04-13   14:00   16:00   Class    	kate
-2018-04-13   15:00   18:00   Class    	amy
-2018-04-13   17:00   18:00   Meeting  	tom amy kate
-2018-04-14   08:00   09:00   Gathering	simon amy tom
-2018-04-14   08:00   10:00   Gathering	simon tom yan
-2018-04-14   12:00   17:00   Meeting  	simon tom
-2018-04-14   14:00   18:00   Gathering	kate simon tom yan
-2018-04-14   15:00   18:00   Class    	tom
-2018-04-14   15:00   18:00   Class    	tom
-2018-04-14   17:00   18:00   Meeting  	simon kate tom yan
-
-=========================================================
-Total number of request:    224
-Timeslot in use:            394
-Timeslot not in use:        306
-Utilization:                56%
-
-	- End -
-
-
-Personal Organizer
+2018-04-01   08:00   09:00   Meeting  	yan Personal Organizer
 ***Schedule Report***
 
-Algorithm used: Priority
+Algorithm used: Priority  
 ***Accept List***
-There are 84 requests accepted.
+There are 83 requests accepted.
    Date      Start    End     Type      Remarks
 =========================================================
-2018-04-01   08:00   09:00   Meeting  	simon kate tom yan
+2018-04-01   08:00   09:00   Meeting  	simon yan
 2018-04-01   10:00   14:00   Class    	yan
 2018-04-01   10:00   15:00   Class    	amy
 2018-04-01   12:00   14:00   Class    	kate
@@ -265,23 +107,22 @@ There are 84 requests accepted.
 2018-04-02   09:00   12:00   Meeting  	amy simon yan
 2018-04-02   09:00   13:00   Class    	kate
 2018-04-02   12:00   15:00   Class    	tom
-2018-04-02   14:00   15:00   Gathering	kate simon
+2018-04-02   14:00   15:00   Gathering	kate amy
 2018-04-02   15:00   18:00   Class    	amy
-2018-04-02   17:00   18:00   Gathering	yan kate tom
 2018-04-03   10:00   12:00   Class    	kate
 2018-04-03   10:00   15:00   Class    	simon
 2018-04-03   12:00   15:00   Class    	amy
 2018-04-03   15:00   16:00   Gathering	simon amy kate yan
-2018-04-04   08:00   13:00   Meeting  	yan amy kate simon
+2018-04-04   08:00   13:00   Meeting  	yan amy kate tom
 2018-04-04   14:00   17:00   Meeting  	simon amy kate tom
 2018-04-04   15:00   18:00   Class    	yan
 2018-04-04   17:00   18:00   Class    	amy
+2018-04-05   08:00   11:00   Gathering	amy yan
 2018-04-05   09:00   10:00   Class    	tom
 2018-04-05   09:00   14:00   Class    	simon
 2018-04-05   11:00   15:00   Class    	amy
 2018-04-05   12:00   17:00   Class    	yan
 2018-04-05   13:00   15:00   Class    	kate
-2018-04-05   16:00   17:00   Meeting  	amy kate
 2018-04-06   11:00   12:00   Class    	tom
 2018-04-06   12:00   16:00   Class    	amy
 2018-04-06   12:00   16:00   Class    	simon
@@ -299,7 +140,7 @@ There are 84 requests accepted.
 2018-04-08   15:00   16:00   Class    	tom
 2018-04-08   16:00   18:00   Class    	tom
 2018-04-08   17:00   18:00   Gathering	simon amy yan
-2018-04-09   08:00   09:00   Meeting  	kate tom
+2018-04-09   08:00   09:00   Meeting  	kate amy simon tom yan
 2018-04-09   09:00   10:00   Class    	yan
 2018-04-09   10:00   11:00   Class    	tom
 2018-04-09   10:00   11:00   Class    	kate
@@ -309,30 +150,30 @@ There are 84 requests accepted.
 2018-04-09   15:00   16:00   Class    	tom
 2018-04-09   15:00   18:00   Class    	yan
 2018-04-10   08:00   09:00   Class    	tom
-2018-04-10   10:00   11:00   Meeting  	yan amy simon tom
-2018-04-10   12:00   13:00   Meeting  	simon yan
+2018-04-10   10:00   11:00   Meeting  	yan amy kate tom
 2018-04-10   12:00   13:00   Class    	amy
-2018-04-10   13:00   18:00   Meeting  	yan amy tom
-2018-04-11   09:00   11:00   Meeting  	simon kate tom
+2018-04-10   12:00   17:00   Meeting  	kate simon tom yan
+2018-04-11   09:00   11:00   Meeting  	simon tom
 2018-04-11   12:00   13:00   Class    	amy
 2018-04-11   12:00   16:00   Class    	yan
 2018-04-11   12:00   17:00   Class    	tom
 2018-04-11   13:00   17:00   Class    	kate
-2018-04-12   08:00   09:00   Meeting  	kate amy tom yan
-2018-04-12   09:00   14:00   Gathering	yan amy kate
+2018-04-12   08:00   09:00   Meeting  	kate tom
+2018-04-12   08:00   11:00   Gathering	amy simon
 2018-04-12   10:00   11:00   Class    	tom
+2018-04-12   11:00   15:00   Meeting  	amy kate
 2018-04-12   14:00   16:00   Class    	yan
 2018-04-12   14:00   16:00   Class    	tom
 2018-04-12   15:00   17:00   Class    	simon
-2018-04-12   16:00   18:00   Gathering	yan tom
+2018-04-12   16:00   18:00   Gathering	yan amy tom
 2018-04-13   09:00   12:00   Meeting  	yan simon
 2018-04-13   11:00   13:00   Class    	kate
 2018-04-13   12:00   16:00   Class    	simon
 2018-04-13   13:00   14:00   Class    	kate
 2018-04-13   14:00   16:00   Class    	kate
 2018-04-13   15:00   18:00   Class    	amy
+2018-04-14   08:00   09:00   Gathering	simon amy tom
 2018-04-14   08:00   10:00   Class    	kate
-2018-04-14   08:00   11:00   Meeting  	tom yan
 2018-04-14   11:00   16:00   Class    	simon
 2018-04-14   12:00   14:00   Class    	amy
 2018-04-14   15:00   16:00   Class    	kate
@@ -342,144 +183,225 @@ There are 84 requests accepted.
 
 =========================================================
 
-***Reject List***
-There are 140 requests rejected.
-   Date      Start    End     Type      Remarks
-=========================================================
-2018-04-01   08:00   09:00   Meeting  	yan kate tom
-2018-04-01   10:00   14:00   Class    	kate
+***Rejecamy simon tom
 2018-04-01   11:00   13:00   Gathering	amy tom
-2018-04-01   11:00   14:00   Meeting  	simon yan
+2018-04-01   11:00   14:00   Meeting  	simon amy tom yan
 2018-04-01   11:00   16:00   Gathering	simon amy kate tom
-2018-04-01   11:00   16:00   Gathering	yan simon tom
+2018-04-01   11:00   16:00   Gathering	yan amy kate simon
+2018-04-01   12:00   14:00   Class    	kate
 2018-04-01   12:00   17:00   Meeting  	yan kate tom
 2018-04-01   13:00   15:00   Meeting  	kate simon yan
 2018-04-01   13:00   16:00   Meeting  	kate tom
-2018-04-01   13:00   16:00   Meeting  	yan amy kate
+2018-04-01   13:00   16:00   Meeting  	yan simon
 2018-04-01   15:00   16:00   Meeting  	kate tom yan
-2018-04-02   08:00   11:00   Gathering	kate yan
-2018-04-02   09:00   11:00   Gathering	amy tom yan
-2018-04-02   09:00   12:00   Gathering	yan amy kate simon tom
+2018-04-02   09:00   11:00   Gathering	amy kate tom yan
+2018-04-02   09:00   12:00   Meeting  	amy simon yan
+2018-04-02   09:00   12:00   Gathering	yan tom
+2018-04-02   09:00   13:00   Class    	kate
 2018-04-02   10:00   15:00   Meeting  	kate amy
-2018-04-02   13:00   17:00   Meeting  	kate amy tom yan
+2018-04-02   14:00   15:00   Gathering	kate amy
 2018-04-02   14:00   17:00   Class    	amy
-2018-04-02   15:00   17:00   Meeting  	amy tom yan
+2018-04-02   15:00   17:00   Meeting  	amy yan
+2018-04-02   15:00   18:00   Class    	amy
 2018-04-02   16:00   18:00   Gathering	kate amy simon
 2018-04-03   08:00   11:00   Meeting  	kate amy simon tom
-2018-04-03   08:00   12:00   Meeting  	kate amy simon tom
-2018-04-03   09:00   11:00   Class    	simon
+2018-04-03   10:00   12:00   Class    	kate
+2018-04-03   10:00   15:00   Class    	simon
 2018-04-03   11:00   12:00   Gathering	kate amy yan
 2018-04-03   11:00   14:00   Gathering	yan simon
-2018-04-03   11:00   15:00   Gathering	yan kate
-2018-04-03   12:00   17:00   Gathering	kate simon yan
+2018-04-03   11:00   15:00   Gathering	yan amy kate simon tom
+2018-04-03   12:00   15:00   Class    	amy
 2018-04-03   13:00   14:00   Meeting  	yan kate simon tom
+2018-04-03   15:00   16:00   Gathering	simon amy kate yan
 2018-04-04   09:00   13:00   Gathering	yan simon tom
 2018-04-04   09:00   14:00   Gathering	kate amy simon
-2018-04-04   11:00   12:00   Meeting  	simon yan
-2018-04-04   11:00   16:00   Meeting  	yan amy kate simon
-2018-04-04   12:00   16:00   Gathering	kate amy tom yan
-2018-04-04   15:00   18:00   Gathering	amy kate tom yan
-2018-04-04   15:00   18:00   Gathering	kate amy simon tom
-2018-04-04   15:00   18:00   Meeting  	yan kate simon tom
-2018-04-04   16:00   17:00   Meeting  	yan amy
-2018-04-04   16:00   18:00   Gathering	amy kate tom
-2018-04-05   08:00   11:00   Gathering	amy kate simon tom
+2018-04-04   10:00   15:00   Meeting  	kate amy yan
+2018-04-04   11:00   12:00   Meeting  	simon kate
+2018-04-04   11:00   16:00   Meeting  	yan simon
+2018-04-04   12:00   16:00   Gathering	kate amy simon yan
+2018-04-04   15:00   18:00   Gathering	amy kate
+2018-04-04   15:00   18:00   Gathering	kate amy
+2018-04-04   15:00   18:00   Meeting  	yan amy simon
+2018-04-04   16:00   17:00   Meeting  	yan tom
+2018-04-04   16:00   18:00   Gathering	amy kate yan
 2018-04-05   08:00   12:00   Gathering	amy simon tom
 2018-04-05   09:00   10:00   Gathering	amy kate simon
+2018-04-05   09:00   11:00   Gathering	tom amy kate simon yan
 2018-04-05   09:00   12:00   Meeting  	amy yan
-2018-04-05   11:00   14:00   Gathering	tom amy kate simon
-2018-04-05   11:00   16:00   Meeting  	yan amy kate tom
 2018-04-05   12:00   13:00   Gathering	yan amy simon tom
-2018-04-05   12:00   14:00   Class    	kate
-2018-04-05   12:00   16:00   Gathering	tom amy yan
-2018-04-05   13:00   15:00   Meeting  	amy simon tom yan
+2018-04-05   12:00   16:00   Gathering	tom kate simon
+2018-04-05   13:00   15:00   Class    	kate
+2018-04-05   13:00   15:00   Meeting  	amy kate tom
 2018-04-05   13:00   17:00   Gathering	yan kate simon tom
 2018-04-05   14:00   16:00   Meeting  	yan kate
 2018-04-05   14:00   17:00   Meeting  	tom amy simon
 2018-04-05   15:00   18:00   Class    	yan
-2018-04-05   16:00   18:00   Meeting  	simon tom yan
-2018-04-06   10:00   14:00   Gathering	simon kate tom yan
+2018-04-05   16:00   17:00   Meeting  	amy simon yan
+2018-04-05   16:00   18:00   Meeting  	simon amy yan
 2018-04-06   11:00   13:00   Class    	simon
 2018-04-06   11:00   16:00   Meeting  	tom amy kate
+2018-04-06   12:00   16:00   Class    	simon
+2018-04-06   13:00   16:00   Gathering	kate tom yan
 2018-04-06   14:00   15:00   Gathering	kate amy simon tom yan
-2018-04-06   15:00   16:00   Class    	simon
-2018-04-06   15:00   18:00   Gathering	amy simon tom
+2018-04-06   15:00   18:00   Gathering	amy simon yan
 2018-04-07   08:00   09:00   Meeting  	tom simon yan
-2018-04-07   08:00   11:00   Meeting  	kate amy yan
+2018-04-07   08:00   09:00   Class    	yan
+2018-04-07   09:00   10:00   Gathering	simon kate tom yan
+2018-04-07   09:00   11:00   Class    	amy
 2018-04-07   09:00   14:00   Meeting  	kate amy simon yan
 2018-04-07   10:00   14:00   Meeting  	kate amy simon tom
-2018-04-07   10:00   15:00   Meeting  	kate yan
+2018-04-07   10:00   14:00   Gathering	tom yan
+2018-04-07   10:00   15:00   Meeting  	kate amy simon tom
 2018-04-07   11:00   14:00   Gathering	kate yan
-2018-04-07   11:00   14:00   Gathering	kate amy tom
+2018-04-07   12:00   15:00   Class    	amy
 2018-04-07   12:00   15:00   Gathering	amy kate simon tom
 2018-04-07   12:00   17:00   Gathering	yan simon tom
-2018-04-07   12:00   17:00   Meeting  	yan tom
-2018-04-07   13:00   15:00   Gathering	simon amy
+2018-04-07   12:00   17:00   Meeting  	yan amy
+2018-04-07   13:00   15:00   Gathering	simon amy kate yan
 2018-04-07   13:00   18:00   Class    	tom
 2018-04-07   14:00   18:00   Gathering	kate amy tom
 2018-04-07   15:00   16:00   Gathering	yan kate simon tom
 2018-04-07   15:00   18:00   Gathering	tom amy kate yan
-2018-04-07   17:00   18:00   Gathering	simon yan
-2018-04-08   08:00   12:00   Meeting  	yan amy simon
+2018-04-07   17:00   18:00   Gathering	simon amy kate tom
+2018-04-08   08t List***
+There are 141 requests rejected.
+   Date      Start    End     Type      Remarks
+=========================================================
+2018-04-01   08:00   09:00   Meeting  	yan amy simon tom
+2018-04-01   10:00   14:00   Class    	kate
+2018-04-01   11:00   13:00   Gathering	amy tom
+2018-04-01   11:00   14:00   Meeting  	simon amy tom yan
+2018-04-01   11:00   16:00   Gathering	simon amy kate tom
+2018-04-01   11:00   16:00   Gathering	yan amy kate simon
+2018-04-01   12:00   17:00   Meeting  	yan kate tom
+2018-04-01   13:00   15:00   Meeting  	kate simon yan
+2018-04-01   13:00   16:00   Meeting  	kate tom
+2018-04-01   13:00   16:00   Meeting  	yan simon
+2018-04-01   15:00   16:00   Meeting  	kate tom yan
+2018-04-02   08:00   11:00   Gathering	kate simon tom yan
+2018-04-02   09:00   11:00   Gathering	amy kate tom yan
+2018-04-02   09:00   12:00   Gathering	yan tom
+2018-04-02   10:00   15:00   Meeting  	kate amy
+2018-04-02   13:00   17:00   Meeting  	kate amy simon
+2018-04-02   14:00   17:00   Class    	amy
+2018-04-02   15:00   17:00   Meeting  	amy yan
+2018-04-02   16:00   18:00   Gathering	kate amy simon
+2018-04-02   17:00   18:00   Gathering	yan amy kate simon
+2018-04-03   08:00   11:00   Meeting  	kate amy simon tom
+2018-04-03   08:00   12:00   Meeting  	kate amy yan
+2018-04-03   09:00   11:00   Class    	simon
+2018-04-03   11:00   12:00   Gathering	kate amy yan
+2018-04-03   11:00   14:00   Gathering	yan simon
+2018-04-03   11:00   15:00   Gathering	yan amy kate simon tom
+2018-04-03   12:00   17:00   Gathering	kate amy
+2018-04-03   13:00   14:00   Meeting  	yan kate simon tom
+2018-04-04   09:00   13:00   Gathering	yan simon tom
+2018-04-04   09:00   14:00   Gathering	kate amy simon
+2018-04-04   10:00   15:00   Meeting  	kate amy yan
+2018-04-04   11:00   12:00   Meeting  	simon kate
+2018-04-04   11:00   16:00   Meeting  	yan simon
+2018-04-04   12:00   16:00   Gathering	kate amy simon yan
+2018-04-04   15:00   18:00   Gathering	amy kate
+2018-04-04   15:00   18:00   Gathering	kate amy
+2018-04-04   15:00   18:00   Meeting  	yan amy simon
+2018-04-04   16:00   17:00   Meeting  	yan tom
+2018-04-04   16:00   18:00   Gathering	amy kate yan
+2018-04-05   08:00   12:00   Gathering	amy simon tom
+2018-04-05   09:00   10:00   Gathering	amy kate simon
+2018-04-05   09:00   11:00   Gathering	tom amy kate simon yan
+2018-04-05   09:00   12:00   Meeting  	amy yan
+2018-04-05   12:00   13:00   Gathering	yan amy simon tom
+2018-04-05   12:00   14:00   Class    	kate
+2018-04-05   12:00   16:00   Gathering	tom kate simon
+2018-04-05   13:00   15:00   Meeting  	amy kate tom
+2018-04-05   13:00   17:00   Gathering	yan kate simon tom
+2018-04-05   14:00   16:00   Meeting  	yan kate
+2018-04-05   14:00   17:00   Meeting  	tom amy simon
+2018-04-05   15:00   18:00   Class    	yan
+2018-04-05   16:00   17:00   Meeting  	amy simon yan
+2018-04-05   16:00   18:00   Meeting  	simon amy yan
+2018-04-06   10:00   14:00   Gathering	simon kate
+2018-04-06   11:00   13:00   Class    	simon
+2018-04-06   11:00   16:00   Meeting  	tom amy kate
+2018-04-06   14:00   15:00   Gathering	kate amy simon tom yan
+2018-04-06   15:00   16:00   Class    	simon
+2018-04-06   15:00   18:00   Gathering	amy simon yan
+2018-04-07   08:00   09:00   Meeting  	tom simon yan
+2018-04-07   08:00   11:00   Meeting  	kate amy yan
+2018-04-07   09:00   14:00   Meeting  	kate amy simon yan
+2018-04-07   10:00   14:00   Gathering	tom yan
+2018-04-07   10:00   14:00   Meeting  	kate amy simon tom
+2018-04-07   10:00   15:00   Meeting  	kate amy simon tom
+2018-04-07   11:00   14:00   Gathering	kate yan
+2018-04-07   11:00   14:00   Gathering	kate amy tom
+2018-04-07   12:00   15:00   Gathering	amy kate simon tom
+2018-04-07   12:00   17:00   Gathering	yan simon tom
+2018-04-07   12:00   17:00   Meeting  	yan amy
+2018-04-07   13:00   15:00   Gathering	simon amy kate yan
+2018-04-07   13:00   18:00   Class    	tom
+2018-04-07   14:00   18:00   Gathering	kate amy tom
+2018-04-07   15:00   16:00   Gathering	yan kate simon tom
+2018-04-07   15:00   18:00   Gathering	tom amy kate yan
+2018-04-07   17:00   18:00   Gathering	simon amy kate tom
+2018-04-08   08:00   11:00   Meeting  	tom amy yan
+2018-04-08   08:00   12:00   Meeting  	yan amy kate
 2018-04-08   09:00   14:00   Gathering	yan kate simon
 2018-04-08   10:00   13:00   Class    	amy
-2018-04-08   12:00   17:00   Gathering	simon yan
+2018-04-08   12:00   17:00   Gathering	simon amy tom
 2018-04-08   13:00   14:00   Gathering	yan kate tom
 2018-04-08   13:00   17:00   Meeting  	amy kate tom
 2018-04-08   15:00   17:00   Meeting  	amy simon tom
 2018-04-09   08:00   09:00   Gathering	yan simon tom
-2018-04-09   08:00   10:00   Meeting  	amy yan
+2018-04-09   08:00   10:00   Meeting  	amy kate tom
 2018-04-09   09:00   11:00   Class    	simon
 2018-04-09   09:00   13:00   Gathering	simon amy
 2018-04-09   09:00   14:00   Class    	kate
-2018-04-09   10:00   15:00   Meeting  	yan kate simon tom
-2018-04-09   11:00   13:00   Gathering	simon amy tom
-2018-04-09   12:00   17:00   Meeting  	amy kate simon yan
-2018-04-09   13:00   15:00   Gathering	yan amy kate tom
+2018-04-09   10:00   15:00   Meeting  	yan amy
+2018-04-09   11:00   13:00   Gathering	simon amy
+2018-04-09   12:00   17:00   Meeting  	amy kate
+2018-04-09   13:00   15:00   Gathering	yan amy kate simon tom
 2018-04-09   13:00   18:00   Meeting  	yan amy
-2018-04-09   14:00   15:00   Meeting  	amy simon yan
-2018-04-09   14:00   16:00   Gathering	simon amy tom yan
-2018-04-09   15:00   17:00   Meeting  	yan tom
-2018-04-10   09:00   13:00   Gathering	yan tom
+2018-04-09   14:00   15:00   Meeting  	amy kate simon tom
+2018-04-09   14:00   16:00   Gathering	simon amy kate
+2018-04-09   15:00   17:00   Meeting  	yan amy kate simon tom
+2018-04-10   09:00   13:00   Gathering	yan kate
 2018-04-10   10:00   11:00   Meeting  	yan kate simon tom
-2018-04-10   10:00   15:00   Gathering	kate amy simon tom
-2018-04-10   10:00   15:00   Gathering	kate amy tom yan
+2018-04-10   10:00   15:00   Gathering	kate amy simon
+2018-04-10   10:00   15:00   Gathering	kate simon yan
 2018-04-10   11:00   15:00   Meeting  	simon tom
 2018-04-10   11:00   16:00   Gathering	amy kate simon yan
-2018-04-10   11:00   16:00   Meeting  	amy kate simon
+2018-04-10   11:00   16:00   Meeting  	amy kate
 2018-04-10   12:00   13:00   Gathering	kate amy simon tom yan
-2018-04-10   12:00   17:00   Meeting  	kate amy tom
+2018-04-10   12:00   13:00   Meeting  	simon yan
+2018-04-10   13:00   18:00   Meeting  	yan kate
 2018-04-10   15:00   18:00   Gathering	yan simon tom
 2018-04-11   09:00   13:00   Meeting  	yan kate tom
 2018-04-11   12:00   13:00   Gathering	kate yan
 2018-04-11   13:00   15:00   Gathering	kate amy simon tom yan
-2018-04-11   13:00   17:00   Meeting  	yan tom
+2018-04-11   13:00   17:00   Meeting  	yan amy tom
 2018-04-11   13:00   18:00   Gathering	simon tom
 2018-04-11   14:00   15:00   Gathering	tom kate yan
 2018-04-11   14:00   15:00   Class    	tom
 2018-04-11   14:00   18:00   Class    	yan
-2018-04-12   08:00   11:00   Gathering	amy simon
-2018-04-12   11:00   15:00   Gathering	yan amy kate simon tom
-2018-04-12   11:00   15:00   Meeting  	amy simon tom
+2018-04-12   09:00   14:00   Gathering	yan amy kate
+2018-04-12   11:00   15:00   Gathering	yan amy tom
 2018-04-12   12:00   17:00   Meeting  	amy yan
-2018-04-12   15:00   18:00   Gathering	tom amy yan
-2018-04-12   16:00   18:00   Gathering	simon amy kate yan
-2018-04-13   08:00   11:00   Gathering	tom yan
-2018-04-13   09:00   12:00   Meeting  	yan kate tom
+2018-04-12   15:00   18:00   Gathering	tom amy kate
+2018-04-12   16:00   18:00   Gathering	simon kate yan
+2018-04-13   09:00   12:00   Meeting  	yan amy kate tom
 2018-04-13   10:00   12:00   Meeting  	yan amy kate simon
-2018-04-13   10:00   14:00   Meeting  	kate simon tom yan
+2018-04-13   10:00   14:00   Meeting  	kate simon yan
 2018-04-13   11:00   14:00   Class    	simon
 2018-04-13   11:00   15:00   Class    	kate
 2018-04-13   12:00   15:00   Gathering	amy kate simon yan
 2018-04-13   12:00   16:00   Meeting  	yan amy simon tom
 2018-04-13   13:00   15:00   Class    	kate
-2018-04-13   13:00   17:00   Meeting  	simon tom
-2018-04-13   14:00   15:00   Gathering	tom simon yan
-2018-04-13   14:00   16:00   Gathering	amy kate simon yan
+2018-04-13   13:00   17:00   Meeting  	simon yan
+2018-04-13   14:00   15:00   Gathering	tom amy simon yan
+2018-04-13   14:00   16:00   Gathering	amy kate simon tom
 2018-04-13   16:00   17:00   Meeting  	amy kate tom yan
 2018-04-13   17:00   18:00   Gathering	tom amy kate simon
 2018-04-13   17:00   18:00   Meeting  	tom amy kate
-2018-04-14   08:00   09:00   Gathering	simon amy tom
 2018-04-14   08:00   10:00   Gathering	simon tom yan
 2018-04-14   12:00   17:00   Meeting  	simon tom
 2018-04-14   13:00   18:00   Class    	tom
@@ -489,94 +411,170 @@ There are 140 requests rejected.
 
 =========================================================
 Total number of request:    224
-Timeslot in use:            300
-Timeslot not in use:        400
+Timeslot in use:            299
+Timeslot not in use:        401
 Utilization:                42%
 
 	- End -
 
 
+:00   12:00   Meeting  	yan amy kate
+2018-04-08   09:00   12:00   Class    	amy
+2018-04-08   09:00   14:00   Gathering	yan kate simon
+2018-04-08   10:00   13:00   Class    	amy
+2018-04-08   13:00   14:00   Gathering	yan kate tom
+2018-04-08   13:00   15:00   Meeting  	yan simon
+2018-04-08   13:00   17:00   Meeting  	amy kate tom
+2018-04-08   15:00   16:00   Class    	tom
+2018-04-08   15:00   17:00   Meeting  	amy simon tom
+2018-04-08   16:00   18:00   Class    	tom
+2018-04-09   08:00   09:00   Gathering	yan simon tom
+2018-04-09   08:00   10:00   Meeting  	amy kate tom
+2018-04-09   09:00   13:00   Gathering	simon amy
+2018-04-09   10:00   11:00   Class    	kate
+2018-04-09   10:00   14:00   Class    	yan
+2018-04-09   10:00   15:00   Class    	simon
+2018-04-09   11:00   13:00   Gathering	simon amy
+2018-04-09   12:00   17:00   Meeting  	amy kate
+2018-04-09   13:00   15:00   Gathering	yan amy kate simon tom
+2018-04-09   13:00   18:00   Meeting  	yan amy
+2018-04-09   13:00   18:00   Class    	amy
+2018-04-09   14:00   15:00   Meeting  	amy kate simon tom
+2018-04-09   14:00   16:00   Gathering	simon amy kate
+2018-04-09   15:00   16:00   Class    	tom
+2018-04-09   15:00   18:00   Class    	yan
+2018-04-10   10:00   11:00   Meeting  	yan kate simon tom
+2018-04-10   10:00   11:00   Meeting  	yan amy kate tom
+2018-04-10   10:00   15:00   Gathering	kate amy simon
+2018-04-10   10:00   15:00   Gathering	kate simon yan
+2018-04-10   11:00   16:00   Gathering	amy kate simon yan
+2018-04-10   11:00   16:00   Meeting  	amy kate
+2018-04-10   12:00   13:00   Meeting  	simon yan
+2018-04-10   12:00   13:00   Gathering	kate amy simon tom yan
+2018-04-10   12:00   17:00   Meeting  	kate simon tom yan
+2018-04-10   15:00   18:00   Gathering	yan simon tom
+2018-04-11   09:00   13:00   Meeting  	yan kate tom
+2018-04-11   12:00   13:00   Gathering	kate yan
+2018-04-11   13:00   15:00   Gathering	kate amy simon tom yan
+2018-04-11   13:00   17:00   Meeting  	yan amy tom
+2018-04-11   13:00   18:00   Gathering	simon tom
+2018-04-11   14:00   15:00   Gathering	tom kate yan
+2018-04-11   14:00   15:00   Class    	tom
+2018-04-11   14:00   18:00   Class    	yan
+2018-04-12   09:00   14:00   Gathering	yan amy kate
+2018-04-12   11:00   15:00   Gathering	yan amy tom
+2018-04-12   12:00   17:00   Meeting  	amy yan
+2018-04-12   15:00   18:00   Gathering	tom amy kate
+2018-04-12   16:00   18:00   Gathering	simon kate yan
+2018-04-13   09:00   12:00   Meeting  	yan simon
+2018-04-13   10:00   12:00   Meeting  	yan amy kate simon
+2018-04-13   10:00   14:00   Meeting  	kate simon yan
+2018-04-13   11:00   13:00   Class    	kate
+2018-04-13   11:00   15:00   Class    	kate
+2018-04-13   12:00   15:00   Gathering	amy kate simon yan
+2018-04-13   12:00   16:00   Meeting  	yan amy simon tom
+2018-04-13   12:00   16:00   Class    	simon
+2018-04-13   13:00   15:00   Class    	kate
+2018-04-13   13:00   17:00   Meeting  	simon yan
+2018-04-13   14:00   15:00   Gathering	tom amy simon yan
+2018-04-13   14:00   16:00   Class    	kate
+2018-04-13   15:00   18:00   Class    	amy
+2018-04-13   17:00   18:00   Meeting  	tom amy kate
+2018-04-14   08:00   10:00   Gathering	simon tom yan
+2018-04-14   12:00   17:00   Meeting  	simon tom
+2018-04-14   14:00   18:00   Gathering	kate simon tom yan
+2018-04-14   15:00   18:00   Class    	tom
+2018-04-14   15:00   18:00   Class    	tom
+2018-04-14   17:00   18:00   Meeting  	simon kate tom yan
+
+=========================================================
+Total number of request:    224
+Timeslot in use:            365
+Timeslot not in use:        335
+Utilization:                52%
+
+	- End -
+
+
 Personal Organizer
 ***Schedule Report***
 
-Algorithm used: Special
+Algorithm used: Special  
 ***Accept List***
-There are 79 requests accepted.
+There are 77 requests accepted.
    Date      Start    End     Type      Remarks
 =========================================================
-2018-04-01   08:00   09:00   Meeting  	simon kate tom yan
+2018-04-01   08:00   09:00   Meeting  	simon yan
 2018-04-01   10:00   14:00   Class    	yan
 2018-04-01   10:00   15:00   Class    	amy
 2018-04-01   12:00   14:00   Class    	kate
 2018-04-01   15:00   16:00   Class    	amy
 2018-04-01   15:00   16:00   Class    	tom
 2018-04-01   16:00   18:00   Class    	yan
-2018-04-02   09:00   11:00   Gathering	amy tom yan
+2018-04-02   09:00   12:00   Gathering	yan tom
 2018-04-02   09:00   13:00   Class    	kate
 2018-04-02   12:00   15:00   Class    	tom
-2018-04-02   14:00   15:00   Gathering	kate simon
-2018-04-02   15:00   17:00   Meeting  	amy tom yan
-2018-04-02   17:00   18:00   Gathering	yan kate tom
-2018-04-03   09:00   11:00   Class    	simon
+2018-04-02   14:00   15:00   Gathering	kate amy
+2018-04-02   15:00   17:00   Meeting  	amy yan
+2018-04-02   17:00   18:00   Gathering	yan amy kate simon
 2018-04-03   10:00   12:00   Class    	kate
-2018-04-03   12:00   15:00   Class    	amy
-2018-04-03   12:00   17:00   Gathering	kate simon yan
-2018-04-04   08:00   13:00   Meeting  	yan amy kate simon
-2018-04-04   16:00   17:00   Meeting  	yan amy
-2018-04-04   17:00   18:00   Class    	amy
+2018-04-03   10:00   15:00   Class    	simon
+2018-04-03   12:00   17:00   Gathering	kate amy
+2018-04-04   08:00   13:00   Meeting  	yan amy kate tom
+2018-04-04   15:00   18:00   Gathering	kate amy
+2018-04-04   16:00   17:00   Meeting  	yan tom
+2018-04-05   08:00   11:00   Gathering	amy yan
 2018-04-05   09:00   10:00   Class    	tom
 2018-04-05   09:00   14:00   Class    	simon
-2018-04-05   11:00   16:00   Meeting  	yan amy kate tom
-2018-04-05   16:00   17:00   Meeting  	amy kate
-2018-04-05   16:00   18:00   Meeting  	simon tom yan
+2018-04-05   13:00   15:00   Meeting  	amy kate tom
+2018-04-05   16:00   17:00   Meeting  	amy simon yan
 2018-04-06   11:00   12:00   Class    	tom
 2018-04-06   12:00   16:00   Class    	amy
 2018-04-06   12:00   16:00   Class    	simon
 2018-04-06   13:00   16:00   Gathering	kate tom yan
 2018-04-07   08:00   09:00   Class    	yan
 2018-04-07   09:00   10:00   Gathering	simon kate tom yan
-2018-04-07   09:00   11:00   Class    	amy
-2018-04-07   10:00   15:00   Meeting  	kate yan
-2018-04-07   13:00   15:00   Gathering	simon amy
+2018-04-07   10:00   15:00   Meeting  	kate amy simon tom
+2018-04-07   13:00   17:00   Class    	yan
 2018-04-07   15:00   16:00   Class    	tom
-2018-04-07   17:00   18:00   Gathering	simon yan
-2018-04-08   09:00   12:00   Class    	amy
-2018-04-08   12:00   17:00   Gathering	simon yan
-2018-04-08   15:00   16:00   Class    	tom
-2018-04-08   16:00   18:00   Class    	tom
+2018-04-07   17:00   18:00   Gathering	simon amy kate tom
+2018-04-08   08:00   11:00   Meeting  	tom amy yan
+2018-04-08   12:00   17:00   Gathering	simon amy tom
 2018-04-08   17:00   18:00   Gathering	simon amy yan
-2018-04-09   08:00   09:00   Meeting  	kate tom
+2018-04-09   08:00   09:00   Meeting  	kate amy simon tom yan
 2018-04-09   09:00   10:00   Class    	yan
 2018-04-09   09:00   11:00   Class    	simon
 2018-04-09   10:00   11:00   Class    	tom
 2018-04-09   10:00   11:00   Class    	kate
 2018-04-09   10:00   14:00   Class    	yan
-2018-04-09   11:00   13:00   Gathering	simon amy tom
-2018-04-09   14:00   15:00   Meeting  	amy simon yan
-2018-04-09   15:00   17:00   Meeting  	yan tom
+2018-04-09   11:00   13:00   Gathering	simon amy
+2018-04-09   14:00   15:00   Meeting  	amy kate simon tom
+2018-04-09   15:00   17:00   Meeting  	yan amy kate simon tom
 2018-04-10   08:00   09:00   Class    	tom
-2018-04-10   10:00   15:00   Gathering	kate amy tom yan
+2018-04-10   10:00   15:00   Gathering	kate simon yan
+2018-04-10   12:00   13:00   Class    	amy
 2018-04-10   15:00   18:00   Gathering	yan simon tom
-2018-04-11   09:00   11:00   Meeting  	simon kate tom
+2018-04-11   09:00   11:00   Meeting  	simon tom
 2018-04-11   12:00   13:00   Class    	amy
 2018-04-11   12:00   16:00   Class    	yan
 2018-04-11   12:00   17:00   Class    	tom
 2018-04-11   13:00   17:00   Class    	kate
-2018-04-12   08:00   09:00   Meeting  	kate amy tom yan
+2018-04-12   08:00   09:00   Meeting  	kate tom
+2018-04-12   08:00   11:00   Gathering	amy simon
 2018-04-12   10:00   11:00   Class    	tom
-2018-04-12   11:00   15:00   Meeting  	amy simon tom
+2018-04-12   11:00   15:00   Meeting  	amy kate
 2018-04-12   14:00   16:00   Class    	yan
+2018-04-12   14:00   16:00   Class    	tom
 2018-04-12   15:00   17:00   Class    	simon
-2018-04-12   16:00   18:00   Gathering	yan tom
-2018-04-13   08:00   11:00   Gathering	tom yan
+2018-04-12   16:00   18:00   Gathering	yan amy tom
+2018-04-13   09:00   12:00   Meeting  	yan simon
 2018-04-13   11:00   13:00   Class    	kate
-2018-04-13   11:00   14:00   Class    	simon
 2018-04-13   13:00   14:00   Class    	kate
-2018-04-13   14:00   16:00   Gathering	amy kate simon yan
+2018-04-13   14:00   16:00   Gathering	amy kate simon tom
 2018-04-13   16:00   17:00   Meeting  	amy kate tom yan
 2018-04-13   17:00   18:00   Gathering	tom amy kate simon
+2018-04-14   08:00   09:00   Gathering	simon amy tom
 2018-04-14   08:00   10:00   Class    	kate
-2018-04-14   08:00   11:00   Meeting  	tom yan
 2018-04-14   11:00   16:00   Class    	simon
 2018-04-14   12:00   14:00   Class    	amy
 2018-04-14   15:00   16:00   Class    	kate
@@ -587,148 +585,150 @@ There are 79 requests accepted.
 =========================================================
 
 ***Reject List***
-There are 145 requests rejected.
+There are 147 requests rejected.
    Date      Start    End     Type      Remarks
 =========================================================
-2018-04-01   08:00   09:00   Meeting  	yan kate tom
+2018-04-01   08:00   09:00   Meeting  	yan amy simon tom
 2018-04-01   10:00   14:00   Class    	kate
 2018-04-01   11:00   13:00   Gathering	amy tom
-2018-04-01   11:00   14:00   Meeting  	simon yan
+2018-04-01   11:00   14:00   Meeting  	simon amy tom yan
 2018-04-01   11:00   16:00   Gathering	simon amy kate tom
-2018-04-01   11:00   16:00   Gathering	yan simon tom
+2018-04-01   11:00   16:00   Gathering	yan amy kate simon
 2018-04-01   12:00   17:00   Meeting  	yan kate tom
 2018-04-01   13:00   15:00   Meeting  	kate simon yan
 2018-04-01   13:00   16:00   Meeting  	kate tom
-2018-04-01   13:00   16:00   Meeting  	yan amy kate
+2018-04-01   13:00   16:00   Meeting  	yan simon
 2018-04-01   15:00   16:00   Meeting  	kate tom yan
-2018-04-02   08:00   11:00   Gathering	kate yan
+2018-04-02   08:00   11:00   Gathering	kate simon tom yan
+2018-04-02   09:00   11:00   Gathering	amy kate tom yan
 2018-04-02   09:00   12:00   Meeting  	amy simon yan
-2018-04-02   09:00   12:00   Gathering	yan amy kate simon tom
 2018-04-02   10:00   15:00   Meeting  	kate amy
-2018-04-02   13:00   17:00   Meeting  	kate amy tom yan
+2018-04-02   13:00   17:00   Meeting  	kate amy simon
 2018-04-02   14:00   17:00   Class    	amy
 2018-04-02   15:00   18:00   Class    	amy
 2018-04-02   16:00   18:00   Gathering	kate amy simon
 2018-04-03   08:00   11:00   Meeting  	kate amy simon tom
-2018-04-03   08:00   12:00   Meeting  	kate amy simon tom
-2018-04-03   10:00   15:00   Class    	simon
+2018-04-03   08:00   12:00   Meeting  	kate amy yan
+2018-04-03   09:00   11:00   Class    	simon
 2018-04-03   11:00   12:00   Gathering	kate amy yan
 2018-04-03   11:00   14:00   Gathering	yan simon
-2018-04-03   11:00   15:00   Gathering	yan kate
+2018-04-03   11:00   15:00   Gathering	yan amy kate simon tom
+2018-04-03   12:00   15:00   Class    	amy
 2018-04-03   13:00   14:00   Meeting  	yan kate simon tom
 2018-04-03   15:00   16:00   Gathering	simon amy kate yan
 2018-04-04   09:00   13:00   Gathering	yan simon tom
 2018-04-04   09:00   14:00   Gathering	kate amy simon
-2018-04-04   11:00   12:00   Meeting  	simon yan
-2018-04-04   11:00   16:00   Meeting  	yan amy kate simon
-2018-04-04   12:00   16:00   Gathering	kate amy tom yan
+2018-04-04   10:00   15:00   Meeting  	kate amy yan
+2018-04-04   11:00   12:00   Meeting  	simon kate
+2018-04-04   11:00   16:00   Meeting  	yan simon
+2018-04-04   12:00   16:00   Gathering	kate amy simon yan
 2018-04-04   14:00   17:00   Meeting  	simon amy kate tom
 2018-04-04   15:00   18:00   Class    	yan
-2018-04-04   15:00   18:00   Gathering	amy kate tom yan
-2018-04-04   15:00   18:00   Gathering	kate amy simon tom
-2018-04-04   15:00   18:00   Meeting  	yan kate simon tom
-2018-04-04   16:00   18:00   Gathering	amy kate tom
-2018-04-05   08:00   11:00   Gathering	amy kate simon tom
+2018-04-04   15:00   18:00   Gathering	amy kate
+2018-04-04   15:00   18:00   Meeting  	yan amy simon
+2018-04-04   16:00   18:00   Gathering	amy kate yan
+2018-04-04   17:00   18:00   Class    	amy
 2018-04-05   08:00   12:00   Gathering	amy simon tom
 2018-04-05   09:00   10:00   Gathering	amy kate simon
+2018-04-05   09:00   11:00   Gathering	tom amy kate simon yan
 2018-04-05   09:00   12:00   Meeting  	amy yan
-2018-04-05   11:00   14:00   Gathering	tom amy kate simon
 2018-04-05   11:00   15:00   Class    	amy
 2018-04-05   12:00   13:00   Gathering	yan amy simon tom
 2018-04-05   12:00   14:00   Class    	kate
-2018-04-05   12:00   16:00   Gathering	tom amy yan
+2018-04-05   12:00   16:00   Gathering	tom kate simon
 2018-04-05   12:00   17:00   Class    	yan
 2018-04-05   13:00   15:00   Class    	kate
-2018-04-05   13:00   15:00   Meeting  	amy simon tom yan
 2018-04-05   13:00   17:00   Gathering	yan kate simon tom
 2018-04-05   14:00   16:00   Meeting  	yan kate
 2018-04-05   14:00   17:00   Meeting  	tom amy simon
 2018-04-05   15:00   18:00   Class    	yan
-2018-04-06   10:00   14:00   Gathering	simon kate tom yan
+2018-04-05   16:00   18:00   Meeting  	simon amy yan
+2018-04-06   10:00   14:00   Gathering	simon kate
 2018-04-06   11:00   13:00   Class    	simon
 2018-04-06   11:00   16:00   Meeting  	tom amy kate
 2018-04-06   14:00   15:00   Gathering	kate amy simon tom yan
 2018-04-06   15:00   16:00   Class    	simon
-2018-04-06   15:00   18:00   Gathering	amy simon tom
+2018-04-06   15:00   18:00   Gathering	amy simon yan
 2018-04-07   08:00   09:00   Meeting  	tom simon yan
 2018-04-07   08:00   11:00   Meeting  	kate amy yan
+2018-04-07   09:00   11:00   Class    	amy
 2018-04-07   09:00   14:00   Meeting  	kate amy simon yan
 2018-04-07   10:00   14:00   Meeting  	kate amy simon tom
+2018-04-07   10:00   14:00   Gathering	tom yan
 2018-04-07   11:00   14:00   Gathering	kate yan
 2018-04-07   11:00   14:00   Gathering	kate amy tom
 2018-04-07   12:00   15:00   Class    	amy
 2018-04-07   12:00   15:00   Gathering	amy kate simon tom
 2018-04-07   12:00   17:00   Gathering	yan simon tom
-2018-04-07   12:00   17:00   Meeting  	yan tom
-2018-04-07   13:00   17:00   Class    	yan
+2018-04-07   12:00   17:00   Meeting  	yan amy
+2018-04-07   13:00   15:00   Gathering	simon amy kate yan
 2018-04-07   13:00   18:00   Class    	tom
 2018-04-07   14:00   16:00   Class    	kate
 2018-04-07   14:00   18:00   Class    	simon
 2018-04-07   14:00   18:00   Gathering	kate amy tom
 2018-04-07   15:00   16:00   Gathering	yan kate simon tom
 2018-04-07   15:00   18:00   Gathering	tom amy kate yan
-2018-04-08   08:00   12:00   Meeting  	yan amy simon
+2018-04-08   08:00   12:00   Meeting  	yan amy kate
+2018-04-08   09:00   12:00   Class    	amy
 2018-04-08   09:00   14:00   Gathering	yan kate simon
 2018-04-08   10:00   13:00   Class    	amy
 2018-04-08   13:00   14:00   Gathering	yan kate tom
 2018-04-08   13:00   15:00   Meeting  	yan simon
 2018-04-08   13:00   17:00   Meeting  	amy kate tom
+2018-04-08   15:00   16:00   Class    	tom
 2018-04-08   15:00   17:00   Meeting  	amy simon tom
+2018-04-08   16:00   18:00   Class    	tom
 2018-04-09   08:00   09:00   Gathering	yan simon tom
-2018-04-09   08:00   10:00   Meeting  	amy yan
+2018-04-09   08:00   10:00   Meeting  	amy kate tom
 2018-04-09   09:00   13:00   Gathering	simon amy
 2018-04-09   09:00   14:00   Class    	kate
 2018-04-09   10:00   15:00   Class    	simon
-2018-04-09   10:00   15:00   Meeting  	yan kate simon tom
-2018-04-09   12:00   17:00   Meeting  	amy kate simon yan
-2018-04-09   13:00   15:00   Gathering	yan amy kate tom
+2018-04-09   10:00   15:00   Meeting  	yan amy
+2018-04-09   12:00   17:00   Meeting  	amy kate
+2018-04-09   13:00   15:00   Gathering	yan amy kate simon tom
 2018-04-09   13:00   18:00   Meeting  	yan amy
 2018-04-09   13:00   18:00   Class    	amy
-2018-04-09   14:00   16:00   Gathering	simon amy tom yan
+2018-04-09   14:00   16:00   Gathering	simon amy kate
 2018-04-09   15:00   16:00   Class    	tom
 2018-04-09   15:00   18:00   Class    	yan
-2018-04-10   09:00   13:00   Gathering	yan tom
+2018-04-10   09:00   13:00   Gathering	yan kate
 2018-04-10   10:00   11:00   Meeting  	yan kate simon tom
-2018-04-10   10:00   11:00   Meeting  	yan amy simon tom
-2018-04-10   10:00   15:00   Gathering	kate amy simon tom
+2018-04-10   10:00   11:00   Meeting  	yan amy kate tom
+2018-04-10   10:00   15:00   Gathering	kate amy simon
 2018-04-10   11:00   15:00   Meeting  	simon tom
 2018-04-10   11:00   16:00   Gathering	amy kate simon yan
-2018-04-10   11:00   16:00   Meeting  	amy kate simon
+2018-04-10   11:00   16:00   Meeting  	amy kate
 2018-04-10   12:00   13:00   Meeting  	simon yan
-2018-04-10   12:00   13:00   Class    	amy
 2018-04-10   12:00   13:00   Gathering	kate amy simon tom yan
-2018-04-10   12:00   17:00   Meeting  	kate amy tom
-2018-04-10   13:00   18:00   Meeting  	yan amy tom
+2018-04-10   12:00   17:00   Meeting  	kate simon tom yan
+2018-04-10   13:00   18:00   Meeting  	yan kate
 2018-04-11   09:00   13:00   Meeting  	yan kate tom
 2018-04-11   12:00   13:00   Gathering	kate yan
 2018-04-11   13:00   15:00   Gathering	kate amy simon tom yan
-2018-04-11   13:00   17:00   Meeting  	yan tom
+2018-04-11   13:00   17:00   Meeting  	yan amy tom
 2018-04-11   13:00   18:00   Gathering	simon tom
 2018-04-11   14:00   15:00   Gathering	tom kate yan
 2018-04-11   14:00   15:00   Class    	tom
 2018-04-11   14:00   18:00   Class    	yan
-2018-04-12   08:00   11:00   Gathering	amy simon
 2018-04-12   09:00   14:00   Gathering	yan amy kate
-2018-04-12   11:00   15:00   Gathering	yan amy kate simon tom
+2018-04-12   11:00   15:00   Gathering	yan amy tom
 2018-04-12   12:00   17:00   Meeting  	amy yan
-2018-04-12   14:00   16:00   Class    	tom
-2018-04-12   15:00   18:00   Gathering	tom amy yan
-2018-04-12   16:00   18:00   Gathering	simon amy kate yan
-2018-04-13   09:00   12:00   Meeting  	yan simon
-2018-04-13   09:00   12:00   Meeting  	yan kate tom
+2018-04-12   15:00   18:00   Gathering	tom amy kate
+2018-04-12   16:00   18:00   Gathering	simon kate yan
+2018-04-13   09:00   12:00   Meeting  	yan amy kate tom
 2018-04-13   10:00   12:00   Meeting  	yan amy kate simon
-2018-04-13   10:00   14:00   Meeting  	kate simon tom yan
+2018-04-13   10:00   14:00   Meeting  	kate simon yan
+2018-04-13   11:00   14:00   Class    	simon
 2018-04-13   11:00   15:00   Class    	kate
 2018-04-13   12:00   15:00   Gathering	amy kate simon yan
 2018-04-13   12:00   16:00   Meeting  	yan amy simon tom
 2018-04-13   12:00   16:00   Class    	simon
 2018-04-13   13:00   15:00   Class    	kate
-2018-04-13   13:00   17:00   Meeting  	simon tom
-2018-04-13   14:00   15:00   Gathering	tom simon yan
+2018-04-13   13:00   17:00   Meeting  	simon yan
+2018-04-13   14:00   15:00   Gathering	tom amy simon yan
 2018-04-13   14:00   16:00   Class    	kate
 2018-04-13   15:00   18:00   Class    	amy
 2018-04-13   17:00   18:00   Meeting  	tom amy kate
-2018-04-14   08:00   09:00   Gathering	simon amy tom
 2018-04-14   08:00   10:00   Gathering	simon tom yan
 2018-04-14   12:00   17:00   Meeting  	simon tom
 2018-04-14   13:00   18:00   Class    	tom
@@ -738,8 +738,8 @@ There are 145 requests rejected.
 
 =========================================================
 Total number of request:    224
-Timeslot in use:            332
-Timeslot not in use:        368
+Timeslot in use:            334
+Timeslot not in use:        366
 Utilization:                47%
 
 	- End -
