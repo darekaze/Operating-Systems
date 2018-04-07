@@ -659,15 +659,16 @@ void scheduler_exct(int schedulerID, int users, Job *jobList, char *userList[], 
 	int i=0, flag=1;
     while(wList[++i]!=NULL){
 		if(strcmp(wList[i], "reschedule")==0){
-			scheduler_print(jobList, &acceptList, &rejectList, users, userList, 1);
+			scheduler_print(jobList, &acceptList, &rejectList, users, userList, 1); // Reschedule
 			flag = 0;
 			break;
 		}
 	}
-    if(flag) scheduler_print(jobList, &acceptList, &rejectList, users, userList, 0); // Reschedule
-    // quickSort(&acceptList);
-    // quickSort(&rejectList);
-
+    if(flag) scheduler_print(jobList, &acceptList, &rejectList, users, userList, 0); 
+	
+    quickSort(&acceptList);
+    quickSort(&rejectList);
+	
 	if(t == 5)  printer_userSchedule(schedulerID, wList[1], wList[3], acceptList);
 	else        printer_report(schedulerID, wList[1], toParent, acceptList, rejectList, users);
 	freeJob(acceptList);
@@ -892,7 +893,7 @@ void printer_outputJob(Job *curr, FILE *f, char *userName) {
 
     if(curr->startTime < 10) sprintf(start, "0%d:00", curr->startTime);
     else sprintf(start, "%d:00", curr->startTime);
-    if(curr->endTime < 10) sprintf(start, "0%d:00", curr->endTime);
+    if(curr->endTime < 10) sprintf(end, "0%d:00", curr->endTime);
     else sprintf(end, "%d:00", curr->endTime);
     switch(curr->ssType) {
         case CLASSES:   strcpy(type, "Class    ");      break;
