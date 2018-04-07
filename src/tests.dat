@@ -1,0 +1,300 @@
+addGathering kate 20180410 1000 5 amy tom yan
+addMeeting simon 20180404 1500 4 amy tom yan
+addMeeting amy 20180405 1600 1 kate
+addMeeting tom 20180408 0800 3 amy kate simon tom
+addMeeting kate 20180407 1000 5 yan
+addGathering kate 20180403 1200 5 simon yan
+addMeeting kate 20180412 0800 1 amy tom yan
+addGathering tom 20180413 0800 3 yan
+addMeeting simon 20180411 0900 2 kate tom
+addMeeting kate 20180409 0800 1 tom
+addMeeting yan 20180405 1100 5 amy kate tom
+addClass amy 20180401 1700 2
+addGathering yan 20180412 1600 2 tom
+addClass tom 20180414 1500 3
+addMeeting tom 20180414 0800 2 simon tom
+addMeeting yan 20180404 1600 1 amy
+addMeeting yan 20180404 1500 3 kate simon tom
+addGathering yan 20180403 1100 4 kate
+addGathering amy 20180413 1400 2 kate simon yan
+addGathering tom 20180412 1500 3 amy yan
+addClass tom 20180407 1500 1
+addMeeting amy 20180409 1400 1 simon yan
+addClass kate 20180402 0900 4
+addGathering simon 20180408 1200 5 yan
+addGathering simon 20180407 1700 1 yan
+addMeeting kate 20180413 1400 5 amy
+addMeeting simon 20180413 1300 4 tom
+addClass yan 20180409 0900 1
+addClass simon 20180405 0900 5
+addClass kate 20180401 1200 2
+addClass kate 20180413 1100 2
+addGathering tom 20180410 1300 2 amy kate simon tom yan
+addMeeting amy 20180405 1300 2 simon tom yan
+addClass simon 20180406 1200 4
+addGathering simon 20180406 1000 4 kate tom yan
+addClass kate 20180409 1000 1
+addGathering yan 20180402 0900 3 amy kate simon tom
+addGathering kate 20180404 1500 3 amy simon tom
+addGathering tom 20180407 1000 4 kate tom yan
+addClass tom 20180406 1100 1
+addMeeting yan 20180404 0800 5 amy kate simon
+addGathering simon 20180410 1700 3 amy yan
+addClass yan 20180414 1600 4
+addMeeting yan 20180409 1500 2 tom
+addMeeting kate 20180413 1000 4 simon tom yan
+addClass yan 20180401 1000 4
+addClass amy 20180408 0900 3
+addClass amy 20180407 0900 2
+addGathering yan 20180402 1700 1 kate tom
+addMeeting tom 20180414 0800 3 yan
+addGathering amy 20180405 0800 3 kate simon tom
+addMeeting kate 20180410 1200 5 amy tom
+addClass kate 20180403 1000 2
+addMeeting yan 20180401 1300 3 amy kate
+addMeeting simon 20180413 1400 5 tom
+addMeeting amy 20180402 1500 2 tom yan
+addGathering amy 20180404 1600 2 kate tom
+addClass tom 20180401 1500 1
+addMeeting yan 20180401 1700 2 amy kate
+addMeeting simon 20180404 1100 1 yan
+addClass simon 20180414 1100 5
+addGathering kate 20180402 0800 3 yan
+addGathering tom 20180405 1100 3 amy kate simon
+addMeeting amy 20180409 0800 2 yan
+addClass yan 20180411 1400 5
+addGathering amy 20180402 0900 2 tom yan
+addClass tom 20180409 1500 1
+addClass amy 20180409 1300 5
+addMeeting yan 20180407 1200 5 tom
+addClass simon 20180403 1000 5
+addMeeting yan 20180409 1000 5 kate simon tom
+addClass tom 20180412 1700 4
+addGathering tom 20180402 1700 3 amy simon yan
+addMeeting yan 20180410 1000 1 amy simon tom
+addMeeting amy 20180409 1200 5 kate simon yan
+addGathering kate 20180410 1000 5 amy simon tom
+addMeeting simon 20180405 1600 2 tom yan
+addClass kate 20180414 0800 2
+addClass yan 20180405 1200 5
+addMeeting kate 20180402 1300 4 amy tom yan
+addGathering amy 20180404 1700 4 kate
+addGathering simon 20180407 1300 2 amy
+addGathering tom 20180404 1000 1 amy kate tom
+addMeeting amy 20180406 1600 5 kate tom
+addClass kate 20180407 1400 2
+addClass kate 20180405 1300 2
+addMeeting yan 20180413 0900 3 kate tom
+addClass simon 20180403 0900 2
+addClass simon 20180406 1500 1
+addMeeting simon 20180401 0800 1 kate tom yan
+addMeeting amy 20180402 1500 4 simon tom yan
+addMeeting amy 20180409 1400 5 kate simon yan
+addClass tom 20180405 0900 1
+addGathering yan 20180410 0900 4 tom
+addClass simon 20180413 1200 4
+addGathering amy 20180404 1500 3 kate tom yan
+addClass yan 20180401 1600 2
+addClass tom 20180411 1200 5
+addMeeting amy 20180412 1100 4 simon tom
+addClass amy 20180414 1200 2
+addClass tom 20180407 1300 5
+addClass yan 20180405 1500 5
+addGathering kate 20180403 1700 4 amy simon yan
+addGathering simon 20180409 1400 2 amy tom yan
+addGathering yan 20180401 1100 5 simon tom
+addClass tom 20180407 1600 4
+addGathering yan 20180412 1100 4 amy kate simon tom
+addMeeting tom 20180409 1400 2 amy simon tom yan
+addMeeting yan 20180411 1300 4 tom
+addGathering yan 20180409 1300 2 amy kate tom
+addMeeting amy 20180403 1700 2 kate tom yan
+addMeeting simon 20180405 1700 5 amy tom yan
+addMeeting kate 20180403 0800 4 amy simon tom
+addClass tom 20180411 1400 1
+addGathering amy 20180407 1700 5 kate tom
+addGathering simon 20180412 1600 2 amy kate yan
+addClass kate 20180406 1700 3
+addGathering tom 20180409 0900 4 tom
+addGathering kate 20180402 1400 1 simon
+addGathering simon 20180408 1400 5 amy kate yan
+addGathering kate 20180404 1200 4 amy tom yan
+addMeeting simon 20180401 1100 3 yan
+addGathering amy 20180406 1500 3 simon tom
+addMeeting kate 20180404 1000 5
+addMeeting amy 20180413 1400 5 simon tom yan
+addGathering tom 20180412 0800 3 kate tom yan
+addMeeting simon 20180412 1500 5
+addMeeting yan 20180408 0800 4 amy simon
+addGathering tom 20180413 1400 1 simon yan
+addGathering yan 20180404 0900 4 simon tom
+addClass tom 20180412 1400 2
+addMeeting tom 20180404 1700 2 amy simon tom
+addMeeting yan 20180401 1700 2 amy kate
+addClass simon 20180409 1000 5
+addClass yan 20180412 1400 2
+addGathering simon 20180404 1700 4 amy tom yan
+addMeeting yan 20180401 0800 1 kate tom
+addClass kate 20180411 1300 4
+addGathering simon 20180409 1100 2 amy tom
+addGathering amy 20180407 1200 3 kate simon tom
+addMeeting simon 20180407 1700 2 amy
+addMeeting amy 20180410 1100 5 kate simon
+addMeeting tom 20180414 1600 4 amy kate yan
+addGathering tom 20180405 1200 4 amy yan
+addMeeting yan 20180404 1100 5 amy kate simon
+addClass yan 20180407 1300 4
+addMeeting yan 20180410 1300 5 amy tom
+addClass simon 20180401 1600 3
+addGathering tom 20180405 0900 2 simon tom
+addClass simon 20180409 0900 2
+addGathering kate 20180404 0900 5 amy simon
+addGathering amy 20180413 1200 3 kate simon yan
+addGathering yan 20180409 0800 1 simon tom
+addClass amy 20180407 1200 3
+addMeeting amy 20180412 1200 5 yan
+addMeeting yan 20180403 1300 1 kate simon tom
+addGathering tom 20180413 1700 1 amy kate simon
+addGathering tom 20180408 1600 4 simon
+addGathering simon 20180408 1700 1 amy yan
+addMeeting kate 20180407 0800 3 amy yan
+addGathering amy 20180412 0800 3 simon
+addClass yan 20180409 1500 3
+addClass yan 20180411 1200 4
+addGathering simon 20180401 1700 3 amy yan
+addGathering kate 20180410 1200 1 amy simon tom yan
+addMeeting yan 20180413 0900 3 simon
+addGathering simon 20180414 0800 1 amy tom
+addClass amy 20180401 1500 1
+addGathering yan 20180408 0900 5 kate simon
+addMeeting tom 20180405 1400 3 amy simon
+addMeeting tom 20180402 0900 2 amy tom yan
+addMeeting yan 20180409 1600 4 simon
+addGathering simon 20180411 1300 5 tom
+addMeeting simon 20180414 1700 1 kate tom yan
+addMeeting kate 20180401 1500 1 tom yan
+addMeeting tom 20180403 0800 1 simon tom yan
+addGathering yan 20180408 1300 1 kate tom
+addMeeting amy 20180413 1600 1 kate tom yan
+addClass kate 20180409 0900 5
+addMeeting tom 20180406 0800 4 amy simon tom yan
+addGathering yan 20180407 1500 1 kate simon tom
+addClass tom 20180401 1600 5
+addGathering yan 20180412 1700 3 amy tom
+addClass amy 20180402 1500 3
+addGathering tom 20180404 1100 1 simon tom yan
+addMeeting yan 20180410 1000 1 kate simon tom
+addClass amy 20180408 1500 4
+addClass amy 20180406 1200 4
+addGathering kate 20180407 1400 4 amy tom
+addClass amy 20180404 1700 1
+addClass kate 20180405 1200 2
+addMeeting yan 20180409 1300 5 amy
+addMeeting simon 20180414 1200 5 tom
+addMeeting yan 20180401 1200 5 kate tom
+addGathering kate 20180406 1300 3 tom yan
+addClass simon 20180407 1400 4
+addGathering yan 20180410 1500 3 simon tom
+addClass kate 20180413 1300 1
+addMeeting amy 20180408 1500 2 simon tom
+addGathering simon 20180401 1100 5 amy kate tom
+addGathering amy 20180410 1100 5 kate simon yan
+addGathering amy 20180405 0800 4 simon tom
+addClass yan 20180407 0800 1
+addGathering kate 20180407 1100 3 amy tom
+addMeeting tom 20180411 0900 4 amy simon tom
+addGathering kate 20180407 1100 3 yan
+addGathering yan 20180413 1200 2
+addMeeting kate 20180407 1600 4 simon tom
+addClass simon 20180406 1100 2
+addMeeting simon 20180404 1400 3 amy kate tom
+addClass yan 20180414 1500 5
+addClass kate 20180413 1400 2
+addClass yan 20180414 1500 4
+addGathering yan 20180406 1200 4
+addClass amy 20180413 1500 3
+addGathering kate 20180403 1100 1 amy yan
+addClass amy 20180405 1100 4
+addMeeting kate 20180402 1000 5 amy
+addMeeting amy 20180402 0900 3 simon yan
+addClass amy 20180401 1000 5
+addMeeting amy 20180402 1600 4 kate simon tom yan
+addGathering amy 20180405 0900 1 kate simon
+addMeeting kate 20180407 1000 4 amy simon tom
+addGathering amy 20180411 1700 2 kate tom yan
+addGathering kate 20180411 1200 1 yan
+addGathering yan 20180405 1300 4 kate simon tom
+addClass tom 20180408 1600 2
+addGathering simon 20180405 1400 1
+addMeeting yan 20180413 1000 2 amy kate simon
+addClass yan 20180407 1400 5
+addClass amy 20180410 1200 1
+addGathering simon 20180403 1500 1 amy kate yan
+addClass tom 20180408 1500 1
+addMeeting amy 20180409 1700 5 yan
+addClass tom 20180410 0800 1
+addMeeting yan 20180408 1300 2 simon
+addMeeting kate 20180408 1500 4 simon
+addClass amy 20180414 1700 1
+addGathering yan 20180405 1200 1 amy simon tom
+addClass tom 20180414 1500 3
+addMeeting simon 20180410 1100 4 tom
+addMeeting kate 20180401 1300 2 simon yan
+addMeeting tom 20180406 1100 5 amy kate
+addMeeting kate 20180403 0800 3 amy simon tom
+addClass tom 20180402 1200 3
+addMeeting yan 20180411 0900 4 kate tom
+addGathering yan 20180407 1200 5 simon tom
+addClass tom 20180409 1000 1
+addMeeting kate 20180407 0900 5 amy simon yan
+addClass tom 20180406 1700 4
+addGathering simon 20180414 0800 2 tom yan
+addClass kate 20180413 1300 2
+addGathering kate 20180414 1400 4 simon tom yan
+addMeeting tom 20180414 1300 1 amy kate simon tom
+addClass kate 20180414 1500 1
+addGathering kate 20180402 1600 2 amy simon
+addClass amy 20180411 1200 1
+addClass simon 20180404 1600 4
+addGathering simon 20180409 0900 4 amy
+addClass tom 20180412 1000 1
+addGathering yan 20180407 1000 5
+addMeeting simon 20180410 1500 5 kate
+addGathering kate 20180411 1300 2 amy simon tom yan
+addClass simon 20180412 1500 2
+addClass tom 20180414 1300 5
+addClass kate 20180401 1000 4
+addClass amy 20180402 1400 3
+addGathering tom 20180412 1100 2 kate tom yan
+addMeeting amy 20180405 0900 3 yan
+addMeeting simon 20180402 1600 4 amy yan
+addMeeting tom 20180407 0800 1 simon yan
+addGathering tom 20180407 1500 3 amy kate yan
+addGathering amy 20180401 1100 2 tom
+addMeeting yan 20180413 1200 4 amy simon tom
+addGathering yan 20180412 0900 5 amy kate
+addClass simon 20180413 1100 3
+addMeeting simon 20180410 1200 1 yan
+addClass yan 20180405 1500 3
+addClass kate 20180413 1100 4
+addClass yan 20180411 1700 3
+addClass yan 20180404 1500 3
+addGathering tom 20180411 1400 1 kate yan
+addGathering simon 20180407 0900 1 kate tom yan
+addMeeting tom 20180402 1000 5 kate simon tom yan
+addGathering yan 20180403 1100 3 simon
+addMeeting tom 20180413 1700 1 amy kate
+addClass yan 20180409 1000 4
+addClass amy 20180403 1200 3
+addGathering kate 20180406 1400 1 amy simon tom yan
+addGathering tom 20180402 1700 2 kate simon tom
+addMeeting kate 20180401 1300 3 tom
+addClass yan 20180411 1400 4
+addMeeting yan 20180405 1400 2 kate
+addGathering tom 20180408 1600 1 amy simon tom
+addMeeting kate 20180402 1500 2
+addClass amy 20180408 1000 3
+addMeeting tom 20180414 1100 5 amy tom yan
+addMeeting amy 20180408 1300 4 kate tom
+addGathering amy 20180414 1600 1 kate
+addGathering kate 20180414 1500 5 yan
