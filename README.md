@@ -7,6 +7,7 @@ This is just a project of dealing with some **scheduling** stuff..(lol)(　ﾟД
 Find the doc here __ o(〃＾▽＾〃)o  
 + [Report.doc](https://drive.google.com/open?id=12FRtLWDHTRIrv0eajyQKSbbxxS461pue)
 + [PDF VERSION](https://drive.google.com/open?id=1uLjDwr_sa6EuZLl145UetNF99bftJjpC)
++ [PDF of Structure Graph](https://drive.google.com/open?id=1j93JE7Exhxj7WrlTYV4Dp3qlY_OZIw3i)
 ---
 
 ## Some useful links for you to explore :thinking:
