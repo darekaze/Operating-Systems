@@ -1,13 +1,11 @@
 # Operating-System Project
-> PolyU COMP2432 Project (2017~2018 Spring)  
+> COMP2432 Project (2017~2018 Spring)  
 
 This is just a project of dealing with some **scheduling** stuff..(lol)(　ﾟДﾟ)＜!!
 
 ## Project Complete!! :fire:
-Find the doc here __ o(〃＾▽＾〃)o  
-+ [Project_Report.doc](https://drive.google.com/open?id=12FRtLWDHTRIrv0eajyQKSbbxxS461pue)
-+ [Project_Report.pdf](https://drive.google.com/open?id=1uLjDwr_sa6EuZLl145UetNF99bftJjpC)
-+ [PDF of UML Structure Graph](https://drive.google.com/open?id=1j93JE7Exhxj7WrlTYV4Dp3qlY_OZIw3i)
+Archiving __ o(〃＾▽＾〃)o 
+..GGWP..
 ---
 
 ## Some useful links for you to explore :thinking:
