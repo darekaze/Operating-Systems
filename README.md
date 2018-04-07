@@ -3,15 +3,13 @@
 
 This is just a project of dealing with some **scheduling** stuff..(lol)(　ﾟДﾟ)＜!!
 
-## Project WiP :fire:
-Keep calm and **commit** !! o(〃＾▽＾〃)o
-
+## Project Complete!! :fire:
+Find the doc here __ o(〃＾▽＾〃)o  
++ [Report.doc](https://drive.google.com/open?id=12FRtLWDHTRIrv0eajyQKSbbxxS461pue)
++ [PDF VERSION](https://drive.google.com/open?id=1uLjDwr_sa6EuZLl145UetNF99bftJjpC)
 ---
 
 ## Some useful links for you to explore :thinking:
-### Project Report
-+ [Report.doc](https://drive.google.com/open?id=12FRtLWDHTRIrv0eajyQKSbbxxS461pue)
-+ [PDF VERSION](https://drive.google.com/open?id=1uLjDwr_sa6EuZLl145UetNF99bftJjpC)
 
 ### OS tutorial
 + [Operating System tutorial](https://www.tutorialspoint.com/operating_system/index.htm)
