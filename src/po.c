@@ -57,13 +57,14 @@ void quickSort          (Job **);
 
 void parent_checkUserNum    (int, char*[]);
 void parent_write           (char*, int[][2]);
-void parent_handler         (char(*), char*[], int*, int[][2], int[][2], int);
-void parent_request         (char*, char*[], int[][2], int);
-int parent_validate         (char**, char*[], int, int);
-int parent_checkUserExist   (char**, char*[], int, int);
+void parent_handler         (char(*), char*[], int*, int[][2], int[][2]);
+void parent_request         (char*, char*[], int[][2]);
+int parent_validate         (char**, char*[], int);
+int parent_checkUserExist   (char**, char*[], int);
 int parent_verifyUser       (char*, char*[]);
-int parent_verifyParticipant(char**, char*[], int);
-void parent_addBatch        (char*, char*[], int[][2], int);
+int parent_verifyParticipant(char**, char*[]);
+int parent_checkDuplicate   (Extra **head_ref, char *userName);
+void parent_addBatch        (char*, char*[], int[][2]);
 void parent_askSchd         (char*, char*[], int[][2]);
 
 void scheduler_base         (int, int, int, int, char*[]);
@@ -135,7 +136,7 @@ int main(int argc, char *argv[]) {
 		}
         while(loop) {
             readInput(cmd);
-            parent_handler(cmd, argv, &loop, toChild, toParent, argc);
+            parent_handler(cmd, argv, &loop, toChild, toParent);
         }
         for(j = 0; j < N_CHILD; j++) { 
 			close(toChild[j][1]);
@@ -399,7 +400,7 @@ void parent_repo(char *cmd, int toChild[][2], int toParent[][2]) {
 	}
 }
 
-void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int toParent[][2], int user) {
+void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int toParent[][2]) {
     char str[MAX_INPUT_SZ];
 	memset(str, 0, sizeof(str));
     int t;
@@ -409,9 +410,9 @@ void parent_handler(char (*cmd), char *users[], int *loop, int toChild[][2], int
     t = checkType(cmd);
     switch(t) {
         case 1: case 2: case 3:
-            parent_request(str, users, toChild, user);  break;
+            parent_request(str, users, toChild);  break;
         case 4:
-            parent_addBatch(str, users, toChild, user); break;
+            parent_addBatch(str, users, toChild); break;
         case 5:
             parent_askSchd(str, users, toChild);        break;
         case 6:
@@ -444,7 +445,7 @@ void parent_askSchd(char *cmd, char *users[], int toChild[][2]) {
     free(wList[l]);
 }
 
-void parent_request(char *cmd, char *users[], int toChild[][2], int user) {
+void parent_request(char *cmd, char *users[], int toChild[][2]) {
     char str[MAX_INPUT_SZ];
 	memset(str,0,sizeof(str));
     char **wList = malloc(sizeof(char*) * 1);
@@ -459,28 +460,28 @@ void parent_request(char *cmd, char *users[], int toChild[][2], int user) {
         free(wList[l]);
 		return;
 	}
-    else if(parent_validate(wList, users, t, user)) 
+    else if(parent_validate(wList, users, t)) 
         parent_write(str,toChild);
     free(wList[l]);
 }
 
-int parent_validate(char **wList, char *users[], int t, int user) {
+int parent_validate(char **wList, char *users[], int t) {
     int tStart = atoi(wList[3]) / 100;
     int cStart = atoi(wList[3]) % 100;
 	
     if(atoi(wList[2]) < 20180401 || atoi(wList[2]) > 20180414)      printf("Error: Invalid Date\n");
 	else if(cStart != 0 || (tStart < 8 || tStart > 17))             printf("Error: Invalid Starting Time\n");
     else if (atoi(wList[4]) < 1 || (atoi(wList[4]) + tStart) > 18)  printf("Error: Invalid Duration\n");
-    else return parent_checkUserExist(wList, users, t, user);
+    else return parent_checkUserExist(wList, users, t);
     return 0;
 }
 
-int parent_checkUserExist(char **wList, char* users[], int t, int user) {
+int parent_checkUserExist(char **wList, char* users[], int t) {
     int ownerValid, usersValid = 1;
     /* check owner's and participants' names and avoid duplicate */
     ownerValid = parent_verifyUser(wList[1], users);
     if(ownerValid == 1 && t != 1) 
-        usersValid = parent_verifyParticipant(wList, users, user);
+        usersValid = parent_verifyParticipant(wList, users);
     else if(wList[NORMAL_LENGTH] != NULL) 
         usersValid = 0;
 
@@ -494,18 +495,40 @@ int parent_verifyUser(char* name, char* users[]) {
     return 0;
 }
 
-int parent_verifyParticipant(char **wList, char* users[], int user) {
+int parent_verifyParticipant(char **wList, char* users[]) {
     int l = NORMAL_LENGTH -1;
     int res = 1;
-
+    Extra *usersList = NULL;
     while(wList[++l] != NULL) {
-        if(findUser(wList[l], user, users) == -1) res = 0; 
+        if(strcmp(wList[1], wList[l]) == 0 
+        || parent_verifyUser(wList[l], users) == 0 
+        || parent_checkDuplicate(&usersList, wList[l]) == 0)
+            res = 0;
     }
-    if(l <= NORMAL_LENGTH) res = 0;
+    if(l <= NORMAL_LENGTH) res = 0; // no participant means useless
+    freeParticipantList(usersList); // free the list
     return res;
 }
 
-void parent_addBatch(char *cmd, char *users[], int toChild[][2], int user) {
+int parent_checkDuplicate(Extra **head_ref, char *userName) {
+    Extra *prev, *curr, *newUser = (Extra*)malloc(sizeof(Extra));
+    
+    initParticipant(newUser, userName);
+    if(*head_ref == NULL) {
+        *head_ref = newUser;
+    } else {
+        curr = *head_ref;
+        while(curr != NULL){
+            if(strcmp(curr->name, newUser->name) == 0) return 0;
+            prev = curr;
+            curr = curr->next;
+        }
+        prev->next = newUser;
+    }
+    return 1;
+}
+
+void parent_addBatch(char *cmd, char *users[], int toChild[][2]) {
     FILE *fp;
     char *line = NULL;
     size_t len = 0;
@@ -520,7 +543,7 @@ void parent_addBatch(char *cmd, char *users[], int toChild[][2], int user) {
     while (getline(&line, &len, fp) != -1) {
         if (strlen(line) > 0 && (line[strlen(line) - 1] == '\n')) // LF only
             line[strlen(line) - 1] = '\0';
-        parent_request(line, users, toChild, user);
+        parent_request(line, users, toChild);
     }
     fclose(fp);
     if (line) free(line);
