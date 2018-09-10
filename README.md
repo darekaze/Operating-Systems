@@ -4,8 +4,7 @@
 This is just a project of dealing with some **scheduling** stuff..(lol)(　ﾟДﾟ)＜!!
 
 ## Project Complete!! :fire:
-Archiving __ o(〃＾▽＾〃)o 
-..GGWP..
+Planning to refactor into Go code __ o(〃＾▽＾〃)o 
 ---
 
 ## Some useful links for you to explore :thinking:
